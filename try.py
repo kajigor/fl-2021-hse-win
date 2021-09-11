@@ -14,12 +14,12 @@ def sum_numbers(filename):
 
 print(sum_numbers("a.txt"))
 
+
 def log(filename, message):
     f = open(filename, 'a')
     f.write('\n')
     f.write(message)
     f.write('\n')
-
 
 
 print(log("a.txt", "new"))
@@ -36,6 +36,7 @@ def sum_numbers(filename):
                     except:
                         break
 # Ой, коммент
+
 
 '''
  крутой коммент
