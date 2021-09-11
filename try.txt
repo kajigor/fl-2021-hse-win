@@ -1,0 +1,11 @@
+for(){
+WhiteCat
+# huihibvbvbvbvbv
+
+
+My cat is redcat
+// this line is comment
+
+/*   */
+
+My cat is WhiteCat

@@ -1,0 +1,48 @@
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
+
+div#highlight-registered-keyword {
+  //font-size: 10pt;
+  font-family: monospace;
+  overflow: auto;
+  li.highlight-registered-keyword.patterns {
+    list-style-type: decimal;
+    list-style-position: outside;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+  }
+}
+
+atom-text-editor .highlight {
+
+    &.highlight-registered-keyword {
+      .region {
+
+     }
+
+        &.comment {
+          .region {
+            background-color: rgba(206, 240, 242, 0.05);
+          }
+        }
+
+        &.blockcomment {
+          .region {
+            background-color: rgba(206, 240, 242, 0.08);
+            border: 2px dotted;
+            border-color: rgba(206, 240, 242, 0.1);
+          }
+        }
+
+        &.keyword {
+          .region {
+            background-color: rgba(242, 206, 241, 0.2);
+          }
+        }
+
+  }
+
+}

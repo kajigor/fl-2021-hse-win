@@ -1,0 +1,33 @@
+"highlight-registered-keyword": [
+  {
+    class: "comment"
+    pattern: "/#.*$/g"
+    fileTypes:["py"]
+  }
+  {
+    class: "blockcomment"
+    pattern: "/'''[\\S\\s]*?'''/g"
+    fileTypes:["py"]
+  }
+  {
+    class: "keyword"
+    pattern: "/and|assert|break|class|continue|def|yield/g"
+    fileTypes:["py"]
+  }
+  {
+    class: "keyword"
+    pattern: "/lambda|not|or|pass|print|raise|return|try|while/g"
+    fileTypes:["py"]
+  }
+  {
+    class: "keyword"
+    pattern: "/del|elif|else|except|exec|finally|from|global/g"
+    fileTypes:["py"]
+  }
+  {
+    class: "keyword"
+    pattern: "/if|import|in|is|None|True|False|for/g"
+    fileTypes:["py"]
+  }
+  
+]
