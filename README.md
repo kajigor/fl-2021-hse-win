@@ -82,13 +82,8 @@ else:
 ```python
 
 Alphabet: enum
-# AlphabetElement: int == element of Alphabet
-
 States: enum
-# StateId: int == element of States 
-
 Edges: enum
-# EdgeId: int == element of Edges
 
 q0: StateId # начальное состояние
 
