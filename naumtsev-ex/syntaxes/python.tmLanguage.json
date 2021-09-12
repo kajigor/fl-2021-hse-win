@@ -1,0 +1,57 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "python",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#class"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.python",
+				"match": "\\b(if|while|for|return|try|except)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.python",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.python",
+					"match": "\\\\."
+				}
+			]
+		}, 
+		"comment": {
+			"name": "comment.line.number-sign",
+			"begin": "#",
+			"end": "\n",
+			"patterns": [
+				{
+					"name": "comment.line.text",
+					"match": ".*"
+				}
+			]
+		},
+		"class": {
+			"patterns": [{
+				"name": "entity.name.class.python",
+				"match": "\\s[a-zA-Z][a-zA-Z0-9_]*\\s{0,}(?=(\\(|:))"
+			}]
+		}
+	},
+
+	"scopeName": "source.python"
+}
+

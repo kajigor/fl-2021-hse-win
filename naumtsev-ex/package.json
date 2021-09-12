@@ -1,0 +1,25 @@
+{
+    "name": "naumtsev-ex",
+    "displayName": "naumtsev-ex",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "python",
+            "aliases": ["python", "python"],
+            "extensions": [".py"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "python",
+            "scopeName": "source.python",
+            "path": "./syntaxes/python.tmLanguage.json"
+        }]
+    }
+}
