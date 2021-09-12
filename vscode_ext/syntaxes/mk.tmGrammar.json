@@ -3,7 +3,7 @@
   "patterns": [{ "include": "#expression" }],
   "repository": {
     "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#integer_numbers" }, { "include": "#floating_point_literals"}, { "include": "#constants"} ]
+      "patterns": [{ "include": "#kw" }, { "include": "#integer_numbers" }, { "include": "#floating_point_literals"}, { "include": "#constants"}, { "include": "#comments1"}, { "include": "#comments2"}  ]
     },
     "kw": {
       "match": "\\b(auto|break|case|switch|try|catch|const|mutable|decltype|default|delete|do|if|else|while|explicit|for|friend|namespace|typedef)\\b",
@@ -11,23 +11,30 @@
     },
   
     "integer_literals": {
-      "match": "\\b([0-9]* | 0[0-7]*)\\b",
+      "match": "\\b([0-9]+|0[0-7]+|0x[a-fA-F0-9])\\b",
       "name": "constant.numeric"
     },
     
     "floating_point_literals": {
-      "match": "\\b([0-9]*.{0,1}[0-9]*)\\b",
+      "match": "\\b([0-9]+.{0,1}[0-9]+)\\b",
       "name": "constant.numeric"
     },
 
     "constants": {
-      "match": "\\b(true|false|nil|YES|NO)\\b",
+      "match": "\\b(true|false|NULL|YES|NO)\\b",
       "name": "constant.language"
     },
 
-    "comments": {
-      "match": "\\b(//$)\\b",
+    "comments1": {
+      "begin": "\\/\\/",
+      "end": "\\n",
       "name": "comment.line.double-slash"
+    },
+
+    "comments2": {
+      "begin": "\\/\\* ",
+      "end": " \\*\\/",
+      "name": "comment.block"
     }
   }
 }
