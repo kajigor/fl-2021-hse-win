@@ -1,8 +1,8 @@
 <b>
-<center>Наумцев Антон</center>
-<center>Домашняя работа</center>
-<center>Второй курс | Первый модуль</center>
-<center>Формальные языки # 1</center>             
+<center>Наумцев Антон</center> <br/>
+<center>Домашняя работа</center><br/>
+<center>Второй курс | Первый модуль</center><br/>
+<center>Формальные языки # 1</center><br/>  
 </b>
 <br/>
 <br/>
