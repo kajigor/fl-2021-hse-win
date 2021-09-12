@@ -1,0 +1,25 @@
+{
+    "name": "highlightingext",
+    "displayName": "HighlightingExt",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "saf",
+            "aliases": ["SomeLang", "saf"],
+            "extensions": [".saf"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "saf",
+            "scopeName": "source.saf",
+            "path": "./syntaxes/saf.tmLanguage.json"
+        }]
+    }
+}

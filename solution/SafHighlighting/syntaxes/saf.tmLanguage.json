@@ -1,0 +1,79 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "saf",
+	"scopeName": "source.saf",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#todo"
+		},
+		{
+			"include": "#types"
+		},
+		{
+			"include": "#function"
+		}
+	],
+	"repository": {
+	  "keywords": {
+		"match": "return|fresh|begin|break",
+		"name": "keyword.control.saf"
+	  },
+	  "types": {
+		  "match": "int|string|float|void",
+		  "name": "entity.name.type.saf"
+	  },
+	  "function": {
+		"patterns": [{
+			"name": "entity.name.function.saf",
+			"match": "\\b[a-zA-Z_]+[0-9a-zA-Z_]*\\s*(?=\\()\\b"
+		}]
+	},
+	  "strings": {
+		"name": "string.quoted.double.saf",
+		"begin": "\"",
+		"end": "\"",
+		"patterns": [
+			{
+				"name": "constant.character.escape.saf",
+				"match": "\\\\."
+			}
+		]
+	},
+	  "paren-expression": {
+		"begin": "\\(",
+		"end": "\\)",
+		"beginCaptures": {
+		  "0": { "name": "punctuation.paren.open" }
+		},
+		"endCaptures": {
+		  "0": { "name": "punctuation.paren.close" }
+		},
+		"name": "expression.group",
+		"patterns": [{ "include": "#expression" }]
+	  },
+	  "todo": {
+		  "match": "\\bTODO\\b",
+		  "name": "comment.todo.saf"
+	  },
+	  "comment": {
+		  "name": "comment.line.double-slash",
+		  "begin": "//",
+		  "end": "\n",
+		  "patterns": [
+			  {
+				  "match": "\\\\.",
+				  "name": "comment.line.double-slash"
+			  }
+		  ]
+	  }
+	}
+  }
