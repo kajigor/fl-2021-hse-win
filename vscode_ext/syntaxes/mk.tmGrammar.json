@@ -15,7 +15,7 @@
       "name": "comment.line"
     },
     "variable_names": {
-      "match": "\\b([A-Z][_a-z]*)\\b",
+      "match": "\\b([A-Z][_a-z]+)\\b",
       "name": "constant.character"
     },
     "literals": {    
@@ -30,7 +30,7 @@
 			]
 		},
     "numbers": {
-      "match":"\\b([0-9]*)\\b",
+      "match":"\\b([0-9]+)\\b",
       "name":"variable.other"
     },
     "storage": {
