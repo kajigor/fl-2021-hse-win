@@ -333,4 +333,4 @@ new Edge(Edges.not_zero_not_zero):
 4) подсветка имени классов (работает странно)
 
 
-Запуск стандартный: F5 в папке naumtsev-ex
+Запуск стандартный: F5 в папке naumtsev-ex в VS Code
