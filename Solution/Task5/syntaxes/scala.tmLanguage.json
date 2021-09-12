@@ -1,0 +1,90 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Scala",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#literals"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#characterTypes"
+		},
+		{
+			"include": "#functionName"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.scala",
+				"match": "\\b(abstract|case|catch|class|def|do|else|extends|false|final|finally|for|forSome|if|implicit|import|lazy|match|new|Null|object|override|package|private|protected|return|sealed|super|this|throw|trait|Try|true|type|val|Var|while|with|yield)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.scala",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.scala",
+					"match": "\\\\."
+				}
+			]
+		},
+		"literals": {
+			"name": "string.quoted.double.scala",
+			"begin": "'",
+			"end": "'",
+			"patterns": [
+				{
+					"name": "constant.character.escape.scala",
+					"match": "\\\\."
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"name": "constant.numeric.scala",
+					"match": "\\b[0-9].?[0-9]*\\b"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.scala",
+					"match": "(\/\/[^\n]*)"
+				}
+			]
+		},
+		"characterTypes": {
+			"patterns": [
+				{
+					"name": "storage.type.built-in.primitive.scala",
+					"match": "\\b(Byte|Short|Char|Int|Long|Float|Double|Boolean|Unit|String)\\b"
+				}
+			]
+		},
+		"functionName": {
+			"patterns": [
+				{
+					"name": "entity.name.function.scala",
+					"match": "\\b[A-Za-z][0-9A-Za-z]*(?=\\([A-Za-z0-9 ,]*\\))\\b"
+				}
+			]
+		}
+	},
+	"scopeName": "source.scala"
+}
