@@ -20,15 +20,15 @@
 	"contributes": {
 		"languages": [
 			{
-				"id": "miniKanren",
+				"id": "Python 3",
 				"extensions": [
-					".mk"
+					".py"
 				]
 			}
 		],
 		"grammars": [
 			{
-				"language": "miniKanren",
+				"language": "Python 3",
 				"scopeName": "source.abc",
 				"path": "./syntaxes/mk.tmGrammar.json"
 			}
