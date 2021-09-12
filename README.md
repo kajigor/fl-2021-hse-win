@@ -86,15 +86,15 @@ Edges: enum
 
 q0: StateId # начальное состояние
 
-class Node:
+class Node():
     id: StateId
-    edges: list of EdgeId
+    edges: [] of EdgeId
     comment: string
     is_terminal: bool
 
-class Edge:
+class Edge():
     id: EdgeId
-    allowed_letters: list of AlphabetElement # буквы, по которым можно пройти в следующую вершину
+    allowed_letters: [] of AlphabetElement # буквы, по которым можно пройти в следующую вершину
     begin: StateId
     end: StateId
     comment: string
