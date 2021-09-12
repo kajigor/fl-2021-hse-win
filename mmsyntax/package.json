@@ -1,0 +1,25 @@
+{
+    "name": "mmsyntax",
+    "displayName": "mmsyntax",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "MM",
+            "aliases": ["MM", "MM"],
+            "extensions": [".mm"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "MM",
+            "scopeName": "source.mm",
+            "path": "./syntaxes/MM.tmLanguage.json"
+        }]
+    }
+}

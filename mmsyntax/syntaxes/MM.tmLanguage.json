@@ -1,0 +1,80 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "MM",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#basic_types"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#triangle_brackets"
+		},
+		{
+			"include": "#comment"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.MM",
+				"match": "\\b(if|while|for|return|do|else|switch|case|break|continue)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.MM",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.MM",
+					"match": "\\\\."
+				}
+			]
+		},
+		"numbers": {
+			"patterns":[{
+				"name": "constant.numeric.MM",
+				"match": "\\b[0-9]+\\b"
+			}]
+		},
+		"basic_types": {
+			"patterns": [{
+				"name": "entity.name.type",
+				"match": "\\b(int|long|unsigned|char|bool|void|short)\\b"
+			}]
+		},
+		"functions":{
+			"patterns":[{
+				"name": "entity.name.function",
+				"match": "\\b[a-zA-Z_]+\\s*(?=\\()\\b"
+			}]
+		},
+		"triangle_brackets":{
+			"patterns":[{
+				"name": "string.other",
+				"match": "<.*>"
+			}]
+		},
+		"comment":{
+			"name": "comment.line.double-slash",
+			"begin": "//",
+			"end": "\n",
+			"patterns":[{
+				"name": "comment.line.double-slash",
+				"match": "//."
+			}]
+		}
+	},
+	"scopeName": "source.mm"
+}
