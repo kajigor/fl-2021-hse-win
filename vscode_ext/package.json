@@ -20,15 +20,16 @@
 	"contributes": {
 		"languages": [
 			{
-				"id": "miniKanren",
+				"id": "C++",
 				"extensions": [
-					".mk"
+					".cpp",
+					".hpp"
 				]
 			}
 		],
 		"grammars": [
 			{
-				"language": "miniKanren",
+				"language": "C++",
 				"scopeName": "source.abc",
 				"path": "./syntaxes/mk.tmGrammar.json"
 			}
