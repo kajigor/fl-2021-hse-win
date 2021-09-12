@@ -1,0 +1,64 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Ada",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#function"
+		},
+		{
+			"include": "#numbers"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.ada",
+				"match": "\\b(begin|end|with|procedure|is|use|when|loop|exception)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.ada",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.ada",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comment": {
+			"name": "comment.line.double-dashк",
+			"begin": "--",
+			"end": "\n",
+			"patterns": [
+				{
+					"name": "comment.line.ada",
+					"match": "\\\\."
+				}
+			]
+		},
+		"function": {
+			"patterns": [{
+				"name": "entity.name.function.ada",
+				"match": "\\s[A-Za-z][0-9A-Za-z_]*(?=(\\(|\\s\\())"
+			}]
+		},
+		"numbers": {
+			"patterns": [{
+				"name": "constant.numeric",
+				"match": "(?<=(\\(|\\b|\\+|-|\\*|/))[0-9]+(?=(\\b|\\+|-|\\*|/|;\\)))"
+			}]
+		}
+	},
+	"scopeName": "source.ada"
+}

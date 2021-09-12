@@ -1,0 +1,34 @@
+{
+    "name": "adahighlighter",
+    "displayName": "AdaHighlighter",
+    "description": "-",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ada",
+            "aliases": ["Ada", "ada"],
+            "extensions": [".ada"],
+            "configuration": "./language-configuration.json"
+        }],
+
+        "grammars": [
+        
+        {
+            "language": "ada",
+            "scopeName": "source.ada",
+            "path": "./syntaxes/ada.tmLanguage.json"
+        },
+        {
+            "path": "./syntaxes/injection.json",
+            "scopeName": "todo-comment.injection",
+            "injectTo": ["source.js"]
+        }
+    ]
+    }
+}
