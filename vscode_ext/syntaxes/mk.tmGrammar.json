@@ -3,15 +3,39 @@
   "patterns": [{ "include": "#expression" }],
   "repository": {
     "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
+      "patterns": [{ "include": "#kw" }, 
+        { "include": "#constructor" }, 
+        { "include": "#digits" }, 
+        { "include": "#sqs"},
+        { "include": "#comment_line"},
+        { "include": "#function_name"},
+        { "include": "#separators"}
+      ]
     },
     "kw": {
-      "match": "\\b(fresh|in|import)\\b",
+      "match": "\\b(true|false|for|while|int|float|double|include|nullptr|auto|if|else|return|class|char|union|struct|byte|do|void)\\b",
       "name": "keyword.control"
     },
+    "digits": {
+      "match": "\\b-?([1-9][0-9]*|0|[0-9]\\.[0-9]*)\\b",
+      "name": "constant.numeric"
+    },
     "constructor": {
-      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
+      "match": "\\b([A-Z][_0-9A-Za-z^ ]*)\\b", 
       "name": "constant.character"
+    },
+    "sqs": {
+      "match": "(\".*?\"|'.*?')",
+      "name": "string.quoted.single"
+    },
+    "comment_line": {
+      "match": "(\/\/.*)",
+      "name": "comment.line"
+
+    },
+    "function_name": {
+      "match": "\\b([a-zA-z][_a-zA-Z0-9^ ]*)\\b *(?=\\(.*\\) *\\{.*)",
+      "name": "entity.name.function"
     }
   }
 }
