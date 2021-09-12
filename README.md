@@ -137,9 +137,10 @@ q0 = StateIds.empty
 5) Описываем вершины и рёбра
 ...
 
-#### Примеры:
+<b>Примеры:</b>
 1) Проверка чередования в строке из нулей и единиц
 <img src="images/a3a46ec755792c76df52d2807c4690a5063b933d2db96fcc1e38d399881c8bee.png" alt="drawing" style="width:220px;"/>
+
 ```python
 # пример кода на описанном языке:
 Alphabet {
@@ -200,6 +201,7 @@ new Edge(Edges.s0_d1):
 ```
 2) Проверка того, что в строке сначала идут нули, а потом единицы
  <img src="images/55e9a6b4a3383dd28511710b411fd25c9c1ec8d87af1c53310eda272fe4e4df8.png" alt="drawing" style="width:220px;"/> 
+
 ```python
 # пример кода на описанном языке:
 Alphabet {
@@ -320,7 +322,7 @@ new Edge(Edges.not_zero_not_zero):
 ```
 <br/>
 <br/>
-<h5>Задание 5:</h5>
+<b>Задание 5:</b>
 <img src="images/6369ed861e4e70436ce47c0ec092a0ac03dc02746c8b8f2e6e335478e5671b9b.png" alt="drawing" style="width:250px;"/> 
 
 ### Отчёт:
