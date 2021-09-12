@@ -3,15 +3,39 @@
   "patterns": [{ "include": "#expression" }],
   "repository": {
     "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
+      "patterns": [{ "include": "#kw" }, { "include": "#variable_names" }, { "include": "#todo"},
+         { "include": "#literals"}, { "include": "#numbers"}, { "include": "#storage"}]
     },
     "kw": {
-      "match": "\\b(fresh|in|import)\\b",
+      "match": "\\b(fresh|in|import|if|while|for|else)\\b",
       "name": "keyword.control"
     },
-    "constructor": {
-      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
+    "todo": {
+      "match": "\\b(TODO)\\b",
+      "name": "comment.line"
+    },
+    "variable_names": {
+      "match": "\\b([A-Z][_a-z]*)\\b",
       "name": "constant.character"
+    },
+    "literals": {    
+			"name": "string.quoted.double.",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.",
+					"match": "\\\\."
+				}
+			]
+		},
+    "numbers": {
+      "match":"\\b([0-9]*)\\b",
+      "name":"variable.other"
+    },
+    "storage": {
+      "match":"\\b(class|struct)\\b",
+      "name":"variable.name"
     }
   }
 }
