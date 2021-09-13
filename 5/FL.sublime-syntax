@@ -1,0 +1,61 @@
+%YAML 1.2
+---
+
+file_extensions:
+  - ec
+scope: source.example-c
+
+contexts:
+  prototype:
+    - include: comments
+
+  main:
+    - include: keywords
+    - include: numbers
+    - include: strings
+    - include: prototype
+
+
+  keywords:
+    - include: comments
+    - include: modifiers-parens
+    - include: modifiers
+
+    - match: '\bAlphabet\b'
+      scope: string.quoted.double.c
+
+    - match: '\b(States|Start|End)\b'
+      scope: keyword.control.example-c
+
+    - match: 'Function'
+      scope: variable.parameter.c++
+
+  numbers:
+    - match: '\(.*\)'
+      scope: constant.numeric.example-c
+
+  strings:
+    - match: '({|}|,)'
+      scope: entity.name.function.c++
+
+  inside_string:
+    - meta_include_prototype: false
+    - meta_scope: string.quoted.double.example-c
+    - match: '\.'
+      scope: constant.character.escape.example-c
+    - match: '"'
+      scope: punctuation.definition.string.end.example-c
+      pop: true
+
+  comments:
+    # Comments begin with a '//' and finish at the end of the line.
+    - match: '//'
+      scope: punctuation.definition.generic.example-c
+      push:
+        # This is an anonymous context push for brevity.
+        - meta_scope: comment.line.double-slash.example-c
+        - match: \n
+          pop: true
+
+    - match: '->'
+      scope: constant.numeric.value.example-c
