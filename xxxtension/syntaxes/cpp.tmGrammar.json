@@ -1,0 +1,90 @@
+{
+  "scopeName": "source.abc",
+  "patterns": [
+    {
+      "include": "#expression"
+    }
+  ],
+  "repository": {
+    "expression": {
+      "patterns": [
+        {
+          "include": "#kw"
+        },
+        {
+          "include": "#constructor"
+        },
+        {
+          "include": "#namespace"
+        },
+        {
+          "include": "#typeconstants"
+        },
+        {
+          "include": "#types"
+        },
+        {
+          "include": "#storage-type"
+        },
+        {
+          "include": "#storage-modifier"
+        },
+        {
+          "include": "#commentaries"
+        },
+        {
+          "include": "#op"
+        },
+        {
+          "include": "#stringsdbl"
+        },
+        {
+          "include": "#stringssngl"
+        },
+        {
+          "include": "#numbers"
+        }
+      ]
+    },
+    "kw": {
+      "match": "\\#include|using|return|while|for|continue|break|override|if|then|else",
+      "name": "keyword.control"
+    },
+    "namespace": {
+      "match": "namespace",
+      "name": "keyword.other"
+    },
+    "typeconstants": {
+      "match": "true|false",
+      "name": "constant.language"
+    },
+    "storage-type": {
+      "match": "class|struct",
+      "name": "storage.type"
+    },
+    "storage-modifier": {
+      "match": "static|inline|virtual|final",
+      "name": "storage.modifier"
+    },
+    "commentaries": {
+      "match": "(\\/\\/.*)",
+      "name": "comment"
+    },
+    "op": {
+      "match": "or|and",
+      "name": "keyword.operator"
+    },
+    "stringsdbl": {
+      "match": "\".*\"",
+      "name": "string.quoted.double"
+    },
+    "stringssngl": {
+      "match": "'.*'",
+      "name": "string.quoted.single"
+    },
+    "numbers": {
+      "match": "[0-9]",
+      "name": "constant.numeric"
+    }
+  }
+}
