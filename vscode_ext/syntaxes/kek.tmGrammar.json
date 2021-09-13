@@ -1,0 +1,28 @@
+{
+  "scopeName": "*.kek",
+  "patterns": [
+    {
+      "include": "#expression"
+    }
+  ],
+  "repository": {
+    "expression": {
+      "patterns": [
+        {
+          "include": "#keyword"
+        },
+        {
+          "include": "#separator"
+        }
+      ]
+    },
+    "keyword": {
+      "match": "\\b(states|start|terminals|alphabet|transitions)\\b",
+      "name": "keyword.control"
+    },
+    "separator": {
+      "match": "\\:|;\\b",
+      "name": "separator.character"
+    }
+  }
+}
