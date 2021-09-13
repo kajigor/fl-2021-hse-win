@@ -28,11 +28,11 @@
       "name": "variable.other"
     },
     "text": {
-      "match": "\\(\".\")\\b",
+      "match": "\\(\".*\")\\b",
       "name": "string"
     },
     "comments": {
-      "match": "\\(\/\/.)\\b",
+      "match": "\\(\/\/.*)\\b",
       "name": "comment"
     }
   }
