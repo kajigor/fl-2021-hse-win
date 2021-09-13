@@ -3,15 +3,19 @@
   "patterns": [{ "include": "#expression" }],
   "repository": {
     "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
+      "patterns": [{ "include": "#type" }, { "include": "#status" }, { "include" : "#comment"}, {"include" : "#operators"} ]
     },
-    "kw": {
-      "match": "\\b(fresh|in|import)\\b",
-      "name": "keyword.control"
+    "type": {
+      "match": "cond|edge|alph",
+      "name": "entity.name.type"
     },
-    "constructor": {
-      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
-      "name": "constant.character"
+    "status": {
+      "match": "terminate|stock|start|regular",
+      "name": "constant.language"
+    }, 
+    "comment": {
+      "match": "(\/\/.*)",
+      "name" : "comment.line"
     }
   }
 }
