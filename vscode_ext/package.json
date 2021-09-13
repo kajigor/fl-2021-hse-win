@@ -22,7 +22,7 @@
 			{
 				"id": "miniKanren",
 				"extensions": [
-					".mk"
+					".cpp"
 				]
 			}
 		],
