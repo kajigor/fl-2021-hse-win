@@ -1,17 +1,51 @@
 {
-  "scopeName": "source.abc",
-  "patterns": [{ "include": "#expression" }],
-  "repository": {
-    "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
-    },
-    "kw": {
-      "match": "\\b(fresh|in|import)\\b",
-      "name": "keyword.control"
-    },
-    "constructor": {
-      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
-      "name": "constant.character"
-    }
-  }
+	"name": "automata",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#literals"
+		},
+		{
+			"include": "#function"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.abc",
+				"match": "\\b(Terminals|Q|q0|delta|Sigma)\\b"
+			}]
+		},
+		"literals": {
+			"name": "string.quoted.double.abc",
+			"begin": "\"",
+			"end": "\"",
+			"aliases": ",",
+			"patterns": [
+				{
+					"name": "constant.character.abc",
+					"match": "[a-zA-Z0-9_]+"
+				}
+			]
+		},
+		"function":{
+			"name":"string.quoted.double.abc",
+			"begin": "'",
+			"end": "'",
+			"aliases": ",",
+			"patterns": [
+				{
+					"name": "constant.character.escape.abc",
+					"match": "\\([a-zA-Z_0-9]+ *, *[a-zA-Z_0-9]+\\)"
+				},
+				{
+					"name": "constant.character.abc",
+					"match": "->[a-zA-Z0-9_]+"
+				}
+			]
+		}
+	},
+	"scopeName": "source.abc"
 }
