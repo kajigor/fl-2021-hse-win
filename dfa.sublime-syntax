@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/syntax.html
+file_extensions:
+  - dfa
+scope: source.example-c
+contexts:
+  main:
+
+    - match: '\['
+      scope: punctuation.definition.comment.example-c
+      push:  edge
+
+    - match: '\b[\d+]M\b'
+      scope: punctuation.definition.example-c
+
+    - match: '\b0S\b|\b[\d+](T)\b'
+      scope: constant.numeric.example-c
+
+    - match: '\b(-)?[0-9.]+\b|[A-Z|a-z]*'
+      scope: keyword.control.example-c
+
+  edge:
+    - meta_scope: comment.line.example-c
+    - match: $
+      pop: true
