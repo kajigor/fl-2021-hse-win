@@ -1,12 +1,12 @@
 {
-  "scopeName": "source.abc",
+  "scopeName": "example1.dfa",
   "patterns": [{ "include": "#expression" }],
   "repository": {
     "expression": {
       "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
     },
     "kw": {
-      "match": "\\b(fresh|in|import)\\b",
+      "match": "\\b(terminal|transitions|states|start)\\b",
       "name": "keyword.control"
     },
     "constructor": {
