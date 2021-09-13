@@ -1,0 +1,25 @@
+{
+    "name": "syntaxes13-09-21",
+    "displayName": "syntaxes13.09.21",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "C++",
+            "aliases": ["C++", "C++"],
+            "extensions": ["cpp"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "C++",
+            "scopeName": "source.cpp",
+            "path": "./syntaxes/C++.tmLanguage.json"
+        }]
+    }
+}

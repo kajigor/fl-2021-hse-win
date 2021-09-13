@@ -1,0 +1,77 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "C++",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#types"
+		},
+		{
+			"include": "#digits"
+		},
+		{
+			"include": "#lambda"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#libraries"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.C++",
+				"match": "\\b(if|while|for|return|else|template|using)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.C++",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.C++",
+					"match": "\\\\."
+				}
+			]
+		},
+		"types": {
+			"patterns": [{
+				"name": "types.C++",
+				"match": "\\b(int|double|float|short|long|long long|signed|unsigned)\\b"
+			}]
+		}, 
+		"digits": {
+			"patterns": [{
+				"name": "digits.C++",
+				"match": "\\b(\d*)\\b"
+			}]
+		},
+		"lambda": {
+			"patterns": [{
+				"name": "lambda.C++",
+				"match": "\\b(\[.*?\]\(.*?\)\{.*?\})\\b"
+			}]
+		},
+		"functions": {
+			"patterns": [{
+				"name": "functions.C++",
+				"match": "\\b([a-zA-Z]*\s*[a-zA-Z]*\s*\([a-zA-Z]*\)\s*\{.*\})\\b"
+			}]
+		}, 
+		"libraries": {
+			"patterns": [{
+				"name": "libraries.C++",
+				"match": "\\b(\#include\s\<[a-zA-Z]*\>)\\b"
+			}]
+		} 
+	},
+	"scopeName": "source.cpp"
+}
