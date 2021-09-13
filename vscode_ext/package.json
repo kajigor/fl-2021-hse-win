@@ -1,7 +1,7 @@
 {
-	"name": "helloworld-sample",
-	"displayName": "helloworld-sample",
-	"description": "HelloWorld example for VS Code",
+	"name": "python-sample",
+	"displayName": "python-sample",
+	"description": "python example for VS Code",
 	"version": "0.0.1",
 	"publisher": "vscode-samples",
 	"repository": "https://github.com/Microsoft/vscode-extension-samples/helloworld-sample",
@@ -20,15 +20,15 @@
 	"contributes": {
 		"languages": [
 			{
-				"id": "miniKanren",
+				"id": "Python",
 				"extensions": [
-					".mk"
+					".py"
 				]
 			}
 		],
 		"grammars": [
 			{
-				"language": "miniKanren",
+				"language": "Python",
 				"scopeName": "source.abc",
 				"path": "./syntaxes/mk.tmGrammar.json"
 			}

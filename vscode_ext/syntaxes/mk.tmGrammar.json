@@ -3,14 +3,23 @@
   "patterns": [{ "include": "#expression" }],
   "repository": {
     "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
+      "patterns": [{ "include": "#keyword" }, { "include": "#comment" }, {"include": "#number"}, {"include": "#mathsymbol"}]
     },
-    "kw": {
-      "match": "\\b(fresh|in|import)\\b",
+    "keyword": {
+      "match": "\\b(False|True|if|else|elif|None|while|break|continue|for|in|return|and|or|xor)\\b",
       "name": "keyword.control"
     },
-    "constructor": {
-      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
+    "comment": {
+      "begin": "#",
+      "end": "\n",
+      "name": "constant.character"
+    },
+    "number": {
+      "match": "([0-9]+[.])?[0-9]+",
+      "name": "constant.character"
+    },
+    "mathsymbol": {
+      "match": "[-+=|^/*]",
       "name": "constant.character"
     }
   }
