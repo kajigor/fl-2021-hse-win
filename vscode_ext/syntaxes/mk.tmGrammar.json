@@ -6,7 +6,7 @@
       "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
     },
     "kw": {
-      "match": "\\b(fresh|in|import)\\b",
+      "match": "\\b(to|by|terminal)\\b",
       "name": "keyword.control"
     },
     "constructor": {
