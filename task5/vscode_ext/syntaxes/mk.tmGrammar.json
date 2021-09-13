@@ -1,0 +1,21 @@
+{
+  "scopeName": "source.abc",
+  "patterns": [{ "include": "#expression" }],
+  "repository": {
+    "expression": {
+      "patterns": [{ "include": "#variables" }, { "include": "#type_names" }, { "include": "#strings" }]
+    },
+    "variables": {
+      "match": "\\b(^([A-Z][a-zA-Z0-9]*[\s]+)\K(m_|[a-z])[a-zA-Z0-9]*[_]{0,1}(?=;$))\\b",
+      "name": "keyword.variable"
+    },
+    "type_names": {
+      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
+      "name": "keyword.typename"
+    },
+    "strings": {
+      "match": "\\b(\".*\")\\b",
+      "name": "constant.string"
+    }
+  }
+}
