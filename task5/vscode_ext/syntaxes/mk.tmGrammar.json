@@ -6,7 +6,7 @@
       "patterns": [{ "include": "#variables" }, { "include": "#type_names" }, { "include": "#strings" }]
     },
     "variables": {
-      "match": "\\b(^([A-Z][a-zA-Z0-9]*[\s]+)\K(m_|[a-z])[a-zA-Z0-9]*[_]{0,1}(?=;$))\\b",
+      "match": "\\b((m_|[a-z])[a-zA-Z0-9]*)\\b",
       "name": "keyword.variable"
     },
     "type_names": {
