@@ -22,6 +22,8 @@
 
 ![task 1 solution](img/task1sol.jpg)
 
+(Тут немного забыл в стоке сделать петлю...)
+
 ## Задание 2
 
 ![task 2 solution](img/task2sol.jpg)
