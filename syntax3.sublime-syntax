@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+name: C
+file_extensions: [c, h]
+scope: source.c
+
+contexts:
+  main:
+    - match: \b(switch|case|default)\b # подсветка ключевых слов
+      scope: keyword.control.c
+    - match: \d+ # подсветка чисел
+      scope: variable.parameter.c++
+    - match: (\[\[\w+\]\]|\b(break)\b) # подсветка атрибутов и break
+      scope: entity.name.function.c++
+    - match: //.* # подсветка комментариев
+      scope: comment.c
