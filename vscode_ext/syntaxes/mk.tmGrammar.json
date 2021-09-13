@@ -3,15 +3,23 @@
   "patterns": [{ "include": "#expression" }],
   "repository": {
     "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
+      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }, { "include": "#comment" }, { "include": "#capacity" }]
     },
     "kw": {
-      "match": "\\b(fresh|in|import)\\b",
+      "match": "\\b(start|edges)\\b",
       "name": "keyword.control"
     },
     "constructor": {
       "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
       "name": "constant.character"
+    },
+    "comment": {
+      "match": "(\/\/.*)",
+      "name": "comment.line"
+    },
+    "capacity": {
+      "match": ".*:\\K ([0-9]*)",
+      "name": "constant.numeric"
     }
   }
 }
