@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/syntax.html
+file_extensions:
+  - dfa
+scope: source.example-c
+contexts:
+  main:
+    - match: '\be\b'
+      scope: keyword.match.double
+      foreground: "#5452FF"
+
+    - match: '\b(s|n|t)\b'
+      scope: keyword.numeric.scope
+      foreground: "#5452FF"
+
+    - match: '\bq[0-9]+( (s|n|t))?\b'
+      scope: string.numeric.example-c
+
+    - match: '\b([a-zA-Z0-9]+( )?)+\b'
+      scope: constant.numeric.example-c
