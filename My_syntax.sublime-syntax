@@ -1,0 +1,54 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/syntax.html
+file_extensions:
+  - ec
+scope: source.example-c
+contexts:
+  main:
+    # Строка начинается и кончается кавычками
+    - match: '"'
+      scope: punctuation.definition.string.begin.example-c
+      push: double_quoted_string
+
+    # Коментарии начинаются с двойных кавычек
+    - match: '//'
+      scope: punctuation.definition.comment.example-c
+      push: line_comment
+
+    # Важные keywoards
+    - match: '\b(if|else|for|while|main|)\b'
+      scope: keyword.control.example-c
+
+    # Логические операторы
+    - match: '\b(and|or|xor)\b'
+      scope: keyword.operator.logical
+
+    # Типы данных
+    - match: '\b(int|string|char|float|int|long)\b'
+      scope: markup.raw.inline
+
+    # Подчеркиваем TODO
+    - match: '\b(TODO)\b'
+      scope: markup.underline
+
+    # Namespace стандартной библиотеки
+    - match: '\bstd\b'
+      scope: constant.numeric.example-c
+
+    # Числа. Используется regexp
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.example-c
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.example-c
+    - match: '\\.'
+      scope: constant.character.escape.example-c
+    - match: '"'
+      scope: punctuation.definition.string.end.example-c
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.example-c
+    - match: $
+      pop: true
