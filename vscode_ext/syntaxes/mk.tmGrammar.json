@@ -3,15 +3,37 @@
   "patterns": [{ "include": "#expression" }],
   "repository": {
     "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
+      "patterns": [{ "include": "#kw" }, {"include": "#todo-keyword" }, 
+      { "include": "#variable_names" }, { "include": "#edges" }, 
+      { "include": "#numbers"}, { "include": "#text"}, { "include": "#comments"}]
     },
     "kw": {
-      "match": "\\b(fresh|in|import)\\b",
+      "match": "\\b(alphabet|states|terminal|state)\\b",
       "name": "keyword.control"
     },
-    "constructor": {
-      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
-      "name": "constant.character"
+    "todo-keyword": {
+      "match": "\\b(TODO)\\b",
+      "name": "comment.line"
+    },
+    "variable_names": {
+      "match": "\\([A-Za-z][_0-9A-Za-z]*)\\b",
+      "name": "variable.name"
+    },
+    "edges": {
+      "match": "\\(--->)\\b",
+      "name": "keyword.operator"
+    },
+    "numbers": {
+      "match": "\\([0-9]+)\\b",
+      "name": "variable.other"
+    },
+    "text": {
+      "match": "\\(\".\")\\b",
+      "name": "string"
+    },
+    "comments": {
+      "match": "\\(\/\/.)\\b",
+      "name": "comment"
     }
   }
 }
