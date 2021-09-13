@@ -3,15 +3,15 @@
   "patterns": [{ "include": "#expression" }],
   "repository": {
     "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
+      "patterns": [{ "include": "#cases" }, { "include": "#specifiers" }]
     },
-    "kw": {
-      "match": "\\b(fresh|in|import)\\b",
+    "cases": {
+      "match": "\\b(states|links)\\b",
       "name": "keyword.control"
     },
-    "constructor": {
-      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
-      "name": "constant.character"
+    "specifiers": {
+      "match": "\\b(beginning|terminal)\\b",
+      "name": "specifiers"
     }
   }
 }
