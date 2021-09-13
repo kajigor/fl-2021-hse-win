@@ -1,17 +1,56 @@
 {
-  "scopeName": "source.abc",
-  "patterns": [{ "include": "#expression" }],
-  "repository": {
-    "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
-    },
-    "kw": {
-      "match": "\\b(fresh|in|import)\\b",
-      "name": "keyword.control"
-    },
-    "constructor": {
-      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
-      "name": "constant.character"
-    }
-  }
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "c++",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#pqxx_lib"
+		},
+		{
+			"include": "#sql"
+		},
+		{
+			"include": "#objects"
+		},
+		{
+			"include": "#std"
+		},
+		{
+			"include": "#templates"
+		},
+		{
+			"include": "#vars"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.c++",
+				"match": "\\b(if|while|for|return|struct|namespace|include|mutable|catch|bool|const|int|try)\\b"
+			}]
+		},
+		"pqxx_lib": {
+			"match": "\\b(pqxx::[_a-z:]*|exec|commit|unprepare|prepare|exec_prepared)\\b",
+			"name": "support.class"
+		},
+		"templates": {
+			"match": "\\b(template|>|<)\\b",
+			"name": "entity.name"
+		},
+		"sql": {
+			"match": "\\b(WHERE|SELECT|OR|LIMIT|AND|ORDER BY|INNER|JOIN|OFFSET|ON|UPDATE|INSERT|INTO|DELETE|FROM|SET)\\b",
+			"name": "constant.character.escape"
+		},
+		"objects": {
+			"match": "\\b([A-Z][a-z]*)\\b",
+			"name": "string"
+		},
+		"std": {
+			"match": "\\b(std::[_a-z]*)\\b",
+			"name": "variable.language"
+		}
+	},
+	"scopeName": "source.cpp"
 }
