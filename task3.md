@@ -19,4 +19,9 @@
   Конструктор по умолчанию не может вызываться как `class()`, 
   а только через `class` или `class{}`.
 
-*
+* Указание атрибутов
+  
+  https://en.cppreference.com/w/cpp/language/attributes
+
+  Разные атрибуты из одного namespace `[using CC: a, b] `
+  и возможность комментировать причину для атрибута `[[nodiscard]]`.
