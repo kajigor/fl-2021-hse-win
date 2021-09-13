@@ -1,0 +1,25 @@
+{
+    "name": "fl1",
+    "displayName": "fl1",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "fl1",
+            "aliases": ["fl1", ""],
+            "extensions": [".txt"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "fl1",
+            "scopeName": "source.fl1",
+            "path": "./syntaxes/fl1.tmLanguage.json"
+        }]
+    }
+}
