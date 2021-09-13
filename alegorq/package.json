@@ -1,0 +1,25 @@
+{
+    "name": "alegorq",
+    "displayName": "Alegorq",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "aleg",
+            "aliases": ["alegorq", "aleg"],
+            "extensions": ["al"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "aleg",
+            "scopeName": "source.al",
+            "path": "./syntaxes/aleg.tmLanguage.json"
+        }]
+    }
+}

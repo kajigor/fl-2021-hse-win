@@ -1,0 +1,51 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "alegorq",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#letters"
+		},
+		{
+			"include": "#digits"
+		},
+		{
+			"include": "#symbols"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.aleg",
+				"match": "\\b(Alph|States|StartState|AcceptStates|Transits)\\b"
+			}]
+		},
+		"letters": {
+			"name": "string.quoted.double.aleg",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.aleg",
+					"match": "\\\\."
+				}
+			]
+		}
+		, 	
+		"digits": {
+			"patterns": [{
+				"name": "constant.numeric",
+				"match": "(?<=[^\"])[0-9]+(?=[^\"])"
+			}]
+		},
+		"symbols": {
+			"patterns": [{
+				"name": "constant.character",
+				"match": "[(|=|)|,]"
+			}]
+		}
+	},
+	"scopeName": "source.al"
+}
