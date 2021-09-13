@@ -74,7 +74,11 @@ public:
     _CRTIMP_PURE const char* raw_name() const;
 };
 ```
+Ссылки на документаци:
 
+https://en.cppreference.com/w/cpp/language/typeid
+
+https://docs.microsoft.com/ru-ru/cpp/cpp/type-info-class?view=msvc-160
 
 #### Задание 4
 *«Придумать язык для описания конечных автоматов»*
