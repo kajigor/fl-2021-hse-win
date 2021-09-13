@@ -1,17 +1,42 @@
 {
-  "scopeName": "source.abc",
-  "patterns": [{ "include": "#expression" }],
-  "repository": {
-    "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
-    },
-    "kw": {
-      "match": "\\b(fresh|in|import)\\b",
-      "name": "keyword.control"
-    },
-    "constructor": {
-      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
-      "name": "constant.character"
-    }
-  }
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "VYACHESLAVLANGUAGE13371488",
+	"patterns": [
+		{
+			"include": "#number"
+		},
+		{
+			"include": "#type_of_vertex"
+		},
+		{
+			"include": "#weights"
+		}
+	],
+	"repository": {
+		"number": {
+			"patterns": [
+				{
+					"name": "constant.character.escape.vyacheslav",
+					"match": "\\K[^!]*!"
+				}
+			]
+		},
+		"type_of_vertex": {
+			"patterns": [
+				{
+					"name": "keyword.control.n",
+					"match": "\\K[^@]*@"
+				}
+			]
+		},
+		"weights": {
+			"patterns": [
+				{
+					"name": "string.quoted.double.n",
+					"match": "[\\d],[\\d]+,\\K[^;]*;"
+				}
+			]
+		}
+	},
+	"scopeName": "source.vyacheslav"
 }
