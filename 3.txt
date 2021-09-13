@@ -1,0 +1,13 @@
+https://en.cppreference.com/w/cpp/language/function
+
+В С++ можно объявлять функции так:
+
+int a = 1, f(), *p; //a - переменная типа int, f() - функция возвращающая int, p - указатель на int
+
+А ещё вот так:
+
+struct S {
+
+    float f() const, g(int); // f и g - функции.
+
+}
