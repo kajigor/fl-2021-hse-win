@@ -1,0 +1,33 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "MY",
+	"scopeName": "source.my",
+	"patterns": [ { "include": "#keywords" }, {"include": "#operators"}, { "include": "#strings"}, {"include": "#vars"} ],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.my",
+				"match": "\\b(points|start|terminal)\\b"
+			}]
+		},
+		"operators": {
+		  "match": ";|>|-|:|,",
+		  "name": "constant.character.escape.my"
+		},
+		"strings": {
+			"name": "string.quoted.double.my",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.my",
+					"match": "\\,"
+				}
+			]
+		},
+		"vars": {
+			"name": "constant.character.abc",
+			"match": "[A-Za-z][A-Za-z0-9_]+"
+		}
+	}
+}

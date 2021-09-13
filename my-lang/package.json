@@ -1,0 +1,25 @@
+{
+    "name": "my-lang",
+    "displayName": "My lang",
+    "description": "Sintax highlighting for my lang",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "my",
+            "aliases": ["MY", "my"],
+            "extensions": [".my"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "my",
+            "scopeName": "source.my",
+            "path": "./syntaxes/my.tmLanguage.json"
+        }]
+    }
+}
