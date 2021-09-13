@@ -5,8 +5,31 @@
 ![](2task.png)
 
 # Задание 3
-Мой воторой любимый язык программирования -- Python. Сегодня с радостью узнал (а может быть вспомнил) о существовании в нём, как и в C++, лямбда-выражений. [Тут](https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions) ссылка на спецификацию. Вкратце 
+Мой второй любимый язык программирования -- Python. Сегодня с радостью узнал (а может быть вспомнил) о существовании в нём, как и в C++, лямбда-выражений. [Тут](https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions) ссылка на спецификацию. Вкратце можно писать так:
+``` python
+>>> def make_incrementor(n):
+...     return lambda x: x + n
+...
+>>> f = make_incrementor(42)
+>>> f(0)
+42
+>>> f(1)
+43
+```
+По моему мнению очень классный способ избежать ненужного копирования кода. А вот так можно заполнять масcивы:
+```python
+>>> squares = list(map(lambda x: x**2, range(10)))
+```
+А еще из-за того, что в Pyton "всё--переменная" можно очень странно работать с методами классов (про это [тут](https://docs.python.org/3/tutorial/classes.html#method-objects)):
+```python
+Class Experiment:
+    def f():
+        return "Hello world"
 
+Experiment x
+xf=x.f
+print(xf())
+```
 # Задание 4
 
 # Задание 5
