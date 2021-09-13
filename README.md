@@ -1,8 +1,8 @@
 # Домашняя работа 1
 ## Задание 1
-![](https://raw.githubusercontent.com/Fawentus/For-some-files/FLHW1/pictures/first.jpg)
+![](https://raw.githubusercontent.com/Fawentus/fl-2021-hse-win/HW01/pictures/first.jpg)
 ## Задание 2
-![](https://raw.githubusercontent.com/Fawentus/For-some-files/FLHW1/pictures/second.jpg)
+![](https://raw.githubusercontent.com/Fawentus/fl-2021-hse-win/HW01/pictures/second.jpg)
 ## Задание 3
 Язык: c++
 1. [Regular expressions library](https://en.cppreference.com/w/cpp/regex)  
