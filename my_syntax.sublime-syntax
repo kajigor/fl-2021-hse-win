@@ -1,0 +1,31 @@
+%YAML 1.2
+---
+
+file_extensions:
+  - ec
+scope: source.example-c
+
+contexts:
+  main:
+
+    - match: \b(if|else|for|while)\b
+      scope: keyword.control.c
+
+    - match: \b(range|min|max|int)\b
+      scope: support.function.builtin.python
+
+    - match: \b(and|or)\b
+      scope: keyword.control.c
+
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.example-c
+
+    - match: \(
+      push: brackets
+    - match: \)
+      scope: invalid.illegal.stray-bracket-end
+ 
+  brackets:
+    - match: \)
+      pop: true
+    - include: main
