@@ -39,8 +39,8 @@ def t_error(t):
 
 lexer = lex.lex()
 
-my_str = open(sys.argv[1], 'r').read()
-lexer.input(my_str)
+lexer.input(open(sys.argv[1], 'r').read())
+sys.stdout = open(sys.argv[1] + '.out', 'w')
 
 while True:
     tok = lexer.token()
