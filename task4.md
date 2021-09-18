@@ -51,9 +51,9 @@ links:
     start [5]> divided5
 
     notdivided5 [1-46-9]> notdivided5
-    notdivided5 [05] divided5
+    notdivided5 [05]> divided5
 
-    divided5 [1-46-9] notdivided5
+    divided5 [1-46-9]> notdivided5
 ```
 
 ### Пример неосмысленного, но корректного автомата ###

@@ -1,17 +1,39 @@
 {
-  "scopeName": "source.abc",
-  "patterns": [{ "include": "#expression" }],
-  "repository": {
-    "expression": {
-      "patterns": [{ "include": "#cases" }, { "include": "#specifiers" }]
-    },
-    "cases": {
-      "match": "\\b(states|links)\\b",
-      "name": "keyword.control"
-    },
-    "specifiers": {
-      "match": "\\b(beginning|terminal)\\b",
-      "name": "specifiers"
-    }
-  }
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "ABC",
+	"patterns": [
+		{
+			"include": "#groups"
+		},
+		{
+			"include": "#specifiers"
+		},
+		{
+			"include": "#values"
+		}
+	],
+	"repository": {
+		"groups": {
+			"patterns": [{
+				"name": "keyword.control.abc",
+				"match": "\\b(links|states)\\b"
+			}]
+		},
+		"specifiers": {
+			"patterns": [{
+				"name": "variable.other.property.abc",
+				"match": "\\b(beginning|terminal)\\b"
+			}]
+		},
+		"values": {
+			"name": "string.brackets.abc",
+			"begin": "\\[",
+			"end": "\\]>",
+			"patterns": [{
+				"name": "variable.abc",
+				"match": "\\b([[^\\]]\\-]*)\\b"
+			}]
+		}
+	},
+	"scopeName": "source.abc"
 }
