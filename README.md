@@ -37,13 +37,21 @@
 
 ### Задание 3
 
-[Лексер](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/myLex.py) написан на языке Python, использован ply.lex. Консольное приложение выполняется командой: 
+[Лексер](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/myLex.py) написан на языке Python, использован ply.lex. Консольное приложение запускается командой: 
 ```
 python3.8 myLex.py "<name_file>"
 ```
 
-Например:
+Например, так запускается [мой "нулевой" тест](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/ex):
 ```
 python3.8 myLex.py "ex"
 ```
-(так запускается [мой тест](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/ex), этот код не строит осмысленный автомат, я включила туда то, что может продемонстрировать все возможности моего лексера. [Это](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/ex.out) то, что выведется в результате работы программы)
+Этот код не строит осмысленный автомат, я включила туда то, что могло бы продемонстрировать все возможности моего лексера. [Это](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/ex.out) то, что будет в выходном файле после работы программы (значения токенов типа `STR` выводятся с отбрасыванием `""`).
+  
+Это примеры работы лексера на тестах из прошлого домашнего задания:
+  
+  [Тест 1](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/ex1) - [результат работы лексера](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/ex1.out)
+  
+  [Тест 2](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/ex2) - [результат работы лексера](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/ex2.out)
+  
+  [Тест 3](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/ex3) - [результат работы лексера](https://github.com/Fawentus/fl-2021-hse-win/blob/HW02/ex3.out)
