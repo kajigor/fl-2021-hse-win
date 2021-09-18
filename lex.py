@@ -2,23 +2,19 @@ import ply.lex as lex
 import sys
 
 reserved = {
-  'if': 'IF',
-  'then': 'THEN',
-  'else': 'ELSE'
+  'alphabet': 'ALPHABET',
+  'states': 'STATES',
+  'terminal': 'TERMINAL',
+  'state': 'STATE'
 }
 
 tokens = [
   'NUM',
-  'PLUS',
-  'MULT',
-  'ID'
+  'COMMA',
+  'ALPHABET_SYMBOL',
+  'ARROW',
+  'VARIABLE'
 ] + list(reserved.values())
-
-
-def t_ID(t):
-  r'[a-z_][a-z_0-9]*'
-  t.type = reserved.get(t.value, 'ID')
-  return t
 
 
 def t_NUM(t):
@@ -26,10 +22,12 @@ def t_NUM(t):
   t.value = int(t.value)
   return t
 
-t_PLUS = r'\+'
-t_MULT = r'\*'
 
 t_ignore = ' \t'
+t_COMMA = r'\/\/.*'
+t_ALPHABET_SYMBOL = r'"(?:[^\\"]|\\.)*"'
+t_VARIABLE = r'[A-Za-z][_0-9A-Za-z]*'
+t_ARROW = r'--->'
 
 def t_newline(t):
   r'\n+'
