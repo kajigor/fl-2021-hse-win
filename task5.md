@@ -19,7 +19,7 @@
 },
 "specifiers": {
     "patterns": [{
-        "name": "variable.other.property.abc",
+        "name": "entity.name.function.property.abc",
         "match": "\\b(beginning|terminal)\\b"
     }]
 }
