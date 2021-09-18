@@ -22,20 +22,19 @@
   https://en.cppreference.com/w/cpp/language/constructor
 
   (Сам попался недавно)
-  Конструктор по умолчанию не может вызываться как `class()`, 
-  а только через `class` или `class{}`.
+  При отсутствии конструктора по умолчанию, нельзя создавать объект класс как `class()`,
+  а только `class` или `class{}`.
   Например:
   ```cpp
   struct SegTree {
     int n;
-    SegTree(int n): n(n) {
-      // ... 
-    }
+    void build();
   }
 
   SegTree s(); // нельзя
   SegTree s{}; // можно
   SegTree s; // можно
+  s.build();
   ```
 * Указание атрибутов
   
