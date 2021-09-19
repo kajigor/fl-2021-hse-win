@@ -20,7 +20,9 @@
 Сайт для перевода чаров [тут](https://www.rapidtables.com/convert/number/ascii-to-binary.html).
 ## Задача №3
 Код в файле `main.py`, тесты - коды из предыдущего задания.
+
 Запуск: `python main.py input.txt`
+
 Выводы для тестов:
 
 1)
