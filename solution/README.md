@@ -17,11 +17,12 @@
 3) `DCBBA0B00110001BACCA0B00110001BAB00110001BA0B00110001BACCA0B00110001BAB00110000BA0B00110010BACCA0B00110010BAB00110000BA0B00110011BACCA0B00110011BAB00110000BA1B00110100BACCA1B00110100BAB00110001BA0B00110001BACCA0B00110011BAB00110001BA0B00110001BACCA0B00110010BAB00110001BA0B00110001BACD`
 
 
-Сайт для перевода чаров [тут]{https://www.rapidtables.com/convert/number/ascii-to-binary.html}.
+Сайт для перевода чаров [тут](https://www.rapidtables.com/convert/number/ascii-to-binary.html).
 ## Задача №3
 Код в файле `main.py`, тесты - коды из предыдущего задания.
 Запуск: `python main.py input.txt`
 Выводы для тестов:
+
 1)
 ```
 Found edge name is  "" to (vertex "1" with terminality: False)
