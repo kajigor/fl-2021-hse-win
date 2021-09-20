@@ -11,3 +11,37 @@ struct S {
     float f() const, g(int); // f и g - функции.
 
 }
+
+Лямбды могут быть шаблонными(в том числе variadic):
+https://en.cppreference.com/w/cpp/language/lambda
+
+auto f = []<typename ...Ts>(Ts&& ...ts) {
+       return foo(std::forward<Ts>(ts)...);
+};
+
+Bit fields:
+https://en.cppreference.com/w/cpp/language/bit_field
+
+Можно задавать у полей ограничение на кол-во бит.
+
+struct S {
+       unsigned int b : 3;
+};
+
+int main() {
+    S s = {6};
+    s.b++; // b = 7
+    s.b++; // b = 0
+}
+
+При этом имя самой переменной можно не задавать, чтобы контролировать padding.
+А ещё туда можно впихнуть тернарник : 
+
+struct S {
+       unsigned int b : 2 > 3 ? 4 : 5 = 6;
+};
+
+Есть ключевое слово volatile
+https://en.cppreference.com/w/cpp/keyword/volatile
+
+если оно написано перед переменной, то это значит что оно может меняться извне.
