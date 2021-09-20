@@ -3,3 +3,11 @@ b = 0.23423j
 c = 123124 + 123132j
 d = 'hello world, 123 + 123j'
 e = 13123 + 123123 + 12312312j + 0.2j + 35 + 42j
+string = 'hello'
+string = "hello"
+# comment 
+if 2:
+elif 3
+as 
+async 
+
