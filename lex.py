@@ -1,34 +1,27 @@
 import ply.lex as lex
 import sys
-
-reserved = {
-  'if': 'IF',
-  'then': 'THEN',
-  'else': 'ELSE'
-}
+import re
 
 tokens = [
-  'NUM',
-  'PLUS',
-  'MULT',
-  'ID'
-] + list(reserved.values())
-
-
-def t_ID(t):
-  r'[a-z_][a-z_0-9]*'
-  t.type = reserved.get(t.value, 'ID')
-  return t
-
-
-def t_NUM(t):
-  r'[0-9]+'
-  t.value = int(t.value)
-  return t
-
-t_PLUS = r'\+'
-t_MULT = r'\*'
-
+  'EDGE',
+  'VERTEX',
+  'INITIAL',
+  'TERMINAL',
+  'ARROW',
+  'SEP',
+  'COLON',
+  'SEMICOLON',
+  'NUM'
+]
+t_EDGE = r'(.)+(?=,\n)'
+t_VERTEX = r'Q([1-9][0-9]*|0)'
+t_INITIAL = r'Начальное\ состояние'
+t_TERMINAL = r'Терминальные\ состояния'
+t_ARROW = r'->'
+t_SEP = r','
+t_COLON = r':'
+t_SEMICOLON = r';'
+t_NUM = r'([1-9][0-9]*|0)'
 t_ignore = ' \t'
 
 def t_newline(t):
@@ -40,11 +33,14 @@ def t_error(t):
   t.lexer.skip(1)
 
 lexer = lex.lex()
-
-lexer.input(sys.argv[1])
+fin = open(sys.argv[1], 'r')
+lexer.input(fin.read())
+fin.close()
+fout = open(sys.argv[1] + '.out', 'w')
 
 while True:
   tok = lexer.token()
   if not tok:
     break
-  print(tok)
+  fout.write(str(tok)+'\n')
+fout.close()
