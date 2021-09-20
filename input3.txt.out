@@ -1,0 +1,5 @@
+LexToken(OPEN_BRACKET,'(',1,0)
+Illegal character '.'
+Illegal character '.'
+Illegal character '.'
+LexToken(CLOSE_BRACKET,')',1,4)

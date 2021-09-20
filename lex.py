@@ -1,35 +1,30 @@
 import ply.lex as lex
 import sys
 
-reserved = {
-  'if': 'IF',
-  'then': 'THEN',
-  'else': 'ELSE'
-}
-
 tokens = [
   'NUM',
-  'PLUS',
-  'MULT',
-  'ID'
-] + list(reserved.values())
-
-
-def t_ID(t):
-  r'[a-z_][a-z_0-9]*'
-  t.type = reserved.get(t.value, 'ID')
+  'VERTICAL_LINE',
+  'COMMA',
+  'OPEN_BRACKET',
+  'CLOSE_BRACKET',
+  'WORD'
+]
+t_COMMA = r'\,'
+def t_WORD(t):
+  r' ".*?[^\\]"'
+  t.value = t.value[1: -1]
   return t
 
-
 def t_NUM(t):
-  r'[0-9]+'
+  r'((-?[1-9][0-9]*)|0)'
   t.value = int(t.value)
   return t
 
-t_PLUS = r'\+'
-t_MULT = r'\*'
-
+t_VERTICAL_LINE = r'\|'
+t_OPEN_BRACKET = r'\('
+t_CLOSE_BRACKET = r'\)'
 t_ignore = ' \t'
+
 
 def t_newline(t):
   r'\n+'
@@ -40,8 +35,10 @@ def t_error(t):
   t.lexer.skip(1)
 
 lexer = lex.lex()
-
-lexer.input(sys.argv[1])
+with open(sys.argv[1], 'r') as f:
+  input=f.read()
+lexer.input(input)
+sys.stdout = open(sys.argv[1] + '.out', 'w')
 
 while True:
   tok = lexer.token()
