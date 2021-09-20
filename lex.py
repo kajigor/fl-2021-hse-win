@@ -43,6 +43,9 @@ lexer = lex.lex()
 
 lexer.input(sys.argv[1])
 
+outfile = open(sys.argv[1] + ".out", "w")
+sys.stdout = outfile
+
 while True:
   tok = lexer.token()
   if not tok:
