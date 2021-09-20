@@ -3,10 +3,10 @@
   "patterns": [{ "include": "#expression" }],
   "repository": {
     "expression": {
-      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }, { "include": "#commentLine" }, { "include": "#commentBlock" }, { "include": "#numbers" }]
+      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }, { "include": "#commentLine"}]
     },
     "kw": {
-      "match": "\\b(fresh|in|import)\\b",
+      "match": "\\b(fresh|in|import|Sigma|Q|q0|T|delta)\\b",
       "name": "keyword.control"
     },
     "constructor": {
@@ -14,16 +14,8 @@
       "name": "constant.character"
     },
     "commentLine": {
-      "match": "\\b(\/\/*\n)\\b",
+      "match": "(\/\/.*\\n)",
       "name": "comment.line"
-    },
-    "commentBlock": {
-      "match": "\\b(\/\/*)\\b",
-      "name": "comment.block"
-    },
-    "numbers": {
-      "match": "\\b([0-9]*)\\b",
-      "name": "constant.character"
     }
   }
 }
