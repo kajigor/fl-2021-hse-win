@@ -1,0 +1,4 @@
+Alf: {0,1}
+Start: a__S
+Vertices: a__T, b__, c__T, d__T
+Edges: (a,b){0}, (b,b){0,1}, (c,b){0}, (d,c){0}, (c,d){1}, (a,d){1}, (d,d){1}
