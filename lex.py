@@ -2,32 +2,60 @@ import ply.lex as lex
 import sys
 
 reserved = {
-  'if': 'IF',
-  'then': 'THEN',
-  'else': 'ELSE'
+    'Alph': 'ALPH',
+    'States': 'STATES',
+    'Start_state': 'STARTSTATE',
+    'Accept_states': 'ACCEPTSTATES',
+    'Transits': 'TRANSITS'
 }
 
 tokens = [
-  'NUM',
-  'PLUS',
-  'MULT',
-  'ID'
+  'NUM_OF_STATES',
+  'VERTEX_NUM',
+  'LETTER',
+  'BEGIN_EDGE',
+  'END_EDGE',
+  'COMMA',
+  'ROUND_BRACKET_OPENED',
+  'ROUND_BRACKET_CLOSED',
+  'EQ',
+  'UNKNOWN_KEYWORD'
 ] + list(reserved.values())
 
-
-def t_ID(t):
-  r'[a-z_][a-z_0-9]*'
-  t.type = reserved.get(t.value, 'ID')
+def t_NUM_OF_STATES(t):
+  r'(?<=States = )[0-9]+$'
+  t.type = reserved.get(t.value, "NUM_OF_STATES")
   return t
 
-
-def t_NUM(t):
-  r'[0-9]+'
-  t.value = int(t.value)
+def t_VERTEX_NUM(t):
+  r'(?= )[0-9]+(?=[ \n])'
+  t.type = reserved.get(t.value, 'VERTEX_NUM')
   return t
 
-t_PLUS = r'\+'
-t_MULT = r'\*'
+def t_LETTER(t):
+  r'(?<= )\"[^\"]*"(?=[\n \)])'
+  t.type = reserved.get(t.value, 'LETTER')
+  return t
+
+def t_BEGIN_EDGE(t):
+  r'(?<=\()[0-9]+(?=,)'
+  t.type = reserved.get(t.value, 'BEGIN_EDGE')
+  return t
+
+def t_END_EDGE(t):
+  r'(?<=,\s)[0-9]+(?=,)'
+  t.type = reserved.get(t.value, 'END_EDGE')
+  return t
+
+t_COMMA = r'\,'
+t_ROUND_BRACKET_OPENED = r'\('
+t_ROUND_BRACKET_CLOSED = r'\)'
+t_EQ = r'='
+
+def t_UNKNOWN_KEYWORD(t):
+  r'[A-Za-z0-9_]+(?=\s=)'
+  t.type = reserved.get(t.value, "UNKNOWN_KEYWORD")
+  return t
 
 t_ignore = ' \t'
 
@@ -41,7 +69,8 @@ def t_error(t):
 
 lexer = lex.lex()
 
-lexer.input(sys.argv[1])
+lexer.input(open(sys.argv[1], 'r').read())
+sys.stdout = open(sys.argv[1] + '.out', 'w')
 
 while True:
   tok = lexer.token()
