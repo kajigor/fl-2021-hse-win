@@ -1,0 +1,3 @@
+begin : {start = true; finish = false, states: {stop : "A"; end : "B", begin : "C"}}
+stop : {start = false; finish = false, states: {stop : "A", "B", "C"}}
+end : {start = false; finish = true, states: {end : "B"}
