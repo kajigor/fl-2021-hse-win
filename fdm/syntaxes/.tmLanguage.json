@@ -1,0 +1,14 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"scopeName": "source.fdm",
+	"patterns": [{ "include": "#expression" }],
+  	"repository": {
+    	"expression": {
+   		"patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
+   	},
+    "kw": {
+      "match": "\\b(Start|Stock|Edge|Alphabet|Accept)\\b",
+      "name": "keyword.control"
+    }
+	}
+}
