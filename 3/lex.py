@@ -1,36 +1,50 @@
-import ply.lex as lex
 import sys
+import ply.lex as lex
 
 reserved = {
-    'if': 'IF',
-    'then': 'THEN',
-    'else': 'ELSE'
+    'States': 'STATES',
+    'Start': 'START',
+    'End': 'END',
+    'Alphabet': 'ALPHABET',
+    'Function': 'FUNCTION'
 }
 
 tokens = [
-             'NUM',
-             'PLUS',
-             'MULT',
-             'ID'
+             'COMMENT',
+             'TRANSFER',
+             'STATE',
+             'EQUAL',
+             'BRACKET',
+             'SEMICOLON',
          ] + list(reserved.values())
 
+t_SEMICOLON = r';'
+t_BRACKET = r'({|})'
+t_EQUAL = r'='
+t_ignore = ' '
 
-def t_ID(t):
-    r'[a-z_][a-z_0-9]*'
-    t.type = reserved.get(t.value, 'ID')
+
+def t_COMMENT(t):
+    r'//.*\n'
+    t.value = t.value[2:]
     return t
 
 
-def t_NUM(t):
-    r'[0-9]+'
-    t.value = int(t.value)
+def t_STATE(t):
+    r'[^\s={};"/]+(,)?(\s)?'
+    t.value = t.value[:-1]
+    if (t.value[-1] == ','):
+        t.value = t.value[:-1]
+    t.type = reserved.get(t.value, 'STATE')
     return t
 
 
-t_PLUS = r'\+'
-t_MULT = r'\*'
-
-t_ignore = ' \t'
+def t_TRANSFER(t):
+    r'"([^"]|\\")+"(,)?\s'
+    t.value = t.value[:-1]
+    if (t.value[-1] == ','):
+        t.value = t.value[:-1]
+    return t
 
 
 def t_newline(t):
@@ -42,15 +56,9 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-
 lexer = lex.lex()
-
-infile = open(sys.argv[1], "r")
-x = infile.readline()
-lexer.input(infile.read())
-
-outfile = open(sys.argv[1] + ".out", "w")
-# sys.stdout = outfile
+lexer.input(open(sys.argv[1], 'r').read())
+sys.stdout = open(sys.argv[1] + '.out', 'w')
 
 while True:
     tok = lexer.token()
