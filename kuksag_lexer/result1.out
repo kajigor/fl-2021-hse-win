@@ -1,0 +1,29 @@
+LexToken(VERTICES,'vertices',1,0)
+LexToken(NUM,10,1,9)
+LexToken(EDGES,'edges',2,0)
+LexToken(NUM,20,2,6)
+LexToken(FROM,'from',3,0)
+LexToken(NUM,1,3,5)
+LexToken(TO,'to',3,7)
+LexToken(NUM,2,3,10)
+LexToken(EDGE,'edge',3,12)
+LexToken(EDGE_VALUE,'a11 3 3 1b"c`` "\\t"d"AB""\'"""\'\'\'"\'"',3,17)
+LexToken(NUM,1337,4,0)
+Unknown sequence 'lol'
+Unknown sequence 'lmao'
+LexToken(EDGES,'edges',4,14)
+Unknown sequence 'kek'
+Unknown sequence 'test'
+Unknown sequence 'NUM'
+Unknown sequence 'is'
+Unknown sequence 'it'
+Unknown sequence 'a'
+Unknown sequence 'number'
+LexToken(EDGE_VALUE,'123',5,17)
+LexToken(NUM,123,5,25)
+LexToken(EDGE_VALUE,'"""""""""""""""',6,0)
+LexToken(NUM,1231233,7,0)
+LexToken(NUM,0,7,8)
+LexToken(NUM,12312,7,10)
+LexToken(NUM,30123,7,16)
+LexToken(NUM,0,7,22)
