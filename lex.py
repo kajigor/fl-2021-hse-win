@@ -2,32 +2,25 @@ import ply.lex as lex
 import sys
 
 reserved = {
-  'if': 'IF',
-  'then': 'THEN',
-  'else': 'ELSE'
+  'to' : 'TO',
+  'by' : 'BY',
+  'terminal' : 'TERMINAL'
 }
 
 tokens = [
   'NUM',
-  'PLUS',
-  'MULT',
-  'ID'
+  'CHAR'
 ] + list(reserved.values())
-
-
-def t_ID(t):
-  r'[a-z_][a-z_0-9]*'
-  t.type = reserved.get(t.value, 'ID')
-  return t
-
 
 def t_NUM(t):
   r'[0-9]+'
   t.value = int(t.value)
   return t
 
-t_PLUS = r'\+'
-t_MULT = r'\*'
+def t_CHAR(t):
+  r'[^\s]+'
+  t.type = reserved.get(t.value, 'CHAR')
+  return t
 
 t_ignore = ' \t'
 
@@ -41,10 +34,19 @@ def t_error(t):
 
 lexer = lex.lex()
 
-lexer.input(sys.argv[1])
+input = open(sys.argv[1], "r")
+data = input.read()
+input.close()
+
+lexer.input(data)
+
+output = open(sys.argv[1] + ".out", "w")
 
 while True:
   tok = lexer.token()
   if not tok:
     break
-  print(tok)
+  output.write(str(tok))
+  output.write('\n')
+
+output.close()
