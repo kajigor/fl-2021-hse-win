@@ -7,7 +7,7 @@
    		"patterns": [{ "include": "#kw" }, { "include": "#constructor" }]
    	},
     "kw": {
-      "match": "\\b(Начальная вершина|Сток|Ребро|Алфавит|Терминальная вершина)\\b",
+      "match": "\\b(Start|Stock|Edge|Alphabet|Accept)\\b",
       "name": "keyword.control"
     }
 	}
