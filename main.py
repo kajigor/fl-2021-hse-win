@@ -2,21 +2,20 @@ import ply.lex as lex
 import sys
 
 tokens = [
-    'NUM',
-    'LETTER',
+    'SYMBOL',
+    'VERTEX',
     'ARROW',
     'BRACKETS'
 ]
 
-
-def t_NUM(t):
-    r'[0-9]+'
-    t.value = int(t.value)
-    return t
-
-t_LETTER = r'[a-z, A-Z]+'
+t_VERTEX = r'0S | ([1-9]+(T|M))'
 t_ARROW = r'\-'
 t_BRACKETS = r'\[ | \]'
+
+def t_SYMBOL(t):
+    r'[0-9]+\s'
+    t.value = int(t.value)
+    return t
 
 t_ignore = ' \t'
 
