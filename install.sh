@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 mkdir ~/.vim/syntax
-mv my_syntax.vim ~/.vim/syntax/my_syntax.vim
-vim example.txt
-: set syntax=my_syntax
+cp my_syntax.vim ~/.vim/syntax/my_syntax.vim
+
+# then open file in Vim and write
+# : set syntax=my_syntax
