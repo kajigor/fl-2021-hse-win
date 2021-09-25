@@ -7,6 +7,7 @@ reserved = {
 }
 
 tokens = [
+  'UNKNOWN_KEYWORD',
   'AMOUNT_VERTEX',
   'VERTEX_NAME',
   'LETTER',
@@ -20,21 +21,27 @@ tokens = [
   'SEMICOLON',
   'COMMA',
   'CLOSE_BRACKET_FIGURE',
-  'CLOSE_BRACKET_SQUARE'
+  'CLOSE_BRACKET_SQUARE',
+  'BRACKET_VERTICAL'
 ] + list(reserved.values())
 
+def t_UNKNOWN_KEYWORD(t):
+  r'[A-Za-z0-9_]+\\n'
+  t.type = reserved.get(t.value, "UNKNOWN_KEYWORD")
+  return t
+
 def t_AMOUNT_VERTEX(t):
-  r'[0-9]+(?=})'
+  r'[0-9]+(?=\s})'
   t.type = reserved.get(t.value, "AMOUNT_VERTEX")
   return t
 
 def t_VERTEX_NAME(t):
-  r'[0-9a-zA-Z]+(?=])'
+  r'[0-9a-zA-Z]+(?=\s])'
   t.type = reserved.get(t.value, 'VERTEX_NAME')
   return t
 
 def t_VERTEX_CONDITION(t):
-  r'(?<=->\s)[0-9]+'
+  r'(?<=->\s)[0-9]+(?=|)'
   t.type = reserved.get(t.value, 'VERTEX_CONDITION')
   return t
 
@@ -65,6 +72,7 @@ t_SEMICOLON = r'\;'
 t_COMMA = r'\,'
 t_CLOSE_BRACKET_FIGURE = r'\}'
 t_CLOSE_BRACKET_SQUARE = r'\]'
+t_BRACKET_VERTICAL = r'\|'
 
 t_ignore = ' \t'
 
