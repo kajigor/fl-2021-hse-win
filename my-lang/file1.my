@@ -1,4 +1,4 @@
-points q_1, q_2, v;
+points q_1, q_2;
 start q_1;
 q_1 -> q_2 : "1, 2";
 q_1 -> q_1 : "0";

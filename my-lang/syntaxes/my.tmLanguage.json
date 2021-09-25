@@ -26,8 +26,8 @@
 			]
 		},
 		"vars": {
-			"name": "constant.character.abc",
-			"match": "[A-Za-z][A-Za-z0-9_]*"
+			"name": "constant.character.my",
+			"match": "[A-Za-z_][A-Za-z0-9_]*"
 		}
 	}
 }
