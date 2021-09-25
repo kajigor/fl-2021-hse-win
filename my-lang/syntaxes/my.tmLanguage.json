@@ -11,7 +11,7 @@
 			}]
 		},
 		"operators": {
-		  "match": ";|>|-|:|,",
+		  "match": "(;|:|,|->)",
 		  "name": "constant.character.escape.my"
 		},
 		"strings": {
@@ -27,7 +27,7 @@
 		},
 		"vars": {
 			"name": "constant.character.abc",
-			"match": "[A-Za-z][A-Za-z0-9_]+"
+			"match": "[A-Za-z][A-Za-z0-9_]*"
 		}
 	}
 }
