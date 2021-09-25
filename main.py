@@ -36,8 +36,8 @@ def t_newline(t):
   t.lexer.lineno += len(t.value)
 
 def t_error(t):
-  print("Wrong input")
-  exit(1)
+    print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
 
 lexer = lex.lex()
 
