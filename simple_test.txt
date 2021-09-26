@@ -1,3 +1,0 @@
-alphabet 10_10
-start q0 q1 with 10_10
-terminal q1
