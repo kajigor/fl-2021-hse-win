@@ -26,10 +26,10 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-t_START_VERTEX = r'[a-zA-Z]+__S'
-t_TERMINAL_VERTEX = r'[a-zA-Z]+__T'
-t_COMMON_VERTEX = r'[a-z]+__'
-t_ALPHABET = r'\{.*\}'
+t_START_VERTEX = r'[a-zA-Z]+\(S\)'
+t_TERMINAL_VERTEX = r'[a-zA-Z]+\(T\)'
+t_COMMON_VERTEX = r'[a-z]+\(\)'
+t_ALPHABET = r'\{[.*,]*.*\}'
 t_COMMA = r'\,'
 t_EDGE = r'\([a-zA-Z]+\, [a-zA-Z]+\)\{[\d,]*\d\}'
 t_COLON = r'\:'
