@@ -4,11 +4,11 @@ import sys
 tokens = [
     'NUM',
     'POINT',
-    'SHARP',
-    'DOLLAR',
+    'NORMAL',
+    'TERMINAL',
     'ARROW',
     'COMMA',
-    'QUOTES'
+    'ALPHABET'
 ]
 
 
@@ -18,11 +18,16 @@ def t_NUM(t):
     return t
 
 
+def t_ALPHABET(t):
+    r'["]([^"\\\n]|\\.|\\\n)*["]'
+    return t
+
+
 t_POINT = r'\.'
-t_SHARP = r'\#'
-t_DOLLAR = r'\$'
+t_NORMAL = r'\#'
+t_TERMINAL = r'\$'
 t_ARROW = r'->'
-t_QUOTES = r'\"'
+t_COMMA = r','
 
 t_ignore = ' \t'
 
