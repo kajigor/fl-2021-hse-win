@@ -40,7 +40,7 @@ def t_STATE(t):
 
 
 def t_TRANSFER(t):
-    r'"([^"]|\\")+"(,)?\s'
+    r'"([^"\\]|\\(")?)+"(,)?\s'
     t.value = t.value[:-1]
     if (t.value[-1] == ','):
         t.value = t.value[:-1]
