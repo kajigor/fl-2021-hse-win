@@ -5,21 +5,21 @@ import re
 tokens = [
   'EDGE',
   'VERTEX',
-  'INITIAL',
   'TERMINAL',
   'ARROW',
   'SEP',
   'COLON',
+  'QUOTES',
   'SEMICOLON',
   'NUM'
 ]
-t_EDGE = r'(.)+(?=,\n)'
+t_EDGE = '"' + r'(.)+' + '"\n'
 t_VERTEX = r'Q([1-9][0-9]*|0)'
-t_INITIAL = r'Начальное\ состояние'
-t_TERMINAL = r'Терминальные\ состояния'
+t_TERMINAL = r'T([1-9][0-9]*|0)'
 t_ARROW = r'->'
 t_SEP = r','
 t_COLON = r':'
+t_QUOTES = r'"'
 t_SEMICOLON = r';'
 t_NUM = r'([1-9][0-9]*|0)'
 t_ignore = ' \t'
