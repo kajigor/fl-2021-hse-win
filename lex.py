@@ -24,7 +24,8 @@ tokens = [
   'BRACKET_VERTICAL',
   'BACKSLASH',
   'QUOTES',
-  'DOG_GAV_GAV'
+  'DOG_GAV_GAV',
+  'OKTOTORB'
 ] + list(reserved.values())
 
 def t_AMOUNT_VERTEX(t):
@@ -53,9 +54,9 @@ def t_TO_EDGE(t):
   return t
 
 def t_LETTER(t):
-  r'"(?:[^\\"]|\\.)*"'
+  r'(?<=\#)([^\\#]|\\.)+(?=\#)'
   t.type = reserved.get(t.value, 'LETTER')
-  return t
+  return t  
 
 def t_NUM(t):
   r'[0-9]+'
@@ -73,6 +74,7 @@ t_BRACKET_VERTICAL = r'\|'
 t_BACKSLASH = r'\\'
 t_QUOTES = r'\"'
 t_DOG_GAV_GAV = r'\@'
+t_OKTOTORB = r'\#'
 t_ignore = ' \t'
 
 def t_newline(t):

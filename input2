@@ -2,5 +2,5 @@
 123 ] -> 0 |
 aaa ] -> 2 |
 abb ] -> 3 |
-123,aaa : a$ b$
-abb,123 : abc$ kdfjd$
+123,aaa : #a a a a#   #b_hello\\s#
+abb,123 : #abc# #kdfjd123#
