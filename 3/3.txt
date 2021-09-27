@@ -1,0 +1,9 @@
+12) {\alpha * 011 * \beta | \alpha, \beta \in {0,1}*} \unite {\gamma * 111 * \delta | \gamma, \delta \in {0,1}*}
+
+Посмотрим на картинку 3.png
+
+Поймём как выглядит регулярная грамматика:
+S -> 0S| 1S | 0A | 1A 
+A -> 1B
+B -> 1F
+F -> 0F | 1F | epsilont
