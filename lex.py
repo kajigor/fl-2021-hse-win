@@ -119,15 +119,19 @@ def t_error(t):
 
 lexer = lex.lex()
 
-f = open(sys.argv[1])
+f = open(sys.argv[1], "r")
 
 lexer.input(f.read())
+
+outName = sys.argv[1] + ".out"
+outFile = open(outName, "w")
 
 while True:
     tok = lexer.token()
     if not tok:
         break
-    print(tok)
+    outFile.write(tok.__str__())
+    outFile.write("\n")
 
 test1List = ["LexToken(def,'def',1,0)",
              "LexToken(ID,'alphabetIntValence',1,4)",
