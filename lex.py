@@ -7,7 +7,6 @@ reserved = {
 }
 
 tokens = [
-  'UNKNOWN_KEYWORD',
   'AMOUNT_VERTEX',
   'VERTEX_NAME',
   'LETTER',
@@ -22,13 +21,11 @@ tokens = [
   'COMMA',
   'CLOSE_BRACKET_FIGURE',
   'CLOSE_BRACKET_SQUARE',
-  'BRACKET_VERTICAL'
+  'BRACKET_VERTICAL',
+  'BACKSLASH',
+  'QUOTES',
+  'DOG_GAV_GAV'
 ] + list(reserved.values())
-
-def t_UNKNOWN_KEYWORD(t):
-  r'[A-Za-z0-9_]+\\n'
-  t.type = reserved.get(t.value, "UNKNOWN_KEYWORD")
-  return t
 
 def t_AMOUNT_VERTEX(t):
   r'[0-9]+(?=\s})'
@@ -56,7 +53,7 @@ def t_TO_EDGE(t):
   return t
 
 def t_LETTER(t):
-  r':*\b [0-9a-zA-Z]+(?=\$)'
+  r'"(?:[^\\"]|\\.)*"'
   t.type = reserved.get(t.value, 'LETTER')
   return t
 
@@ -73,7 +70,9 @@ t_COMMA = r'\,'
 t_CLOSE_BRACKET_FIGURE = r'\}'
 t_CLOSE_BRACKET_SQUARE = r'\]'
 t_BRACKET_VERTICAL = r'\|'
-
+t_BACKSLASH = r'\\'
+t_QUOTES = r'\"'
+t_DOG_GAV_GAV = r'\@'
 t_ignore = ' \t'
 
 def t_newline(t):
@@ -83,6 +82,7 @@ def t_newline(t):
 def t_error(t):
   print("Illegal character '%s'" % t.value[0])
   t.lexer.skip(1)
+
 
 lexer = lex.lex()
 
