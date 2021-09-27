@@ -11,27 +11,32 @@ reserved = {
 tokens = [
              'ARROW',
              'NUMBER',
+             'UNEXPECTED_ID',
              'OPEN_BRACKET_ROUND',
              'CLOSE_BRACKET_ROUND',
              'OPEN_BRACKET_FIGURE',
              'CLOSE_BRACKET_FIGURE',
+             'OPEN_BRACKET_SQUARE',
+             'CLOSE_BRACKET_SQUARE',
              'VERTEX_NAME',
              'WORD',
              'COMMA'
          ] + list(reserved.values())
 
-def t_NUMBER(t):
-    r'[0-9]+'
-    t.value = int(t.value)
+
+def t_WORD(t):
+    r'([0-9][0-9A-F]~)*[0-9][0-9A-F]'
     return t
+
 
 def t_VERTEX_NAME(t):
     r'[a-z]+[0-9]+'
     return t
 
+
 def t_ID(t):
     r'[a-z_0-9]+:*'
-    t.type = reserved.get(t.value, 'WORD')
+    t.type = reserved.get(t.value, 'UNEXPECTED_ID')
     return t
 
 
@@ -40,6 +45,8 @@ t_OPEN_BRACKET_ROUND = r'\('
 t_CLOSE_BRACKET_ROUND = r'\)'
 t_OPEN_BRACKET_FIGURE = r'\{'
 t_CLOSE_BRACKET_FIGURE = r'\}'
+t_OPEN_BRACKET_SQUARE = r'\['
+t_CLOSE_BRACKET_SQUARE = r'\]'
 t_COMMA = r'\,'
 
 t_ignore = ' \t'
