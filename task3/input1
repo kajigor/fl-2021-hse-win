@@ -1,5 +1,5 @@
-Alphabet: 1 -- k
+Alphabet: 4 -- ("k", "--", ":", " ") 
 Q: 1
 start: 0
 T: 1 -- 0
-edges: (0; 0; k)
+edges: (0; 0; "k", "--", ":", " ")

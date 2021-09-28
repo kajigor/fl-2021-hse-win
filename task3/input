@@ -1,5 +1,5 @@
-Alphabet: 2 -- (a, b)
+Alphabet: 2 -- ("a", "b")
 Q: 2
 start: 0
 T: 1 -- 1
-edges: (0; 1; a, b)
+edges: (0; 1; "a", "b")

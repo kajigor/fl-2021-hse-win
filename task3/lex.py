@@ -17,7 +17,7 @@ tokens = [
   'CPARENTHESES',
   'APOSTROPHE',
   'SEMICOLON',
-  'ID'
+  'SYMBOL'
 ] + list(reserved.values())
 
 
@@ -38,9 +38,9 @@ t_START = r'start'
 t_T = r'T'
 t_EDGES = r'edges'
 
-def t_ID(t):
-  r'[a-z_][a-z_0-9]*'
-  t.type = reserved.get(t.value, 'ID')
+def t_SYMBOL(t):
+  r'"(?:[a-z_0-9]|\\.| |[^\\"])*"'
+  t.value = t.value[1 : -1] #выводим содержимое без кавычек
   return t
 
 
