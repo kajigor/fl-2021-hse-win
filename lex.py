@@ -13,7 +13,7 @@ tokens = [
 ] + list(reserved.values())
 
 def t_NUM(t):
-  r'[0-9]+'
+  r'[0-9]+\s'
   t.value = int(t.value)
   return t
 

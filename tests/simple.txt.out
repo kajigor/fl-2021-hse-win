@@ -1,0 +1,8 @@
+LexToken(NUM,0,1,0)
+LexToken(TO,'to',1,2)
+LexToken(NUM,1,1,5)
+LexToken(BY,'by',1,7)
+LexToken(NUM,5,1,10)
+LexToken(CHAR,'0____1',1,12)
+LexToken(NUM,1,2,19)
+LexToken(NUM,2,2,21)
