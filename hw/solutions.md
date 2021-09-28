@@ -9,3 +9,5 @@
 # 2
 
 ## 7
+
+![Alt text](https://github.com/mishok2503/fl-2021-hse-win/blob/HW03/hw/images/2.png?raw=true)
