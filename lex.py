@@ -14,8 +14,25 @@ def t_NUM(t):
   return t
 
 def t_WORD(t):
-    r'\".*\"' # as you might guess, this is not what I described, but it did not work to come up with a regexp in 5 minutes.
+    r'".*"'
     t.value = t.value[1:-1]
+    i = 0
+    while i < len(t.value):
+        if t.value[i] == '\\':
+            if i == len(t.value) - 1:
+                raise KeyError(t.value)
+            n = t.value[i + 1]
+            c = ''
+            if n == '\\':
+                c = '\\'
+            elif n == 'n':
+                c = '\n'
+            elif n == 't':
+                c = '\t'
+            else:
+                raise KeyError(t.value)
+            t.value = t.value[:i] + c + t.value[i + 2:]
+        i += 1
     return t;
 
 t_ignore = ' \t'
@@ -44,10 +61,13 @@ def main():
         return
     with open(sys.argv[1] + '.out', 'w') as out:
         while True:
-          tok = lexer.token()
-          if not tok:
-            break
-          out.write(str(tok) + '\n')
+            try:
+                tok = lexer.token()
+                if not tok:
+                    break
+                out.write(str(tok) + '\n')
+            except KeyError as e:
+                print('syntax error: %s' %e)
 
 if __name__ == '__main__':
     main()
