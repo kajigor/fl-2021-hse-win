@@ -1,0 +1,8 @@
+1
+a b
+2 
+start q1 
+terminal q2
+1
+q1 q2
+a

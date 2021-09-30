@@ -1,0 +1,12 @@
+1
+tra1 
+2 
+start terminal q1 
+terminal q2
+1
+q1 q2
+tra2
+q1 q1
+tra1
+q2 q1
+tra2
