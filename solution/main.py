@@ -201,7 +201,7 @@ def main():
     file_out.write("Edges list:\n")
     for e in edges:
         e.write()
-    file_out.write("Edges list:\n")
+    file_out.write("Analysis:\n")
     file_out.write("1. " + initial_state_checking() + "\n")
     file_out.write("2. " + uniqueness_machine_checking() + "\n")
     file_out.write("3. " + uniqueness_alphabet_checking() + "\n")

@@ -30,7 +30,7 @@ Edges list:
 From None to 1 name: ""
 From 1 to 2 name: "abc"
 From 2 to 2 name: "abc"
-Edges list:
+Analysis:
 1. Initial state found: 1
 2. Vertex names are unique
 3. Elements of the alphabet are unique
@@ -54,7 +54,7 @@ From 1 to 3 name: "0"
 From 2 to 3 name: "0"
 From 3 to 2 name: "1"
 From 3 to 3 name: "0"
-Edges list:
+Analysis:
 1. Initial state found: 1
 2. Vertex names are unique
 3. Elements of the alphabet are unique
@@ -81,7 +81,7 @@ From 3 to 4 name: "0"
 From 4 to 1 name: "1"
 From 3 to 1 name: "1"
 From 2 to 1 name: "1"
-Edges list:
+Analysis:
 1. Initial state found: 1
 2. Vertex names are unique
 3. Elements of the alphabet are unique
@@ -106,7 +106,7 @@ From 2 to 3 name: "1"
 From 1 to 3 name: "1"
 From 3 to 2 name: "0"
 From 3 to 3 name: "1"
-Edges list:
+Analysis:
 1. Initial state found: 1
 2. Vertex names are unique
 3. Elements of the alphabet are unique
