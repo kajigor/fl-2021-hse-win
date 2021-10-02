@@ -17,6 +17,7 @@ class Vertex:
         self.index = index_
         self.name = name_
         self.terminality = terminality_
+        self.edges = []
 
     def write(self):
         file_out.write(str(self.index) + ". " + "Name: \"" + self.name + "\" and it is " +
@@ -25,13 +26,13 @@ class Vertex:
 
 class Edge:
     def __init__(self, index_vertex_from_, name_, index_vertex_to_):
-        self.index_vertex_from_ = index_vertex_from_
+        self.index_vertex_from = index_vertex_from_
         self.name = name_
-        self.index_vertex_to_ = index_vertex_to_
+        self.index_vertex_to = index_vertex_to_
 
     def write(self):
-        file_out.write("From " + str(self.index_vertex_from_) + " to " +
-                       str(self.index_vertex_to_) + " name: \"" + self.name + "\"\n")
+        file_out.write("From " + str(self.index_vertex_from) + " to " +
+                       str(self.index_vertex_to) + " name: \"" + self.name + "\"\n")
 
 
 is_open_edge = False
@@ -86,9 +87,11 @@ def t_vertex(t):
     global is_first_vertex, file_out, current_edge
     index = vertexes_update(get_name(t.value[3:(len(t.value) - 2):1]), t.value[1] == '1')
     if is_first_vertex:
-        current_edge.index_vertex_from_ = index
+        current_edge.index_vertex_from = index
     else:
-        current_edge.index_vertex_to_ = index
+        current_edge.index_vertex_to = index
+        if current_edge.index_vertex_from is not None:
+            vertexes[current_edge.index_vertex_from - 1].edges.append(current_edge.name)
         edges.append(current_edge)
     return t
 
@@ -128,6 +131,56 @@ def t_error(t):
     exit()
 
 
+def initial_state_checking():
+    index = -1
+    for e in edges:
+        if e.index_vertex_from is None and e.index_vertex_to is not None:
+            if index != -1:
+                return "ERROR: not the only initial state"
+            else:
+                index = e.index_vertex_to
+    if index == -1:
+        return "ERROR: initial state does not exist"
+    return "Initial state found: " + str(index)
+
+
+def uniqueness_machine_checking():
+    vertexes_names = []
+    for v in vertexes:
+        vertexes_names.append(v.name)
+    if len(vertexes_names) == len(set(vertexes_names)):
+        return "Vertex names are unique"
+    else:
+        return "ERROR: vertex names are not unique"
+
+
+def uniqueness_alphabet_checking():
+    if len(alphabet) == len(set(alphabet)):
+        return "Elements of the alphabet are unique"
+    else:
+        return "ERROR: elements of the alphabet are not unique"
+
+
+def determinism_checking():
+    for v in vertexes:
+        all_edges = ""
+        for e in v.edges:
+            all_edges += e
+        if list(all_edges) != list(set(all_edges)):
+            return "Machine is not deterministic"
+    return "Machine is deterministic"
+
+
+def completeness_checking():
+    for v in vertexes:
+        all_edges = ""
+        for e in v.edges:
+            all_edges += e
+        if list(set(alphabet)) != list(set(all_edges)):
+            return "Machine is not full"
+    return "Machine is full"
+
+
 def main():
     global file_out, alphabet
     lexer = lex.lex()
@@ -148,7 +201,12 @@ def main():
     file_out.write("Edges list:\n")
     for e in edges:
         e.write()
-    file_out.write("Edges list:\nTODO\n")
+    file_out.write("Edges list:\n")
+    file_out.write("1. " + initial_state_checking() + "\n")
+    file_out.write("2. " + uniqueness_machine_checking() + "\n")
+    file_out.write("3. " + uniqueness_alphabet_checking() + "\n")
+    file_out.write("4. " + determinism_checking() + "\n")
+    file_out.write("5. " + completeness_checking() + "\n")
     file_out.write("Mischief Managed!\n")
     file_out.close()
 
