@@ -7,12 +7,7 @@ reserved = {
     'else': 'ELSE'
 }
 
-tokens = [
-             'Vertex',
-             'EdgeName',
-             'Edge',
-             'Machine'
-         ] + list(reserved.values())
+tokens = ['alphabet', 'vertex', 'edge_name', 'edge', 'machine'] + list(reserved.values())
 
 is_open_edge = False
 is_open_machine = False
@@ -30,7 +25,14 @@ def get_name(s):
     return name
 
 
-def t_EdgeName(t):
+def t_alphabet(t):
+    r'E([0-1]{8})*E'
+    global alphabet
+    t.value = get_name(t.value[1:len(t.value) - 1:1])
+    return t
+
+
+def t_edge_name(t):
     r'B([0-1]{8})*B'
     global is_first_vertex, file_out
     is_first_vertex = False
@@ -38,7 +40,7 @@ def t_EdgeName(t):
     return t
 
 
-def t_Vertex(t):
+def t_vertex(t):
     r'A(0|1)B([0-1]{8})*BA'
     global is_first_vertex, file_out
     vertex_info = "name: " + get_name(t.value[3:(len(t.value) - 2):1]) + ", terminality: " + str(t.value[1] == '1')
@@ -49,7 +51,7 @@ def t_Vertex(t):
     return t
 
 
-def t_Edge(t):
+def t_edge(t):
     r'C'
     global is_open_edge, is_first_vertex, file_out
     if not is_open_edge:
@@ -62,7 +64,7 @@ def t_Edge(t):
     return t
 
 
-def t_Machine(t):
+def t_machine(t):
     r'D'
     global is_open_machine
     if not is_open_machine:
@@ -102,4 +104,3 @@ def main():
 
 
 main()
-
