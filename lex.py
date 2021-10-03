@@ -13,7 +13,10 @@ tokens = [
   'SEMICOLON',
   'NUM'
 ]
-t_EDGE = '"' + r'(.)+' + '"\n'
+def t_EDGE(t):
+  r'"(.)+"(?=\n)'
+  t.value = t.value[1:-1].replace('\\\\', '\\')
+  return t
 t_VERTEX = r'Q([1-9][0-9]*|0)'
 t_TERMINAL = r'T([1-9][0-9]*|0)'
 t_ARROW = r'->'
