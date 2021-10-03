@@ -1,54 +1,52 @@
-import ply.lex as lex 
+import ply.lex as lex
 import sys
 
-reserved = {
-  'if': 'IF', 
-  'then': 'THEN',
-  'else': 'ELSE'
-}
-
 tokens = [
-  'NUM', 
-  'PLUS', 
-  'MULT',
-  'ID',
-  'LBR',
-  'RBR'
-] + list(reserved.values())
+  'NUM',
+  'BACKSLASH',
+  'DASH',
+  'COMMA',
+  'COLON',
+  'ARROW',
+  'DOTS',
+  'STR'
+]
 
-def t_ID(t):
-  r'[a-z_][a-z_0-9]*'
-  t.type = reserved.get(t.value, 'ID')
-  return t
+t_BACKSLASH = r'\\'
+t_DASH = r'-'
+t_COMMA = r','
+t_COLON = r':'
+t_ARROW = r'->'
+t_DOTS = r'\.\.\.'
 
-def t_NUM(t): 
+
+t_ignore = ' \t'
+
+def t_NUM(t):
   r'[0-9]+'
   t.value = int(t.value)
   return t
 
-t_PLUS = r'\+'
-t_MULT = r'\*'
-t_LBR = r'\('
-t_RBR = r'\)'
+def t_STR(t):
+  r'"(?:[^\\"]|\\.)*"'
+  t.value = t.value[1 : -1]
+  return t
 
-t_ignore = ' \t'
-
-def t_newline(t): 
+def t_newline(t):
   r'\n+'
   t.lexer.lineno += len(t.value)
 
-def t_error(t): 
+def t_error(t):
   print("Illegal character '%s'" % t.value[0])
   t.lexer.skip(1)
 
-lexer = lex.lex() 
+lexer = lex.lex()
 
-#lexer.input(sys.argv[1]) 
+lexer.input(open(sys.argv[1], 'r').read())
+sys.stdout = open(sys.argv[1] + '.out', 'w')
 
-#while True: 
-#  r'\+' 
-#  13
-#  tok = lexer.token() 
-#  if not tok: 
-#    break
-#  print(tok)
+while True:
+  tok = lexer.token()
+  if not tok:
+    break
+  print(tok)
