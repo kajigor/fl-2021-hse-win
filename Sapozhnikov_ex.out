@@ -1,0 +1,3 @@
+LexToken(machine,'Open',1,0)
+LexToken(alphabet,'â\x86\x90',1,1)
+LexToken(machine,'Close',1,27)
