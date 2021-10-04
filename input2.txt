@@ -1,0 +1,7 @@
+[50~51] [55~52] [54]
+start q0
+terminal q1
+transition (q0 -> s0 , {54})
+transition (s0 -> s0 , {55~52, 54})
+transition (q0 -> q1 , {50~51})
+transition (q1 -> q1 , {55~52})
