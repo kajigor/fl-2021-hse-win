@@ -1,3 +1,3 @@
-alphabet 10_10
-start q0 q1 with 10_10
-terminal q1
+alphabet 10_10 9_10;
+start q0 q1 with 10_10;
+terminal q1 q0 with 9_10;

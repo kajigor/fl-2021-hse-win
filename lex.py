@@ -11,7 +11,8 @@ reserved = {
 tokens = [
   'VERTEX',
   'WORD',
-  'KEYWORD'
+  'KEYWORD',
+  'SEMICOLON'
 ] + list(reserved.values())
 
 def t_KEYWORD(t):
@@ -29,6 +30,8 @@ def t_VERTEX(t):
   t.value = t.value
   return t
 
+t_SEMICOLON = r';'
+
 t_ignore = ' \t'
 
 def t_newline(t):
@@ -41,17 +44,17 @@ def t_error(t):
 
 lexer = lex.lex()
 
-try:
-  lexer.input(''.join(open(sys.argv[1]).readlines()))
-except:
-  print("Unable to open file")
-  exit(1)
-
-output = open(sys.argv[1] + '.out', 'w')
-
-while True:
-  tok = lexer.token()
-  if not tok:
-    break
-  output.write(str(tok) + '\n')
+# try:
+#   lexer.input(''.join(open(sys.argv[1]).readlines()))
+# except:
+#   print("Unable to open file")
+#   exit(1)
+#
+# output = open(sys.argv[1] + '.out', 'w')
+#
+# while True:
+#   tok = lexer.token()
+#   if not tok:
+#     break
+#   output.write(str(tok) + '\n')
 

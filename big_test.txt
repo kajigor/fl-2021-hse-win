@@ -2,3 +2,8 @@ alphabet 10 10_10 10_10_10
 start q0 q1 with 10 q2 with 10_10
 q1 q2 with 10_10_10
 terminal q2
+
+
+vertex_def : START? TERMINAL? VERTEX transition_def*
+transition_def : VERTEX WITH WORD
+alphabet_def : ALPHABET WORD*
