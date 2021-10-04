@@ -1,0 +1,4 @@
+parser/.idea
+parser/__pycache__
+parser/parser.out
+parser/parsetab.py
