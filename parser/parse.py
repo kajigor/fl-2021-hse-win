@@ -77,14 +77,17 @@ class Automat:
   def print_automat(self):
     self.alphabet.sort()
     print("Alphabet:  ", end="")
-    print(self.alphabet)
+    print("(", end = "")
+    print(', '.join(self.alphabet), end = "")
+    print(")")
 
     print("Start:      ", end="")
     print(self.start_state)
 
     self.terminal_states.sort()
-    print("Terminals: ", end="")
-    print(self.terminal_states)
+    sarr = [str(a) for a in self.terminal_states]
+    print("Terminals:  ", end="")
+    print(', '.join(sarr))
 
     print("Edges:    ")
     for edge in self.edges:
@@ -92,8 +95,9 @@ class Automat:
       print(edge.from_state, end = "")
       print(" --> ", end = "")
       print(edge.to_state, end = "")
+      edge.symbols.sort()
       print(" (", end = "")
-      print(edge.symbols, end = "")
+      print(', '.join(edge.symbols), end = "")
       print(")")
 
 automat = Automat()

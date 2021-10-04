@@ -1,5 +1,5 @@
-Alphabet:  ['a', 'b']
+Alphabet:  (a, b)
 Start:      0
-Terminals: [1]
+Terminals:  1
 Edges:    
-            0 --> 1 (['b', 'a'])
+            0 --> 1 (a, b)
