@@ -1,27 +1,22 @@
-from typing import Counter
 import ply.yacc as yacc
-
+import sys
 from lex import tokens
 
-# if 42 then (if 0 then 777 else 9)
 class Edge:
     def __init__(self):
         self.state_from = ""
         self.state_to = ""
         self.symbols = []
         
-    def add_symbol(self, symbol):
-        self.symbols.append(symbol)
-        
-    def add_state_from(self, state_from_):
+    def add_from(self, from_):
         if self.state_from != "":
-            raise Exception("This edge already has an outgoing state")
-        self.state_from = state_from_
+            raise Exception("Vertex from has already appeared!")
+        self.state_from = from_
         
-    def add_state_to(self, state_to_):
+    def add_to(self, to):
         if self.state_to != "":
-            raise Exception("This edge already has an incoming state")
-        self.state_to = state_to_
+            raise Exception("Vertex to has already appeared!")
+        self.state_to = to
         
 class State:
     def __init__(self, name_):
@@ -32,32 +27,14 @@ class State:
         self.out_edge = []
         self.in_edge = []
          
-    def change_terminality(self):
-        self.terminality = True
-
-    def equality_state(state1, state2):
-        if state1.terminality != state2.terminality:
-            return False
-        if state1.from_state != state2.from_state:
-            return False
-        if state1.to_state != state2.to_state:
-            return False
-        return True  
 alphabet =[]
 edges = []
-states = []         
+states = []   
+term_states = []      
 count_strings = 0
+start = []
+index_edges = {}
 def print_automato():
-     for j in states:
-            for i in alphabet:
-                fl = 0
-                for l in j.out_edge:
-                    if i in l.symbols:
-                        fl += 1
-                if fl == 0:
-                  raise Exception("The automaton is not complete")
-                if fl > 1:
-                  raise Exception("The automaton is not deterministic")
      print("States:\n")            
      for i in states:
           print("q", end="")
@@ -71,7 +48,6 @@ def print_automato():
           else:
             print("normal") 
      print("\nEdges\n")          
-     is_complete = True
      for i in edges:
           print("from q", end="")
           print(i.state_from, end="")
@@ -82,50 +58,103 @@ def print_automato():
           print(i.symbols)
                
 def p_automaton(p):
-      '''Automaton : Alphabet
+      '''Automaton : start_state
+                    | term_state
                     | States
-                    | Terminal
-                    | Edges '''
-def p_alphabet(p):
-    'Alphabet: OPEN_BRACKET Words VERTICAL_LINE'
-    parser.object = "alphabet"
-    parser.is_positive_balance = True
+                    | Alphabet
+                    | edges 
+                    '''
+def p_start_state(p):
+  'start_state: START ARROW NUM'
+  start.append(p[0])
 
+def p_term_state(p):
+  'term_state: TERM COLON OPEN_BRACKET NUM term_state_list CLOSE_BRACKET'
+  term_states.append(4)
+
+
+def p_term_state_list(p):
+  'term_state_list: COMMA NUM term_state_list'
+  term_states.append(2) 
+
+
+def p_states(p):
+  'States: STATES COLON OPEN_BRACKET NUM states_list CLOSE_BRACKET'
+  current_state=State(p[4])
+  for i in start:
+    if i== current_state.name:
+      current_state.is_start = True
+  for i in term_states:
+    if i == current_state.name:
+      current_state.is_terminal = True
+  states.append(current_state)
+  
+def p_states_list(p):
+  'states_list: COMMA NUM states_list' 
+  current_state=State(p[2])
+  if start == current_state.name:
+    current_state.is_start = True
+  for i in term_states:
+    if i == current_state.name:
+      current_state.is_terminal = True
+  states.append(current_state)
+  
+def p_alphabet(p):
+    'Alphabet: ALPHABET OPEN_BRACKET WORD Words CLOSE_BRACKET'
+    parser.object = "alphabet"
+    alphabet.append(p[3])
 def p_words(p):
     'Words: COMMA WORD Words'
     alphabet.append(p[2])  
 
+def p_start_list(p):
+    'start_list: LIST COLON'
+    parser.object = "list"
+
+
 def p_edges(p):
-    'Edges: VERTICAL_LINE edge_list VERTICAL_LINE'
-    states.append(count_strings)
-    count_strings=count_strings + 1
-    counter = 0
-    for i in p[2]:
-      edge = Edge()
-      edge.add_state_from = count_strings
-      edge.add_state_to = i
-      edge.symbols.append(alphabet)
-      edges.append()
+  'edges: VERTEX_FROM COLON OPEN_BRACKET VERTEX_TO POINT_COMMA WORD CLOSE_BRACKET edge_list'
+  parser.vertex_from = p[1]
+  pair = (p[1], p[4])
+  if pair in index_edges:
+    edges[index_edges[pair]].symbols.append(p[6])
+  else:
+    edge = Edge()
+    edge.add_state_to(p[4])
+    edge.add_state_from(p[1])
+    edge.symbols.append(p[6])
+    edges.append(edge) 
+    index_edges[pair] = len(edges)-1   
+
 
 def p_edge_list(p):
-    'edge_list: NUM COMMA edge_list'    
+    'edge_list: VERTICAL_LINE OPEN_BRACKET VERTEX_TO POINT_COMMA WORD CLOSE_BRACKET'
+    pair = (parser.vertex_from, p[3])
+
+    if pair in index_edges:
+      edges[index_edges[pair]].symbols.append(p[5])
+
+    else:
+      edge = Edge()
+      edge.add_state_to(p[3])
+      edge.add_state_from(parser.vertex_from)
+      edge.symbols.append(p[5])
+      edges.append(edge)    
+      index_edges[pair] = len(edges)-1
+
 def p_error(p):
   print("Syntax error")
 
 parser = yacc.yacc()
-
+parser.vertex_from = 0
+sys.stdin = open(sys.argv[1], 'r')
+sys.stdout = open(sys.argv[1] + '.out', 'w')
 while True:
   try:
-    s = input("calc> ")
+    s = input()
   except EOFError:
     break
   if not s:
     continue
   result=parser.parse(s)
-  print(result)
-
-
-
-
-
-
+print_automato()  
