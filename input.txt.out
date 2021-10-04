@@ -1,0 +1,15 @@
+Analyzing:
+
+Alphabet:
+"0" "1" "," Edges: 
+(a,b){0}
+(b,b){0,1}
+(c,b){0}
+(d,c){0}
+(c,d){1}
+(a,d){1}
+(d,d){1}
+Testing...
+
+Passed: starting vertex exists
+All states are unique
