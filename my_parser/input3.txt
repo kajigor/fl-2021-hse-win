@@ -1,0 +1,5 @@
+Alph = "0" "1"
+States = 2
+Start_state = 0
+Accept_states = 1
+Transits = (0, 1, "0" "1") (1, 0, "0" "1")
