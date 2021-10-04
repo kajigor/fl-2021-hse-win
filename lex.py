@@ -14,7 +14,7 @@ tokens = [
 ]
 def t_EDGE(t):
   r'"(.)+"(?=\n)'
-  t.value = t.value[1:-1].replace('\\\\', '\\')
+  t.value = t.value[1:-1]
   return t
 t_VERTEX = r'Q([1-9][0-9]*|0)'
 t_TERMINAL = r'T([1-9][0-9]*|0)'
@@ -43,5 +43,5 @@ while True:
   tok = lexer.token()
   if not tok:
     break
-  fout.write(str(tok)+'\n')
+  fout.write(str(tok).replace('\\\\', '\\')+'\n')
 fout.close()
