@@ -50,7 +50,7 @@ struct DFA{
     bool there_is_only_start_state = true;
     bool found_terminal_vertex = false;
     bool vertex_unique = true;
-    bool alphaber_unique = true;
+    bool alphabet_unique = true;
     bool is_dfa = true;
     bool is_full_dfa = true;
 
@@ -124,7 +124,7 @@ void get_alphabet(std::string &s){
                 if(dfa.alphabet[letter] == 0){
                     dfa.alphabet[letter] = 1;
                 } else {
-                    dfa.alphaber_unique = false;
+                    dfa.alphabet_unique = false;
                     output << "2:" << i + 1 << ": литерал \"" << letter << "\" уже был введён!" << std::endl;
                 }
                 letter = "";
@@ -283,6 +283,9 @@ int get_edges(std::string s, int number_line){
         }
     }
 
+    if(name1.size() == 0 || name2.size() == 0){
+        return 0;
+    }
     if(dfa.id_vertex[std::stoi(name1)] == 0 || dfa.id_vertex[std::stoi(name2)] == 0){
         return 0;
     }
@@ -398,7 +401,7 @@ void output_dfa(){
         output << "У автомата не все состояния уникальны!" << std::endl;
     }
 
-    if(dfa.alphaber_unique){
+    if(dfa.alphabet_unique){
         output << "У автомата все символы алфавита уникальны!" << std::endl;
     } else {
         output << "У автомата символы алфавита не уникальны!" << std::endl;
@@ -430,7 +433,7 @@ void output_dfa(){
     }
     output << std::endl;
     // ребра
-    for(auto number : dfa.all_vertex){
+    for(auto number : dfa.all_vertex){ // вот это можно поменять, чтобы при каждам выводе не пересчитывать -> циц, только никому не говорите)
         std::vector<std::pair<int,std::string>> edges; // сохраняем все рёбра
         for(auto edge : number.transitions){
             edges.push_back({edge.second.second, edge.first});
@@ -471,7 +474,6 @@ int main(int argc, char* argv[]) {
                     get_alphabet_string();
                 } else if(k <= dfa.count_vertex + 2){
                     Vertex vertex = get_vertex(line, k);
-                    //output << vertex.get_name() << " " << vertex.get_state() << std::endl;
                     if(dfa.id_vertex[vertex.get_name()] != 0){ // если уже повторялась вершина = пропустим
                         output << k << ": вершина с номером " << vertex.get_name() << " уже была создана!" << std::endl;
                         dfa.vertex_unique = false;
@@ -502,11 +504,10 @@ int main(int argc, char* argv[]) {
                     if(number == 0){
                         output << k << ": как минимум одной вершины из заданных не существует в автомате!" << std::endl;
                     } else if(number == 1){
-                        // всё ок
+                        // вот сюда заходит, если всё ок
                     }
                 }
             }
-            //output << line << std::endl;
         }
         examination_in_full_dfa();
         output_dfa();
