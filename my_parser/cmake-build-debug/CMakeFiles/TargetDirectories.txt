@@ -1,3 +1,0 @@
-/home/almox/fl-2021-hse-win/my_parser/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/almox/fl-2021-hse-win/my_parser/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/almox/fl-2021-hse-win/my_parser/cmake-build-debug/CMakeFiles/my_parser.dir

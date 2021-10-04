@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/my_parser.dir/my_parser.cpp.o -o my_parser 
