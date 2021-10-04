@@ -75,20 +75,20 @@ class Automaton:
     self.edges.append(edge)  
 
   def print_automaton(self):
-    print("Alphabet:\n    ", end="")
+    print("Alphabet:  ", end="")
     print(self.alphabet)
 
-    print("Start: ", end="")
+    print("Start:     ", end="")
     print(self.start_state)
 
-    print("Terminals:\n    ", end="")
+    print("Terminals: ", end="")
     print(self.terminal_states)
 
-    print("Edges:\n")
+    print("Edges:    ")
     for edge in self.edges:
       print("    " + edge.from_state + " --> " + edge.to_state + " (")
       print(edge.symbols)
-      print(" )\n")
+      print(" )")
 
 def p_automaton(p):
   '''Automaton : Alphabet

@@ -1,0 +1,4 @@
+Alphabet:  [a, b]
+Start:     0
+Terminals: [1]
+Edges:     0 --> 1 (a, b)
