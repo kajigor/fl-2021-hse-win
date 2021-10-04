@@ -1,0 +1,157 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ID
+    SINK
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> VERTICES NUM
+Rule 2     expression -> EDGES NUM
+Rule 3     expression -> FROM NUM TO NUM EDGE EDGE_VALUE
+Rule 4     expression -> TERMINAL NUM
+Rule 5     expression -> START NUM
+
+Terminals, with rules where they appear
+
+EDGE                 : 3
+EDGES                : 2
+EDGE_VALUE           : 3
+FROM                 : 3
+ID                   : 
+NUM                  : 1 2 3 3 4 5
+SINK                 : 
+START                : 5
+TERMINAL             : 4
+TO                   : 3
+VERTICES             : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . VERTICES NUM
+    (2) expression -> . EDGES NUM
+    (3) expression -> . FROM NUM TO NUM EDGE EDGE_VALUE
+    (4) expression -> . TERMINAL NUM
+    (5) expression -> . START NUM
+
+    VERTICES        shift and go to state 2
+    EDGES           shift and go to state 3
+    FROM            shift and go to state 4
+    TERMINAL        shift and go to state 5
+    START           shift and go to state 6
+
+    expression                     shift and go to state 1
+
+state 1
+
+    (0) S' -> expression .
+
+
+
+state 2
+
+    (1) expression -> VERTICES . NUM
+
+    NUM             shift and go to state 7
+
+
+state 3
+
+    (2) expression -> EDGES . NUM
+
+    NUM             shift and go to state 8
+
+
+state 4
+
+    (3) expression -> FROM . NUM TO NUM EDGE EDGE_VALUE
+
+    NUM             shift and go to state 9
+
+
+state 5
+
+    (4) expression -> TERMINAL . NUM
+
+    NUM             shift and go to state 10
+
+
+state 6
+
+    (5) expression -> START . NUM
+
+    NUM             shift and go to state 11
+
+
+state 7
+
+    (1) expression -> VERTICES NUM .
+
+    $end            reduce using rule 1 (expression -> VERTICES NUM .)
+
+
+state 8
+
+    (2) expression -> EDGES NUM .
+
+    $end            reduce using rule 2 (expression -> EDGES NUM .)
+
+
+state 9
+
+    (3) expression -> FROM NUM . TO NUM EDGE EDGE_VALUE
+
+    TO              shift and go to state 12
+
+
+state 10
+
+    (4) expression -> TERMINAL NUM .
+
+    $end            reduce using rule 4 (expression -> TERMINAL NUM .)
+
+
+state 11
+
+    (5) expression -> START NUM .
+
+    $end            reduce using rule 5 (expression -> START NUM .)
+
+
+state 12
+
+    (3) expression -> FROM NUM TO . NUM EDGE EDGE_VALUE
+
+    NUM             shift and go to state 13
+
+
+state 13
+
+    (3) expression -> FROM NUM TO NUM . EDGE EDGE_VALUE
+
+    EDGE            shift and go to state 14
+
+
+state 14
+
+    (3) expression -> FROM NUM TO NUM EDGE . EDGE_VALUE
+
+    EDGE_VALUE      shift and go to state 15
+
+
+state 15
+
+    (3) expression -> FROM NUM TO NUM EDGE EDGE_VALUE .
+
+    $end            reduce using rule 3 (expression -> FROM NUM TO NUM EDGE EDGE_VALUE .)
+
