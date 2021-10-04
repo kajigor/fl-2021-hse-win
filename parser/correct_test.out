@@ -1,6 +1,7 @@
 alphabet:
 0
 1
+Q0 is initial state
 Edge from Q0 to Q0 by "0"
 Edge from Q0 to Q1 by "1"
 Edge from Q1 to Q0 by "0"

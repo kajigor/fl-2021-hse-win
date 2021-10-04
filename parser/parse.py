@@ -15,6 +15,7 @@ cnt = 0
 alphabet = []
 edges = []
 dic = {}
+vertexes = []
 def t_EDGE(t):
   r'"(.)+"(?=\n)'
   t.value = t.value[1:-1]
@@ -53,6 +54,9 @@ def write_error(t):
 def write_ans():
   if (('Q0' not in dic) and ('T0' not in dic)):
     print_err("Error: there is no started vertex in automaton")
+  for i in set(vertexes):
+    if (i not in dic):
+      print_err("Error: there is no started vertex in automaton")
   for i in dic:
     if (len(dic[i]) != cnt):
       print_err("Error: automaton is not complete, vertex " + i + " have not enough edges\n")
@@ -66,6 +70,10 @@ def write_ans():
   fout.write("alphabet:\n")
   for i in alphabet:
     fout.write(i+'\n')
+  if ('Q0' in dic):
+    fout.write("Q0 is initial state\n")
+  else:
+    fout.write("T0 is initial state\n")
   for i in dic:
     for j in dic[i]:
       fout.write("Edge from " + i + " to " + dic[i][j] + " by \"" + alphabet[int(j)-1] + "\"\n")
@@ -108,6 +116,7 @@ def main():
       write_error(tok)
       return
     else:
+      vertexes.append(tok.value)
       t = lexer.token()
       if ((not t) or (t.type != 'COLON')):
         write_error(t)
@@ -131,6 +140,7 @@ def main():
             if ((not t) or (t.type != 'SEMICOLON')):
               write_error(t)
               return
+            vertexes.append(tok3.value)
             if (tok.value in dic):
               if (tok2.value in dic[tok.value]):
                 print_err("Error: automaton is not deterministic because from " + tok.value + " two edges by \"" + tok2.value + "\"\n")
