@@ -1,49 +1,7 @@
 import sys
-
 import ply.yacc as yacc
 
 from lex import tokens
-
-
-# if 42 then (if 0 then 777 else 9)
-
-
-# def p_if(p):
-#   '''if : IF expression THEN if ELSE if
-#         | IF expression THEN if
-#         | expression '''
-#   if len(p) == 7:
-#     p[0] = p[4] if p[2] == 0 else p[6]
-#   else:
-#     if len(p) == 5:
-#       if p[2] == 0 :
-#         p[0] = p[4]
-#     else:
-#       p[0] = p[1]
-#
-# def p_expression_plus(p):
-#   'expression : expression PLUS expression'
-#   p[0] = p[1] - p[3]
-#
-# def p_expression_term(p):
-#   'expression : term'
-#   p[0] = p[1]
-# #
-# def p_term_times(p):
-#   'term : term MULT factor'
-#   p[0] = p[1] * p[3]
-# #
-# def p_term_factor(p):
-#   'term : factor'
-#   p[0] = p[1]
-#
-# def p_factor_num(p):
-#   'factor : NUM'
-#   p[0] = p[1]
-#
-# def p_factor_expr(p):
-#   'factor : LBR expression RBR'
-#   p[0] = p[2]
 
 class Automate:
     def parts_str(self):
@@ -62,6 +20,7 @@ class Automate:
     def __init__(self, type, parts):
         self.type = type
         self.parts = parts
+
 
 def p_automate(p):
     '''automate : states start end alphabet function'''
@@ -89,8 +48,11 @@ def p_error(p):
 
 def p_state_list(p):
     '''state_list : state state_list
-                  | state'''
+                  | state
+                  | '''
     p[0] = []
+    if (len(p) == 1):
+        return
     p[0] += [p[1]]
     if (len(p) == 3):
         p[0] += p[2]
@@ -131,7 +93,7 @@ def p_function_def(p):
 
 def p_where(p):
     'where : state transfer state'
-    p[0] = p[1] + " --(" + p[2] + ")--> " + p[3]
+    p[0] = [p[1], p[2], p[3]]
 
 def p_function_list(p):
     '''function_list : where function_list
@@ -141,16 +103,58 @@ def p_function_list(p):
     if (len(p) == 3):
         p[0] += p[2]
 
+def print_error(error_string):
+    print("ERROR: " + error_string)
+
+def test_unique(automate):
+    for part in automate.parts[:4]:
+        if len(part.parts) > len(set(part.parts)):
+            print_error(part.type + " not unique")
+
+def test_deterministic(automate):
+    function = automate.parts[4]
+    if len(set((start, key) for start, key, _ in function.parts)) != len(function.parts):
+        print_error("automate not deterministic")
+
+def test_automate_full(automate):
+    function = automate.parts[4]
+    states = automate.parts[0]
+    alphabet = automate.parts[3]
+    if len(function.parts) != len(states.parts) * len(alphabet.parts):
+        print_error("automate not full")
+
+def test_correct_transfers(automate):
+    function = automate.parts[4]
+    alphabet = automate.parts[3]
+
+    for _, transfer, _ in function.parts:
+        if transfer not in alphabet.parts:
+            print_error("transfer: " + transfer + " is not exist")
+
+def test_correct_states(automate):
+    states = automate.parts[0]
+    start, end = automate.parts[1:3]
+
+    for state in start.parts + end.parts:
+        if state not in states.parts:
+            print_error("state: \"" + state + "\" is not exist")
+
+def test_correct_start(automate):
+    start = automate.parts[1]
+    if (len(start.parts) == 0):
+        print_error("start is empty")
+
 sys.stdout = open(sys.argv[1] + '.out', 'w')
 
 parser = yacc.yacc()
 s = open(sys.argv[1], 'r').read()
-# while True:
-# try:
-#   s = input("calc> ")
-# except EOFError:
-#   break
-# if not s:
-# continue
+
 result = parser.parse(s)
 print(result)
+
+test_correct_transfers(result)
+test_correct_states(result)
+test_correct_start(result)
+test_unique(result)
+test_deterministic(result)
+test_automate_full(result)
