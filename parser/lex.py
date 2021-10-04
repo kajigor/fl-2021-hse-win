@@ -41,12 +41,3 @@ def t_error(t):
   t.lexer.skip(1)
 
 lexer = lex.lex()
-
-lexer.input(open(sys.argv[1], 'r').read())
-sys.stdout = open(sys.argv[1] + '.out', 'w')
-
-while True:
-  tok = lexer.token()
-  if not tok:
-    break
-  print(tok)

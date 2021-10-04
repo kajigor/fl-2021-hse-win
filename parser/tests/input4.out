@@ -1,0 +1,16 @@
+Alphabet:
+	{'олень', '\\"', 'дед мороз', 'северный', '\\\\'}
+States:
+	(name: 1, type: start)
+	(name: 2, type: normal)
+	(name: 3, type: terminal)
+	(name: 4, type: stock)
+Edges:
+	(from: 1, to: 1, moves: дед мороз,\",\\)
+	(from: 1, to: 2, moves: северный)
+	(from: 1, to: 4, moves: олень)
+	(from: 2, to: 2, moves: дед мороз,\",\\)
+	(from: 2, to: 3, moves: олень)
+	(from: 2, to: 4, moves: северный)
+	(from: 3, to: 3, moves: дед мороз,\",\\)
+	(from: 3, to: 4, moves: северный,олень)

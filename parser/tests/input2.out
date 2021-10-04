@@ -1,0 +1,14 @@
+Alphabet:
+	{0, 1, 2}
+States:
+	(name: 1, type: start)
+	(name: 2, type: normal)
+	(name: 3, type: terminal)
+	(name: 4, type: stock)
+Edges:
+	(from: 1, to: 2, moves: 1)
+	(from: 1, to: 4, moves: 0,2)
+	(from: 2, to: 3, moves: 0)
+	(from: 2, to: 4, moves: 1,2)
+	(from: 3, to: 4, moves: 0,1,2)
+	(from: 4, to: 4, moves: 0,1,2)
