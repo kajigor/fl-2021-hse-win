@@ -2,7 +2,7 @@ import ply.yacc as yacc
 from lex import tokens
 import sys
 
-# автомат -- граф, характеризуется состояними (вершины Vertex) и ребрами перехода (ребра Edges)
+# автомат -- граф, характеризуется состояними (вершины State) и ребрами перехода (ребра Edges)
 
 class State:
   def __init__(self, number_):
@@ -39,7 +39,7 @@ class Edge:
   def add_symbol(self, symbol):
     self.symbols.append(symbol)      
 
-class Automaton:
+class Automat:
   def __init__(self):
     self.alphabet_size = 0
     self.alphabet = []
@@ -47,7 +47,7 @@ class Automaton:
     self.start_state = 0
     self.count_terminal = 0
     self.terminal_states = []
-    self.count_edges = 0
+    #self.count_edges = 0
     self.edges = []
 
   def init_alphabet_size(self, size):
@@ -68,30 +68,39 @@ class Automaton:
   def add_terminal_state(self, state_number):
     self.terminal_states.append(state_number)
 
-  def init_count_edges(self, count):
-    self.count_edges = count
+  #def init_count_edges(self, count):
+    #self.count_edges = count
 
   def add_edge(self, edge):
     self.edges.append(edge)  
 
-  def print_automaton(self):
+  def print_automat(self):
+    self.alphabet.sort()
     print("Alphabet:  ", end="")
     print(self.alphabet)
 
-    print("Start:     ", end="")
+    print("Start:      ", end="")
     print(self.start_state)
 
+    self.terminal_states.sort()
     print("Terminals: ", end="")
     print(self.terminal_states)
 
     print("Edges:    ")
     for edge in self.edges:
-      print("    " + edge.from_state + " --> " + edge.to_state + " (")
-      print(edge.symbols)
-      print(" )")
+      print("            ", end = "")
+      print(edge.from_state, end = "")
+      print(" --> ", end = "")
+      print(edge.to_state, end = "")
+      print(" (", end = "")
+      print(edge.symbols, end = "")
+      print(")")
+
+automat = Automat()
+current_edge = Edge()      
 
 def p_automaton(p):
-  '''Automaton : Alphabet
+  '''Automat : Alphabet
                | States_count
                | Start_state
                | Terminals
@@ -99,20 +108,17 @@ def p_automaton(p):
 
 def p_alphabet(p):
   'Alphabet : ALPHABET COLON NUM DASH OPARENTHESES str_alphabet_symbols CPARENTHESES'
-  parser.current_obj_for_reading = "alphabet"
 
 def p_states_count(p):
   'States_count : Q COLON NUM'
-  parser.current_obj_for_reading = "states count"
-  parser.automaton.init_count_states(10)
+  automat.init_count_states(p[3])
 
 def p_start_state(p):
   'Start_state : START COLON NUM'
-  parser.current_obj_for_reading = "start state"
-  parser.automaton.init_start_state(p[3])
+  automat.init_start_state(p[3])
 
 def p_terminals(p):
-  'Terminals : T COLON NUM DASH str_nums'
+  'Terminals : T COLON NUM DASH str_terminal_nums'
 
 def p_edges(p):
   'Edges : EDGES COLON str_edges'
@@ -120,26 +126,35 @@ def p_edges(p):
 def p_str_alphabet_symbols(p):
   '''str_alphabet_symbols : SYMBOL COMMA str_alphabet_symbols
                           | SYMBOL'''
+  automat.add_alphabet_symbol(p[1])    
+
+def p_str_terminal_nums(p):
+  '''str_terminal_nums : NUM COMMA str_terminal_nums
+                       | NUM''' 
+  automat.add_terminal_state(p[1])                                 
 
 def p_str_edges(p):
   '''str_edges : str_edge COMMA str_edges
                | str_edge'''
 
 def p_str_edge(p):
-  '''str_edge : OPARENTHESES NUM SEMICOLON NUM SEMICOLON str_nums CPARENTHESES'''   
+  '''str_edge : OPARENTHESES NUM SEMICOLON NUM SEMICOLON str_edge_symbols end_edge''' 
+  current_edge.init_from_state(p[2])   
+  current_edge.init_to_state(p[4])
 
-def p_str_nums(p):
-  '''str_nums : NUM COMMA str_nums
-              | NUM'''                                               
+def p_str_edge_symbols(p):
+  '''str_edge_symbols : SYMBOL COMMA str_edge_symbols
+                      | SYMBOL'''   
+  current_edge.add_symbol(p[1]) 
+
+def p_end_edge(p):
+  '''end_edge : CPARENTHESES'''
+  automat.add_edge(current_edge)                                                             
 
 def p_error(p):
   raise Exception("Syntax error")
 
 parser = yacc.yacc()
-
-parser.automaton = Automaton()
-parser.current_obj_for_reading = ""
-parser.current_edge = Edge()
 
 sys.stdin = open(sys.argv[1], 'r')
 sys.stdout = open(sys.argv[1] + '.out', 'w')
@@ -157,10 +172,4 @@ while True:
   except Exception as err:
     print("Error: " + str(err))
 
-parser.automaton.print_automaton()    
-
-
-
-
-
-
+automat.print_automat()    
