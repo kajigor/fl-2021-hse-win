@@ -5,9 +5,6 @@ tokens = ['SYMBOL', 'EDGE', 'VERTEX', 'newline']
 
 fout = open(sys.argv[1] + '.out', 'w')
 
-START = 0
-MIDDLE = 1
-TERMINAL = 2
 types = {'S': 'START', 'M': 'MIDDLE', 'T': 'TERMINAL'}
 
 class Vertex:
