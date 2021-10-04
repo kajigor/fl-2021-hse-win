@@ -1,4 +1,3 @@
-import ply.yacc as yacc
 import ply.lex as lex
 import sys
 
@@ -7,7 +6,6 @@ tokens = [
   'VERTEX',
   'TERMINAL',
   'ARROW',
-  'SEP',
   'COLON',
   'QUOTES',
   'SEMICOLON',
@@ -30,7 +28,6 @@ def t_TERMINAL(t):
 
   return t
 t_ARROW = r'->'
-t_SEP = r','
 t_COLON = r':'
 t_QUOTES = r'"'
 t_SEMICOLON = r';'
