@@ -9,7 +9,6 @@ reserved = {
 }
 
 tokens = [
-  'NUM',
   'COMMA',
   'COMMENT',
   'CURLY_BRACKET_OPEN',
@@ -20,12 +19,6 @@ tokens = [
   'ARROW',
   'VARIABLE'
 ] + list(reserved.values())
-
-
-def t_NUM(t):
-  r'[0-9]+'
-  t.value = int(t.value)
-  return t
 
 def t_VARIABLE(t):
   r'[A-Za-z][_0-9A-Za-z]*'

@@ -26,12 +26,27 @@ class State:
         self.name = name_
         self.terminality = False
         self.description = ""
+        self.out_edge = []
+        self.in_edge = []
+        self.from_state = []
+        self.to_state = []
         
     def change_terminality(self):
         self.terminality = True
         
     def add_description(self, description_):
         self.description = description_
+        
+def equality_state(state1, state2):
+    if state1.terminality != state2.terminality:
+        return False
+    if state1.description != state2.description:
+        return False
+    if state1.from_state != state2.from_state:
+        return False
+    if state1.to_state != state2.to_state:
+        return False
+    return True
                        
 class Automaton:
     def __init__(self):
@@ -39,7 +54,55 @@ class Automaton:
         self.edges = []
         self.states = []
         
+    def find_initial_state(self):
+        for i in self.edges:
+            for j in self.states:
+                if i.state_from == j.name:
+                    j.out_edge.append(i)
+                    j.to_state.append(i.state_to)
+                if i.state_to == j.name:
+                    j.in_edge.append(i)
+                    j.from_state.append(i.state_from)
+        for i in self.states:
+            i.to_state.sort()
+            i.from_state.sort()
+        self.check_uniqueness_states()
+        k = 0
+        index = 0
+        for i in range(0, len(self.states)):
+            kl = 0
+            for j in self.states[i].in_edge:
+                if j.state_from != self.states[i].name:
+                    kl += 1
+            if kl == 0:
+                k += 1
+                index = i
+        if k > 1 or k == 0:
+            raise Exception("The automaton does not have a uniquely defined initial state")
+        return index
+        
+    def check_uniqueness_states(self):
+        for i in range(0, len(self.states)):
+            for j in range(0, len(self.states)):
+                if i != j and equality_state(self.states[i], self.states[j]):
+                    raise Exception("States are not unique: " + self.states[i].name + " " + self.states[j].name)
+        
     def print_val(self):
+        for i in range(0, len(self.alphabet)):
+            for j in range(0, len(self.alphabet)):
+                if i != j and self.alphabet[i] == self.alphabet[j]:
+                    raise Exception("Symbols in the alphabet are not unique: " + self.alphabet[j])
+        initial_state = self.find_initial_state()
+        for j in self.states:
+            for i in self.alphabet:
+                fl = 0
+                for l in j.out_edge:
+                    if i in l.symbols:
+                        fl += 1
+                if fl == 0:
+                    raise Exception("The automaton is not complete")
+                if fl > 1:
+                    raise Exception("The automaton is not deterministic")
         print("Alphabet:")
         print("    ", end = "")
         print(self.alphabet)
@@ -48,11 +111,12 @@ class Automaton:
             s = "False"
             if i.terminality:
                 s = "True"
-            print("    name: " + i.name + ", terminality: " + s + ", description: \"" + i.description + "\"")
+            print("    name: " + i.name + ", terminality: " + s + ", description: \'" + i.description + "\'")
         print("Edges:")
         for i in self.edges:
             print("    state from: " + i.state_from + ", state to: " + i.state_to + ", symbols: ", end = "")
             print(i.symbols)
+        print("Initial state:\n    " + self.states[initial_state].name)
   
     def add_symbol(self, symbol_):
         self.alphabet.append(symbol_)
@@ -95,17 +159,16 @@ def p_automaton(p):
 #    pass
 
 def p_alphabet(p):
-    'Alphabet : Start_description_alphabet list Close_curly_bracket'
+    'Alphabet : Start_description_alphabet list_str Close_curly_bracket'
     
 def p_states(p):
-    'States : Start_description_states list Close_curly_bracket'
+    'States : Start_description_states list_var Close_curly_bracket'
     
 def p_terminal(p):
-    'Terminal : Start_description_terminal list Close_curly_bracket'
+    'Terminal : Start_description_terminal list_var Close_curly_bracket'
 
 def p_edges(p):
-    '''Edges : Edges Start_description_edge list Close_square_bracket
-             | Start_description_edge list Close_square_bracket'''
+    'Edges : Start_description_edge list_str Close_square_bracket'
 
 def p_edge_start(p):
     'Start_description_edge : VARIABLE ARROW VARIABLE SQUARE_BRACKET_OPEN'
@@ -131,8 +194,7 @@ def p_states_start(p):
     parser.is_open_curly_bracket = True
     
 def p_description_states(p):
-    ''' Description_states : Description_states STATE VARIABLE CURLY_BRACKET_OPEN STR CURLY_BRACKET_CLOSE
-                           | STATE VARIABLE CURLY_BRACKET_OPEN STR CURLY_BRACKET_CLOSE '''
+    'Description_states : STATE VARIABLE CURLY_BRACKET_OPEN STR CURLY_BRACKET_CLOSE'
     i = 2
     if len(p) == 7:
         i += 1
@@ -147,28 +209,37 @@ def p_terminal_start(p):
     parser.list_read_now = "terminal"
     parser.is_open_curly_bracket = True
     
-def p_read_list(p):
-    '''list : list COMMA STR
-            | list COMMA VARIABLE
-            | STR
-            | VARIABLE'''
+def p_read_list_var(p):
+    '''list_var : list_var COMMA VARIABLE
+                | VARIABLE'''
+    if parser.list_read_now == "" or not parser.is_open_curly_bracket:
+        raise Exception("When reading a list, there are no open brackets or there is no required type for the values ​​being read")
+    if parser.list_read_now != "states" and parser.list_read_now != "terminal":
+        raise Exception("Error type")
+    i = 3
+    if len(p) == 2:
+       i = 1
+    if parser.list_read_now == "states":
+        parser.automaton.add_state(State(p[i]))
+    elif parser.list_read_now == "terminal":
+        parser.automaton.add_terminal(p[i])
+    
+def p_read_list_str(p):
+    '''list_str : list_str COMMA STR
+                | STR'''
     if parser.list_read_now == "" or (not parser.is_open_curly_bracket and not parser.is_open_square_bracket):
         raise Exception("When reading a list, there are no open brackets or there is no required type for the values ​​being read")
     if parser.list_read_now == "edge" and not parser.is_open_square_bracket:
         raise Exception("Necessary bracket not open")
-    if parser.list_read_now != "edge" and parser.list_read_now != "alphabet" and parser.list_read_now != "states" and parser.list_read_now != "terminal":
-        raise Exception("Error in the parser")
-    if parser.list_read_now != "edge" and not parser.is_open_curly_bracket:
+    if parser.list_read_now != "edge" and parser.list_read_now != "alphabet":
+        raise Exception("Error type")
+    if parser.list_read_now == "alphabet" and not parser.is_open_curly_bracket:
         raise Exception("Necessary bracket not open")
     i = 3
     if len(p) == 2:
        i = 1
     if parser.list_read_now == "alphabet":
         parser.automaton.add_symbol(p[i])
-    elif parser.list_read_now == "states":
-        parser.automaton.add_state(State(p[i]))
-    elif parser.list_read_now == "terminal":
-        parser.automaton.add_terminal(p[i])
     elif parser.list_read_now == "edge":
         parser.edge_read_now.add_symbol(p[i])
     	    
@@ -223,5 +294,8 @@ while True:
         not_valid_automaton("Error: " + str(e))    
         break
 
-#if parser.is_valid_automaton:
-parser.automaton.print_val()
+if parser.is_valid_automaton:
+    try:
+        parser.automaton.print_val()
+    except Exception as e:
+        not_valid_automaton("Error: " + str(e))
