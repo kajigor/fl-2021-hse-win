@@ -1,0 +1,17 @@
+alphabet:
+['1', '0']
+Init vertex:
+['q0']
+Terminal vertex:
+[]
+Not Init or Terminal vertex:
+['q1', 'q2', 'q3']
+From: q0 To: q1 By this alphabet:  ['1', '0']
+From: q0 To: q2 By this alphabet:  ['1', '0']
+From: q1 To: q1 By this alphabet:  ['0']
+From: q2 To: q2 By this alphabet:  ['0']
+Is auto full - False
+Is auto deter - False
+q1 and q2 are same
+q2 and q1 are same
+Valid

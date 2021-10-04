@@ -1,0 +1,12 @@
+alphabet:
+['1', '0']
+Init vertex:
+['q0']
+Terminal vertex:
+[]
+Not Init or Terminal vertex:
+['q1']
+From: q0 To: q1 By this alphabet:  ['1', '0']
+From: q1 To: q1 By this alphabet:  ['0']
+Is auto full - False
+Valid

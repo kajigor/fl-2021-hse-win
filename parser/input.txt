@@ -1,0 +1,10 @@
+alphabet {'a', 'f', 'c', 'asd'}
+vertex 'q0';T;F
+vertex 'q1';F;F
+vertex 'q2';F;F
+vertex 'q3';F;T
+vertex 'q4';F;T
+vertex 'q5';F;F
+vertex 'q5';F;F
+edge 'q0';'q1';{'a'}
+edge 'q1';'q2';{'c'}

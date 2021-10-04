@@ -1,0 +1,11 @@
+alphabet:
+['asd', 'c', 'f', 'a']
+Init vertex:
+['q0']
+Terminal vertex:
+['q3', 'q4']
+Not Init or Terminal vertex:
+['q1', 'q2', 'q5']
+From: q0 To: q1 By this alphabet:  ['a']
+From: q1 To: q2 By this alphabet:  ['f', 'c']
+Valid

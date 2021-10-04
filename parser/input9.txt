@@ -1,0 +1,7 @@
+alphabet {'0', '1'}
+vertex 'q0';T;F
+vertex 'q1';F;F
+vertex 'q2';F;F
+edge 'q0';'q1';{'0', '1'}
+edge 'q0';'q2';{'1'}
+edge 'q1';'q1';{'0'}
