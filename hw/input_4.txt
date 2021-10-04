@@ -1,0 +1,5 @@
+Alphabet 10101010
+Terminalvertexes 10101010
+States 01010101
+Startvertex 10101010
+Edge 10101010 10101010 10101010

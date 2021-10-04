@@ -1,0 +1,12 @@
+Этот автомат удовлетвояет не всем проверкам
+Alphabet:
+ª U 
+Terminal Vertexes:
+ªª 
+States:
+U ª ªª 
+Start Vertex:
+ª 
+Edges:
+from: ª   to: ªª   using: ªª 
+from: ª   to: U   using: ªU 
