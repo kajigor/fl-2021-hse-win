@@ -17,7 +17,7 @@ edges = []
 dic = {}
 def t_EDGE(t):
   r'"(.)+"(?=\n)'
-  t.value = t.value[1:-1].replace('\\\\', '\\')
+  t.value = t.value[1:-1]
   return t
 def t_VERTEX(t):
   r'Q([1-9][0-9]*|0)'
