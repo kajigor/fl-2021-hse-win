@@ -1,0 +1,13 @@
+Input is correct
+Alphabet:
+A 
+Terminal Vertexes:
+Z 
+States:
+X Y Z 
+Start Vertex:
+X 
+Edges:
+FROM: X   BY: A   TO: Y 
+FROM: Y   BY: A   TO: Z 
+FROM: Z   BY: A   TO: Z 

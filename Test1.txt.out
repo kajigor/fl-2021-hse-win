@@ -1,0 +1,12 @@
+Input is correct
+Alphabet:
+A 
+Terminal Vertexes:
+FINISH 
+States:
+START FINISH 
+Start Vertex:
+START 
+Edges:
+FROM: START   BY: A   TO: FINISH 
+FROM: FINISH   BY: A   TO: FINISH 
