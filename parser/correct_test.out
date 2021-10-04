@@ -1,0 +1,9 @@
+alphabet:
+0
+1
+Edge from Q0 to Q0 by "0"
+Edge from Q0 to Q1 by "1"
+Edge from Q1 to Q0 by "0"
+Edge from Q1 to T2 by "1"
+Edge from T2 to T2 by "0"
+Edge from T2 to T2 by "1"
