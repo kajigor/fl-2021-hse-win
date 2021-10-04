@@ -52,7 +52,6 @@ vertexes = []
 unique_vertexes = {}
 edges = []
 alphabet = []
-number_of_vertexes = 0
 
 ERROR = 0
 
@@ -74,10 +73,9 @@ def t_EDGE(t):
         if p == '.':
             parts.append(part)
             part = ''
-    global edges, vertexes, number_of_vertexes
+    global edges, vertexes
     edges.append(Edge(parts[0], parts[1], parts[2]))
     vertexes.append(Vertex(parts[2], parts[3]))
-    number_of_vertexes = max(int(parts[0]), int(parts[2]), number_of_vertexes)
     return t
 
 
@@ -98,7 +96,7 @@ def initial_state_checking():
 
 
 def uniqueness_of_states_checking():
-    global vertexes, unique_vertexes
+    global vertexes, unique_vertexes, ERROR
     for v in vertexes:
         if unique_vertexes.get(v.i) is None:
             unique_vertexes.update({v.i: v.terminality})
@@ -106,7 +104,6 @@ def uniqueness_of_states_checking():
             if unique_vertexes[v.i] == v.terminality:
                 continue
             else:
-                global ERROR
                 ERROR = 1
                 return "ERROR: vertex names are not unique"
     return "Vertexes are unique"
@@ -128,24 +125,27 @@ def make_adjacency():
 
 
 def determinism_checking():
-    global vertexes
+    global vertexes, ERROR
     make_adjacency()
     for v in vertexes:
         all_vertex_edges = []
         for e in v.edges:
             all_vertex_edges.append(e)
         if len(all_vertex_edges) != len(set(all_vertex_edges)):
+            global ERROR
+            ERROR = 1
             return "Automate is not deterministic"
     return "Automate is deterministic"
 
 
 def completeness_checking():
-    global vertexes
+    global vertexes, ERROR
     for v in vertexes:
         all_vertex_edges = []
         for e in v.edges:
             all_vertex_edges.append(e)
         if len(edges) == len(set(edges)) and len(edges) == len(alphabet):
+            ERROR = 1
             return "Automate is not full"
     return "Automate is full"
 
