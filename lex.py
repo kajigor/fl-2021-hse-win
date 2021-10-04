@@ -7,7 +7,6 @@ tokens = [
   'VERTEX',
   'TERMINAL',
   'ARROW',
-  'SEP',
   'COLON',
   'QUOTES',
   'SEMICOLON',
@@ -20,7 +19,6 @@ def t_EDGE(t):
 t_VERTEX = r'Q([1-9][0-9]*|0)'
 t_TERMINAL = r'T([1-9][0-9]*|0)'
 t_ARROW = r'->'
-t_SEP = r','
 t_COLON = r':'
 t_QUOTES = r'"'
 t_SEMICOLON = r';'
