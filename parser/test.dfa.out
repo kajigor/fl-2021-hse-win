@@ -1,0 +1,25 @@
+alphabet:
+A B 
+
+vertices list:
+vertex 0S with type START
+vertex 1M with type MIDDLE
+vertex 1T with type TERMINAL
+vertex 2M with type MIDDLE
+
+edges list:
+from vertex 0S with type START to vertex 1M with type MIDDLE if symbols are B
+from vertex 1M with type MIDDLE to vertex 0S with type START if symbols are A
+from vertex 1M with type MIDDLE to vertex 1T with type TERMINAL if symbols are B
+from vertex 1T with type TERMINAL to vertex 1M with type MIDDLE if symbols are B
+from vertex 1T with type TERMINAL to vertex 2M with type MIDDLE if symbols are A
+from vertex 2M with type MIDDLE to vertex 1T with type TERMINAL if symbols are B
+from vertex 2M with type MIDDLE to vertex 0S with type START if symbols are A
+from vertex 0S with type START to vertex 2M with type MIDDLE if symbols are A
+
+analysis:
+Initial state was found
+Vertices names are unique
+Elements of the alphabet are unique
+This automaton is deterministic
+This automaton is complete
