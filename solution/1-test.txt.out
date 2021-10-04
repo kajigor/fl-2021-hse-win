@@ -1,0 +1,11 @@
+1) Vertexes are unique
+2) Initial state found: 0
+4/4 are COMPLETE! 
+
+Automate is good! Look: 
+
+Alphabet: 0, 1, 
+
+Vertexes: 0 S, 1 N, 3 N, 2 T, 
+
+Edges: 0 2 1, 0 1 3, 1 2 3, 3 1 3, 3 2 3, 1 1 2, 2 1 3, 2 2 3, 
