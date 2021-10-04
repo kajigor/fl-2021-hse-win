@@ -19,13 +19,14 @@ class Vertex:
     def __init__(self, i_, terminality_):
         self.i = i_
         if terminality_ == '#':
-            terminality_ = 'N'
+            terminality_ = 'Normal'
         if terminality_ == '$':
-            terminality_ = 'T'
+            terminality_ = 'Terminal'
         self.terminality = terminality_
+        self.edges = []
 
     def write(self):
-        print(str(self.i) + " " + str(self.terminality), end='')
+        print('\t\t' + str(self.i) + ': ' + str(self.terminality), end='\n')
 
 
 class Edge:
@@ -35,21 +36,23 @@ class Edge:
         self.index_vertex_to = index_vertex_to_
 
     def write(self):
-        print(str(self.index_vertex_from) + ' ' + str(self.crossover) + ' ' + str(self.index_vertex_to), end='')
+        print('\t\t' + "From: " + str(self.index_vertex_from) + "\t\tCrossover: " + str(
+            self.crossover) + "\t\tTo: " + str(self.index_vertex_to), end='\n')
 
 
 class Alphabet:
     def __init__(self, crossover_):
         self.crossover = crossover_
 
-    def write(self):
-        print(str(self.crossover), end='')
+    def write(self, i):
+        print('\t\t' + str(self.crossover) + ": " + str(i))
 
 
 vertexes = []
 unique_vertexes = {}
 edges = []
 alphabet = []
+number_of_vertexes = 0
 
 ERROR = 0
 
@@ -71,24 +74,24 @@ def t_EDGE(t):
         if p == '.':
             parts.append(part)
             part = ''
-    global edges
+    global edges, vertexes, number_of_vertexes
     edges.append(Edge(parts[0], parts[1], parts[2]))
-    global vertexes
     vertexes.append(Vertex(parts[2], parts[3]))
+    number_of_vertexes = max(int(parts[0]), int(parts[2]), number_of_vertexes)
     return t
 
 
 def t_START(t):
     r'(?<=\n)\d(?=\n)'
     global vertexes
-    vertexes.append(Vertex(t.value, 'S'))
+    vertexes.append(Vertex(t.value, 'Start'))
     return t
 
 
 def initial_state_checking():
     global unique_vertexes, ERROR
     for v, s in unique_vertexes.items():
-        if s == 'S':
+        if s == 'Start':
             return "Initial state found: " + str(v)
     ERROR = 1
     return "ERROR: initial state does not exist"
@@ -109,34 +112,47 @@ def uniqueness_of_states_checking():
     return "Vertexes are unique"
 
 
-# def uniqueness_alphabet_checking():
-#     if len(alphabet) == len(set(alphabet)):
-#         return "Elements of the alphabet are unique"
-#     else:
-#         return "ERROR: elements of the alphabet are not unique"
+def uniqueness_alphabet_checking():
+    if len(alphabet) == len(set(alphabet)):
+        return "Elements of the alphabet are unique"
+    else:
+        return "ERROR: elements of the alphabet are not unique"
 
 
-# def determinism_checking():
-#     for v in vertexes:
-#         all_edges = ""
-#         for e in v.edges:
-#             all_edges += e
-#         if list(all_edges) != list(set(all_edges)):
-#             return "Machine is not deterministic"
-#     return "Machine is deterministic"
+def make_adjacency():
+    global vertexes, edges
+    for e in edges:
+        for v in vertexes:
+            if e.index_vertex_from == v.i:
+                v.edges.append(e.crossover)
 
 
-# def completeness_checking():
-#     for v in vertexes:
-#         all_edges = ""
-#         for e in v.edges:
-#             all_edges += e
-#         if list(set(alphabet)) != list(set(all_edges)):
-#             return "Machine is not full"
-#     return "Machine is full"
+def determinism_checking():
+    global vertexes
+    make_adjacency()
+    for v in vertexes:
+        all_vertex_edges = []
+        for e in v.edges:
+            all_vertex_edges.append(e)
+        if len(all_vertex_edges) != len(set(all_vertex_edges)):
+            return "Automate is not deterministic"
+    return "Automate is deterministic"
+
+
+def completeness_checking():
+    global vertexes
+    for v in vertexes:
+        all_vertex_edges = []
+        for e in v.edges:
+            all_vertex_edges.append(e)
+        if len(edges) == len(set(edges)) and len(edges) == len(alphabet):
+            return "Automate is not full"
+    return "Automate is full"
+
 
 def automate_is_good():
-    return "5/5 are COMPLETE! \n\nAutomate is good! Look: \n"
+    return "========= 5/5 are COMPLETE! ========= \n\nAutomate is good!\tLOOK: \n"
+
 
 def automate_is_not_good():
     return "I have sad news... Your automate is bad"
@@ -181,29 +197,32 @@ def main():
     # ВСЕ ПРОВЕРКИ
     print("1) " + uniqueness_of_states_checking())
     print("2) " + initial_state_checking())
+    print("3) " + uniqueness_alphabet_checking())
+    print("4) " + determinism_checking())
+    print("5) " + completeness_checking())
 
     # ВЫВОД
     if not ERROR:
         print(automate_is_good())
 
-        print("Alphabet:", end=' ')
+        print("Alphabet:", end='\n')
+        i = 0
         for a in alphabet:
-            Alphabet.write(a)
-            print(',', end=' ')
+            i += 1
+            Alphabet.write(a, i)
         print('\n')
 
-        print("Vertexes:", end=' ')
+        print("Vertexes:", end='\n')
         for v, s in unique_vertexes.items():
             vert = Vertex(v, s)
             Vertex.write(vert)
-            print(',', end=' ')
         print('\n')
 
-        print("Edges:", end=' ')
+        print("Edges:", end='\n')
         for e in edges:
             Edge.write(e)
-            print(',', end=' ')
     else:
         print(automate_is_not_good())
+
 
 main()
