@@ -12,7 +12,7 @@ reserved = {
 tokens = [
              'NUM',
              'ID',
-             'COMMA'
+             'COMMA',
              'COLON',
              'OPEN_BR',
              'CLOSED_BR',

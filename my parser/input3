@@ -1,0 +1,5 @@
+Sigma : 1, 2, 3
+Q : m, e, o, w
+q0 : m
+T : w
+delta : (m -- e, 1), (e -- o, 2), (o -- w, 3)
