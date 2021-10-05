@@ -44,11 +44,11 @@ class Automat:
     self.alphabet_size = 0
     self.alphabet = []
     self.count_states = 0
-    self.start_state = 0
+    self.start_state = -1
     self.count_terminal = 0
     self.terminal_states = []
-    #self.count_edges = 0
     self.edges = []
+    self.states = []
 
   def init_alphabet_size(self, size):
     self.alphabet_size = size
@@ -67,9 +67,6 @@ class Automat:
 
   def add_terminal_state(self, state_number):
     self.terminal_states.append(state_number)
-
-  #def init_count_edges(self, count):
-    #self.count_edges = count
 
   def add_edge(self, edge):
     self.edges.append(edge)  
@@ -100,6 +97,36 @@ class Automat:
       print(" (", end = "")
       print(', '.join(edge.symbols), end = "")
       print(")")
+
+  def check_start_state(self):
+    if (self.start_state == -1):
+      raise Exception("Start state of the automat has not been detected")
+
+  def check_states_uniqueness(self):
+    for i in range(len(self.states)):
+      for j in range(i, self.states):
+        if (self.states[i] == self.states[j]):
+          raise Exception("Automat has identical states")
+
+  def check_alphabet_uniqueness(self):
+    for i in range(len(self.alphabet)):
+      for j in range(i, self.alphabet):
+        if (self.alphabet[i] == self.alphabet[j]):
+          raise Exception("Symbols of the alphabet are not unique")
+
+  def check_determinancy(self):
+    if (False):
+      raise Exception("Automat is not deterministic")  
+
+  def checker(self):
+    try:
+      heck_start_state()
+      check_states_uniqueness()
+      check_alphabet_uniqueness()
+      check_determinancy()
+    except Exception as err:
+      print("Error:\n    " + str(err))  
+
 
 automat = Automat()
 current_edge = Edge()      
