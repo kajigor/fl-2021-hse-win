@@ -24,23 +24,68 @@ class State:
         self.is_terminal = False
         self.is_start = False
         self.is_stock = False
-        self.out_edge = []
-        self.in_edge = []
-         
+        self.to_ = []
+        self.from_ = [] 
 alphabet =[]
 edges = []
 states = []   
 term_states = []      
 index_edges = {}
+index_states = {}
 edges_to = []
+def state_eq():
+  for i in states:
+    for j in states:
+      if i.is_terminal == j.is_terminal and i.is_start == j.is_start \
+         and i.is_stock == j.is_stock and i!=j and\
+         sorted(i.to_) == sorted(j.to_) and sorted(i.from_) == sorted(j.from_):
+         print('\n'+(str)(i.name) + ' and ' + (str)(j.name) + ' are equal!')
+  print("\nAll states are unique!")
+
+def symbols_unique():
+  return len(set(alphabet))==len(alphabet)
+
+def is_determ():
+  flag = True
+  for i in states:
+    all_symb = {}
+    for j in i.to_:
+      a, b = j
+      if b in all_symb:
+        flag = False
+      else:
+        all_symb[b] = 1  
+  return flag 
+
+def is_full():
+  flag = True
+  for i in states:
+     all_simb = []
+     for j in i.to_:
+       a, b = j
+       all_simb.append(b)
+     if(len(set(all_simb)) != len(alphabet)):
+       flag = False 
+  return flag 
+
 def print_automato():
-     print("\nStates:")            
+     if(is_determ()):
+       print("Automaton is deterministic!")
+     else:
+       print("Automaton is not deterministic!")  
+     if(is_full()):
+       print("Automaton is full!") 
+     else: 
+       print("Automaton is not full!")  
+     print("\nStates:") 
+     start = -1         
      for i in states:
           print(i.name, end=": ")
           if(i.is_terminal):
             print("terminal")
           elif(i.is_start):
             print("start")
+            start = i.name
           elif(i.is_stock):
             print("stock")
           else:
@@ -53,7 +98,15 @@ def print_automato():
           print(i.state_to, end=". ")
           print("Symbols: ", end=' ')
           print(i.symbols)
-               
+     if start!=-1:
+       print("\nAutomaton has a start state!\n")
+     else:
+       print("Automaton does not have a start state!\n")       
+     if(symbols_unique()):
+       print("Symbols in alphabet are unique!")
+     else:
+       print("Symbols in alphabet are not unique!")   
+     state_eq()  
 def p_automaton(p):
       '''Automaton : start_state
                     | States
@@ -92,6 +145,7 @@ def p_states(p):
       if i == current_state.name:
         current_state.is_terminal = True
     states.append(current_state)
+    index_states[p[4]] = len(states) -1
 
   
 def p_states_list(p):
@@ -105,6 +159,7 @@ def p_states_list(p):
       if i == current_state.name:
         current_state.is_terminal = True
     states.append(current_state)
+    index_states[p[2]] = len(states) -1
   
 def p_alphabet(p):
     '''Alphabet : ALPHABET COLON OPEN_BRACKET WORD Words CLOSE_BRACKET
@@ -122,9 +177,11 @@ def p_edges(p):
   '''edges : VERTEX_FROM OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list
           | VERTEX_FROM empty'''
   if(len(p)>3): 
-    edges_to.append((p[3], p[4]))   
+    edges_to.append((p[3], p[4]))
     for pair in edges_to:
+        states[index_states[(int)(p[1])]].to_.append(pair)
         a, b = pair
+        states[index_states[(int)(a)]].to_.append((p[1], b))
         pair2=(p[1], a)
         if pair2 in index_edges:
           edges[index_edges[pair2]].symbols.append(p[4])

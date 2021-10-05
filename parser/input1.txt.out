@@ -1,4 +1,6 @@
 Syntax error
+Automaton is not deterministic!
+Automaton is full!
 
 States:
 6: normal
@@ -28,3 +30,9 @@ from 5 to 4. Symbols:  ['a']
 from 6 to 6. Symbols:  ['c']
 from 6 to 5. Symbols:  ['a']
 from 6 to 1. Symbols:  ['b']
+
+Automaton has a start state!
+
+Symbols in alphabet are unique!
+
+All states are unique!
