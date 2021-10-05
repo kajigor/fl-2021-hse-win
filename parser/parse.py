@@ -48,13 +48,13 @@ def symbols_unique():
 def is_determ():
   flag = True
   for i in states:
-    all_symb = {}
+    symb = {}
     for j in i.to_:
       a, b = j
-      if b in all_symb:
+      if b in symb:
         flag = False
       else:
-        all_symb[b] = 1  
+        symb[b] = 1  
   return flag 
 
 def is_full():
@@ -181,7 +181,7 @@ def p_edges(p):
     for pair in edges_to:
         states[index_states[(int)(p[1])]].to_.append(pair)
         a, b = pair
-        states[index_states[(int)(a)]].to_.append((p[1], b))
+        states[index_states[(int)(a)]].from_.append((p[1], b))
         pair2=(p[1], a)
         if pair2 in index_edges:
           edges[index_edges[pair2]].symbols.append(p[4])

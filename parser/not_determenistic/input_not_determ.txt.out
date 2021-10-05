@@ -1,6 +1,6 @@
 Syntax error
 Automaton is not deterministic!
-Automaton is full!
+Automaton is not full!
 
 States:
 6: normal
@@ -13,7 +13,7 @@ States:
 
 Edges:
 
-from 0 to 2. Symbols:  ['c']
+from 0 to 2. Symbols:  ['a']
 from 0 to 1. Symbols:  ['b', 'a']
 from 1 to 6. Symbols:  ['c']
 from 1 to 1. Symbols:  ['a', 'b']

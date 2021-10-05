@@ -1,0 +1,37 @@
+Syntax error
+Automaton is deterministic!
+Automaton is not full!
+
+States:
+6: normal
+5: terminal
+4: normal
+3: normal
+2: normal
+1: terminal
+0: start
+
+Edges:
+
+from 0 to 1. Symbols:  ['b', 'a']
+from 1 to 6. Symbols:  ['c']
+from 1 to 1. Symbols:  ['a', 'b']
+from 2 to 1. Symbols:  ['c']
+from 2 to 4. Symbols:  ['b']
+from 2 to 3. Symbols:  ['a']
+from 3 to 2. Symbols:  ['c']
+from 3 to 5. Symbols:  ['a', 'b']
+from 4 to 6. Symbols:  ['c']
+from 4 to 5. Symbols:  ['b']
+from 4 to 1. Symbols:  ['a']
+from 5 to 5. Symbols:  ['c', 'b']
+from 5 to 4. Symbols:  ['a']
+from 6 to 6. Symbols:  ['c']
+from 6 to 5. Symbols:  ['a']
+from 6 to 1. Symbols:  ['b']
+
+Automaton has a start state!
+
+Symbols in alphabet are unique!
+
+All states are unique!
