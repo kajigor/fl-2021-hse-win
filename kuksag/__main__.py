@@ -49,7 +49,7 @@ if __name__ == '__main__':
         edge_line = readline(default_input)
         edge = parser.parse(edge_line)
 
-        if not isinstance(graph.vertices, base.Edge):
+        if not isinstance(edge, base.Edge):
             error()
 
         graph.adjacency_list[edge.vertex_from].append(edge)

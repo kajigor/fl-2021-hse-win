@@ -1,0 +1,14 @@
+vertices 5
+edges 9
+from 1 to 2 edge "0"
+from 1 to 4 edge "5"
+from 1 to 5 edge "\sigma \ {0, 5}"
+from 2 to 3 edge "\sigma"
+from 3 to 3 edge "\sigma"
+from 4 to 4 edge "0, 5"
+from 4 to 5 edge "\sigma \ {0, 5}"
+from 5 to 4 edge "0, 5"
+from 5 to 5 edge "\sigma \ {0, 5}"
+start 1
+terminal 4
+sink 3
