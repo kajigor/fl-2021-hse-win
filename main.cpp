@@ -32,6 +32,11 @@ int main(int argc, char *argv[]) {
             std::cout << "Error: \nexpect: '" + expect + "'\nfound: '" + found + "'" << "\n";
         }
 
+        static void bad_input() {
+            not_DFA();
+            std::cout << "Incredible bad input:\n";
+        }
+
         int try_read() {
             auto read_string = [&]() {
                 std::string s;
@@ -48,7 +53,7 @@ int main(int argc, char *argv[]) {
                 int alphabet_size;
                 std::cin >> alphabet_size;
                 if (alphabet_size < 0) {
-                    std::cout << "Incredible bad input:\n";
+                    bad_input();
                     std::cout << "alphabet_size < 0\n";
                     return 1;
                 }
@@ -68,9 +73,9 @@ int main(int argc, char *argv[]) {
                     error(STATES, tmp);
                     return 1;
                 }
-                std::cin >> num_states;  // ???????????????????
+                std::cin >> num_states;
                 if (num_states < 0) {
-                    std::cout << "Incredible bad input:\n";
+                    bad_input();
                     std::cout << "num_states < 0\n";
                     return 1;
                 }
@@ -119,6 +124,10 @@ int main(int argc, char *argv[]) {
                 }
                 int num_terminals;
                 std::cin >> num_terminals;
+                if (num_terminals < 0) {
+                    bad_input();
+                    std::cout << "num_terminals < 0\n";
+                }
                 terminals.resize(num_terminals);
                 for (auto &x : terminals) {
                     std::cin >> x;
@@ -213,10 +222,15 @@ int main(int argc, char *argv[]) {
             return 0;
         }
 
+        static void not_DFA() {
+            std::cout << "Graph is not DFA\n";
+        }
+
         int check() {
             // start state is 0
             // all states are unique because of language construction
             if (!is_alphabet_unique()) {
+                not_DFA();
                 std::cout << "Symbols alphabet is not unique\n";
                 return 1;
             }
@@ -224,7 +238,7 @@ int main(int argc, char *argv[]) {
             if (code == 0) {
                 return 0;
             }
-            std::cout << "Graph is not DFA\n";
+            not_DFA();
             if (code == 1) {
                 std::cout << "Same edge appearance twice in the same vertex's list\n";
             } else if (code == 2) {

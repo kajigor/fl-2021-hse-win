@@ -8,4 +8,5 @@ DFA {
     between states 1 and 1: {}
   Terminals 1: {0}
 }
+Graph is not DFA
 Symbols alphabet is not unique
