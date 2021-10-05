@@ -171,25 +171,24 @@ def p_edge(p):
 
 def p_moves(p):
     '''moves : move COMMA moves
-             | move DOTS move
              | move'''
     if len(p) == 4:
-        p[0] = p[1]
-        if p[2] == '...':
-            for i in range(int(p[1]) + 1, int(p[3]) + 1):
-                automat.add_move(i)
-                p[0] += ',' + str(i)
-        else:
-            p[0] = p[1] + ',' + p[3]
+        p[0] = p[1] + ',' + p[3]
     else:
         p[0] = p[1]
 
 
 def p_move(p):
     '''move : NUM
-            | STR'''
-    p[0] = str(p[1])
+            | STR
+            | NUM DOTS NUM'''
     automat.add_move(p[1])
+    p[0] = str(p[1])
+    if len(p) == 4:
+        if p[2] == '...':
+            for i in range(int(p[1]) + 1, int(p[3]) + 1):
+                automat.add_move(i)
+                p[0] += ',' + str(i)
 
 
 def p_error(p):
