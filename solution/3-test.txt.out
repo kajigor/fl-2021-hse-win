@@ -1,0 +1,8 @@
+1) Vertexes are unique
+2) Initial state found: 0
+3) Elements of the alphabet are unique
+4) Automate is deterministic
+5) Automate is not full
+========= 4/5 are complete! ========= 
+
+I have sad news... Your automate is bad
