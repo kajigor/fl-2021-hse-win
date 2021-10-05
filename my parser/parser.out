@@ -1,0 +1,429 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> Automata
+Rule 1     Automata -> Sigma
+Rule 2     Automata -> States
+Rule 3     Automata -> Terminal
+Rule 4     Automata -> Start_state
+Rule 5     Automata -> Edges
+Rule 6     Sigma -> Start_description_sigma list_symb
+Rule 7     States -> Start_description_states list_state
+Rule 8     Terminal -> Start_description_terminal list_state
+Rule 9     Start_state -> Start_description_start_state list_state
+Rule 10    Edges -> Start_description_edges list_edges
+Rule 11    Start_description_sigma -> SIGMA COLON
+Rule 12    Start_description_states -> STATES COLON
+Rule 13    Start_description_terminal -> TERMINAL COLON
+Rule 14    Start_description_start_state -> START_STATE COLON
+Rule 15    Start_description_edges -> DELTA COLON
+Rule 16    list_edges -> list_edges COMMA edge
+Rule 17    list_edges -> edge
+Rule 18    edge -> OPEN_BR ID DASH ID COMMA NUM CLOSED_BR
+Rule 19    list_state -> list_state COMMA ID
+Rule 20    list_state -> ID
+Rule 21    list_symb -> list_symb COMMA NUM
+Rule 22    list_symb -> NUM
+
+Terminals, with rules where they appear
+
+CLOSED_BR            : 18
+COLON                : 11 12 13 14 15
+COMMA                : 16 18 19 21
+DASH                 : 18
+DELTA                : 15
+ID                   : 18 18 19 20
+NUM                  : 18 21 22
+OPEN_BR              : 18
+SIGMA                : 11
+START_STATE          : 14
+STATES               : 12
+TERMINAL             : 13
+error                : 
+
+Nonterminals, with rules where they appear
+
+Automata             : 0
+Edges                : 5
+Sigma                : 1
+Start_description_edges : 10
+Start_description_sigma : 6
+Start_description_start_state : 9
+Start_description_states : 7
+Start_description_terminal : 8
+Start_state          : 4
+States               : 2
+Terminal             : 3
+edge                 : 16 17
+list_edges           : 10 16
+list_state           : 7 8 9 19
+list_symb            : 6 21
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . Automata
+    (1) Automata -> . Sigma
+    (2) Automata -> . States
+    (3) Automata -> . Terminal
+    (4) Automata -> . Start_state
+    (5) Automata -> . Edges
+    (6) Sigma -> . Start_description_sigma list_symb
+    (7) States -> . Start_description_states list_state
+    (8) Terminal -> . Start_description_terminal list_state
+    (9) Start_state -> . Start_description_start_state list_state
+    (10) Edges -> . Start_description_edges list_edges
+    (11) Start_description_sigma -> . SIGMA COLON
+    (12) Start_description_states -> . STATES COLON
+    (13) Start_description_terminal -> . TERMINAL COLON
+    (14) Start_description_start_state -> . START_STATE COLON
+    (15) Start_description_edges -> . DELTA COLON
+
+    SIGMA           shift and go to state 12
+    STATES          shift and go to state 13
+    TERMINAL        shift and go to state 14
+    START_STATE     shift and go to state 15
+    DELTA           shift and go to state 16
+
+    Automata                       shift and go to state 1
+    Sigma                          shift and go to state 2
+    States                         shift and go to state 3
+    Terminal                       shift and go to state 4
+    Start_state                    shift and go to state 5
+    Edges                          shift and go to state 6
+    Start_description_sigma        shift and go to state 7
+    Start_description_states       shift and go to state 8
+    Start_description_terminal     shift and go to state 9
+    Start_description_start_state  shift and go to state 10
+    Start_description_edges        shift and go to state 11
+
+state 1
+
+    (0) S' -> Automata .
+
+
+
+state 2
+
+    (1) Automata -> Sigma .
+
+    $end            reduce using rule 1 (Automata -> Sigma .)
+
+
+state 3
+
+    (2) Automata -> States .
+
+    $end            reduce using rule 2 (Automata -> States .)
+
+
+state 4
+
+    (3) Automata -> Terminal .
+
+    $end            reduce using rule 3 (Automata -> Terminal .)
+
+
+state 5
+
+    (4) Automata -> Start_state .
+
+    $end            reduce using rule 4 (Automata -> Start_state .)
+
+
+state 6
+
+    (5) Automata -> Edges .
+
+    $end            reduce using rule 5 (Automata -> Edges .)
+
+
+state 7
+
+    (6) Sigma -> Start_description_sigma . list_symb
+    (21) list_symb -> . list_symb COMMA NUM
+    (22) list_symb -> . NUM
+
+    NUM             shift and go to state 18
+
+    list_symb                      shift and go to state 17
+
+state 8
+
+    (7) States -> Start_description_states . list_state
+    (19) list_state -> . list_state COMMA ID
+    (20) list_state -> . ID
+
+    ID              shift and go to state 20
+
+    list_state                     shift and go to state 19
+
+state 9
+
+    (8) Terminal -> Start_description_terminal . list_state
+    (19) list_state -> . list_state COMMA ID
+    (20) list_state -> . ID
+
+    ID              shift and go to state 20
+
+    list_state                     shift and go to state 21
+
+state 10
+
+    (9) Start_state -> Start_description_start_state . list_state
+    (19) list_state -> . list_state COMMA ID
+    (20) list_state -> . ID
+
+    ID              shift and go to state 20
+
+    list_state                     shift and go to state 22
+
+state 11
+
+    (10) Edges -> Start_description_edges . list_edges
+    (16) list_edges -> . list_edges COMMA edge
+    (17) list_edges -> . edge
+    (18) edge -> . OPEN_BR ID DASH ID COMMA NUM CLOSED_BR
+
+    OPEN_BR         shift and go to state 25
+
+    list_edges                     shift and go to state 23
+    edge                           shift and go to state 24
+
+state 12
+
+    (11) Start_description_sigma -> SIGMA . COLON
+
+    COLON           shift and go to state 26
+
+
+state 13
+
+    (12) Start_description_states -> STATES . COLON
+
+    COLON           shift and go to state 27
+
+
+state 14
+
+    (13) Start_description_terminal -> TERMINAL . COLON
+
+    COLON           shift and go to state 28
+
+
+state 15
+
+    (14) Start_description_start_state -> START_STATE . COLON
+
+    COLON           shift and go to state 29
+
+
+state 16
+
+    (15) Start_description_edges -> DELTA . COLON
+
+    COLON           shift and go to state 30
+
+
+state 17
+
+    (6) Sigma -> Start_description_sigma list_symb .
+    (21) list_symb -> list_symb . COMMA NUM
+
+    $end            reduce using rule 6 (Sigma -> Start_description_sigma list_symb .)
+    COMMA           shift and go to state 31
+
+
+state 18
+
+    (22) list_symb -> NUM .
+
+    COMMA           reduce using rule 22 (list_symb -> NUM .)
+    $end            reduce using rule 22 (list_symb -> NUM .)
+
+
+state 19
+
+    (7) States -> Start_description_states list_state .
+    (19) list_state -> list_state . COMMA ID
+
+    $end            reduce using rule 7 (States -> Start_description_states list_state .)
+    COMMA           shift and go to state 32
+
+
+state 20
+
+    (20) list_state -> ID .
+
+    COMMA           reduce using rule 20 (list_state -> ID .)
+    $end            reduce using rule 20 (list_state -> ID .)
+
+
+state 21
+
+    (8) Terminal -> Start_description_terminal list_state .
+    (19) list_state -> list_state . COMMA ID
+
+    $end            reduce using rule 8 (Terminal -> Start_description_terminal list_state .)
+    COMMA           shift and go to state 32
+
+
+state 22
+
+    (9) Start_state -> Start_description_start_state list_state .
+    (19) list_state -> list_state . COMMA ID
+
+    $end            reduce using rule 9 (Start_state -> Start_description_start_state list_state .)
+    COMMA           shift and go to state 32
+
+
+state 23
+
+    (10) Edges -> Start_description_edges list_edges .
+    (16) list_edges -> list_edges . COMMA edge
+
+    $end            reduce using rule 10 (Edges -> Start_description_edges list_edges .)
+    COMMA           shift and go to state 33
+
+
+state 24
+
+    (17) list_edges -> edge .
+
+    COMMA           reduce using rule 17 (list_edges -> edge .)
+    $end            reduce using rule 17 (list_edges -> edge .)
+
+
+state 25
+
+    (18) edge -> OPEN_BR . ID DASH ID COMMA NUM CLOSED_BR
+
+    ID              shift and go to state 34
+
+
+state 26
+
+    (11) Start_description_sigma -> SIGMA COLON .
+
+    NUM             reduce using rule 11 (Start_description_sigma -> SIGMA COLON .)
+
+
+state 27
+
+    (12) Start_description_states -> STATES COLON .
+
+    ID              reduce using rule 12 (Start_description_states -> STATES COLON .)
+
+
+state 28
+
+    (13) Start_description_terminal -> TERMINAL COLON .
+
+    ID              reduce using rule 13 (Start_description_terminal -> TERMINAL COLON .)
+
+
+state 29
+
+    (14) Start_description_start_state -> START_STATE COLON .
+
+    ID              reduce using rule 14 (Start_description_start_state -> START_STATE COLON .)
+
+
+state 30
+
+    (15) Start_description_edges -> DELTA COLON .
+
+    OPEN_BR         reduce using rule 15 (Start_description_edges -> DELTA COLON .)
+
+
+state 31
+
+    (21) list_symb -> list_symb COMMA . NUM
+
+    NUM             shift and go to state 35
+
+
+state 32
+
+    (19) list_state -> list_state COMMA . ID
+
+    ID              shift and go to state 36
+
+
+state 33
+
+    (16) list_edges -> list_edges COMMA . edge
+    (18) edge -> . OPEN_BR ID DASH ID COMMA NUM CLOSED_BR
+
+    OPEN_BR         shift and go to state 25
+
+    edge                           shift and go to state 37
+
+state 34
+
+    (18) edge -> OPEN_BR ID . DASH ID COMMA NUM CLOSED_BR
+
+    DASH            shift and go to state 38
+
+
+state 35
+
+    (21) list_symb -> list_symb COMMA NUM .
+
+    COMMA           reduce using rule 21 (list_symb -> list_symb COMMA NUM .)
+    $end            reduce using rule 21 (list_symb -> list_symb COMMA NUM .)
+
+
+state 36
+
+    (19) list_state -> list_state COMMA ID .
+
+    COMMA           reduce using rule 19 (list_state -> list_state COMMA ID .)
+    $end            reduce using rule 19 (list_state -> list_state COMMA ID .)
+
+
+state 37
+
+    (16) list_edges -> list_edges COMMA edge .
+
+    COMMA           reduce using rule 16 (list_edges -> list_edges COMMA edge .)
+    $end            reduce using rule 16 (list_edges -> list_edges COMMA edge .)
+
+
+state 38
+
+    (18) edge -> OPEN_BR ID DASH . ID COMMA NUM CLOSED_BR
+
+    ID              shift and go to state 39
+
+
+state 39
+
+    (18) edge -> OPEN_BR ID DASH ID . COMMA NUM CLOSED_BR
+
+    COMMA           shift and go to state 40
+
+
+state 40
+
+    (18) edge -> OPEN_BR ID DASH ID COMMA . NUM CLOSED_BR
+
+    NUM             shift and go to state 41
+
+
+state 41
+
+    (18) edge -> OPEN_BR ID DASH ID COMMA NUM . CLOSED_BR
+
+    CLOSED_BR       shift and go to state 42
+
+
+state 42
+
+    (18) edge -> OPEN_BR ID DASH ID COMMA NUM CLOSED_BR .
+
+    COMMA           reduce using rule 18 (edge -> OPEN_BR ID DASH ID COMMA NUM CLOSED_BR .)
+    $end            reduce using rule 18 (edge -> OPEN_BR ID DASH ID COMMA NUM CLOSED_BR .)
+

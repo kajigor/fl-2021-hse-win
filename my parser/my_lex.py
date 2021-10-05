@@ -12,7 +12,7 @@ reserved = {
 tokens = [
              'NUM',
              'ID',
-             'COMMA',
+             'COMMA'
              'COLON',
              'OPEN_BR',
              'CLOSED_BR',
@@ -59,14 +59,13 @@ def t_error(t):
 
 lexer = lex.lex()
 
-print(123)
 
-lexer.input(open(sys.argv[1], 'r').read())
-sys.stdout = open(sys.argv[1] + '.out', 'w')
-
-
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
+# lexer.input(open(sys.argv[1], 'r').read())
+# sys.stdout = open(sys.argv[1] + '.out', 'w')
+#
+#
+# while True:
+#     tok = lexer.token()
+#     if not tok:
+#         break
+#     print(tok)
