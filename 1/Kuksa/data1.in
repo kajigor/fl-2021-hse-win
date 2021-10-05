@@ -1,0 +1,14 @@
+vertices 5
+edges 10
+from 1 to 2 edge "0"
+from 1 to 3 edge "1"
+from 2 to 4 edge "1"
+from 2 to 5 edge "0"
+from 3 to 4 edge "0"
+from 3 to 5 edge "1"
+from 4 to 4 edge "0"
+from 4 to 4 edge "1"
+from 5 to 5 edge "0"
+from 5 to 5 edge "1"
+start 1
+terminal 4

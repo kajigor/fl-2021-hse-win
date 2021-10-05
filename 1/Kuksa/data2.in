@@ -1,0 +1,8 @@
+vertices 2
+edges 4
+from 1 to 2 edge "a"
+from 1 to 1 edge "b"
+from 2 to 1 edge "a"
+from 2 to 1 edge "b"
+start 1
+terminal 2
