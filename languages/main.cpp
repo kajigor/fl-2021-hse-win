@@ -84,14 +84,14 @@ void get_count_number(std::string &s){
     }
 
     if(!count_vertex_correct){
-        output << "1:" << i + 1 << ": ожидалось число, получено некорректное число!" << std::endl;
+        std::cerr << "1:" << i + 1 << ": ожидалось число, получено некорректное число!" << std::endl;
         return;
     }
 
     dfa.count_vertex = std::stoi(number);
     for(; i < s.size(); i++){
         if(s[i] != '}'){
-            output << "1:" << i + 1 << ": не найден файл \"}\"!" << std::endl;
+            std::cerr << "1:" << i + 1 << ": не найден файл \"}\"!" << std::endl;
         } else {
             i++;
             break;
@@ -100,7 +100,7 @@ void get_count_number(std::string &s){
 
     for(; i < s.size(); i++){
         if(s[i] != ' '){
-            output << "1:" << i + 1 << ": после \"}\" найден символ, которого не должно быть!" << std::endl;
+            std::cerr << "1:" << i + 1 << ": после \"}\" найден символ, которого не должно быть!" << std::endl;
         }
     }
 }
@@ -111,7 +111,7 @@ void get_alphabet(std::string &s){
     while(i < s.size()) {
         for (; i < s.size(); i++) {
             if (s[i] != '#') {
-                output << "2:" << i + 1 << ": вместо \"#\" найдено\"" << s[i] << "\"!" << std::endl;
+                std::cerr << "2:" << i + 1 << ": вместо \"#\" найдено\"" << s[i] << "\"!" << std::endl;
             } else {
                 i++;
                 break;
@@ -125,7 +125,7 @@ void get_alphabet(std::string &s){
                     dfa.alphabet[letter] = 1;
                 } else {
                     dfa.alphabet_unique = false;
-                    output << "2:" << i + 1 << ": литерал \"" << letter << "\" уже был введён!" << std::endl;
+                    std::cerr << "2:" << i + 1 << ": литерал \"" << letter << "\" уже был введён!" << std::endl;
                 }
                 letter = "";
                 i++;   // чтобы перейти к следующему символу строки
@@ -136,11 +136,11 @@ void get_alphabet(std::string &s){
         }
 
         if(letter != ""){
-            output << "2:" << i + 1 << ": не найдет символ \"#\"!";
+            std::cerr << "2:" << i + 1 << ": не найдет символ \"#\"!";
         }
 
         if(i < s.size() && s[i] != ' '){
-            output << "2:" << i + 1 << ": ожидался пробел между литералами!" << std::endl;
+            std::cerr << "2:" << i + 1 << ": ожидался пробел между литералами!" << std::endl;
         } else {
             i++; // чтобы пробел пройти, если он есть
         }
@@ -156,7 +156,7 @@ Vertex get_vertex(std::string &s, int number_line){
         if('0' <= s[i] && s[i] <= '9'){
             name += s[i];
         } else if(s[i] != ' '){
-            output << number_line << ":" << i + 1 << ": ожидался номер вершины, но получен символ \"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": ожидался номер вершины, но получен символ \"" << s[i] << "\"!" << std::endl;
             return Vertex(-1,-1);
         } else {
             break;
@@ -165,7 +165,7 @@ Vertex get_vertex(std::string &s, int number_line){
 
     for (; i < s.size(); i++) {
         if (s[i] != ' ') {
-            output << number_line << ":" << i + 1 << ": вместо \" \" найдено\"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": вместо \" \" найдено\"" << s[i] << "\"!" << std::endl;
         } else {
             i++;
             break;
@@ -174,7 +174,7 @@ Vertex get_vertex(std::string &s, int number_line){
 
     for(; i < s.size(); i++){
         if(s[i] != ']'){
-            output << number_line << ":" << i + 1 << ": вместо \"]\" найдено\"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": вместо \"]\" найдено\"" << s[i] << "\"!" << std::endl;
         } else {
             i++;
             break;
@@ -183,7 +183,7 @@ Vertex get_vertex(std::string &s, int number_line){
 
     for (; i < s.size(); i++) {
         if (s[i] != ' ') {
-            output << number_line << ":" << i + 1 << ": вместо \"-\" найдено\"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": вместо \"-\" найдено\"" << s[i] << "\"!" << std::endl;
         } else {
             i++;
             break;
@@ -192,7 +192,7 @@ Vertex get_vertex(std::string &s, int number_line){
 
     for(; i < s.size(); i++){
         if(s[i] != '-'){
-            output << number_line << ":" << i + 1 << ": вместо \"]\" найдено\"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": вместо \"]\" найдено\"" << s[i] << "\"!" << std::endl;
         } else {
             i++;
             break;
@@ -201,7 +201,7 @@ Vertex get_vertex(std::string &s, int number_line){
 
     for(; i < s.size(); i++){
         if(s[i] != '>'){
-            output << number_line << ":" << i + 1 << ": вместо \">\" найдено\"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": вместо \">\" найдено\"" << s[i] << "\"!" << std::endl;
         } else {
             i++;
             break;
@@ -210,7 +210,7 @@ Vertex get_vertex(std::string &s, int number_line){
 
     for(; i < s.size(); i++){
         if(s[i] != ' '){
-            output << number_line << ":" << i + 1 << ": вместо \" \" найдено\"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": вместо \" \" найдено\"" << s[i] << "\"!" << std::endl;
         } else {
             i++;
             break;
@@ -224,7 +224,7 @@ Vertex get_vertex(std::string &s, int number_line){
             found_two_number = true;
             break;
         } else if(s[i] != ' ') {
-            output << number_line << ":" << i + 1 << ": ожидалось состояние вершины, но получен символ \"" << s[i]
+            std::cerr << number_line << ":" << i + 1 << ": ожидалось состояние вершины, но получен символ \"" << s[i]
                    << "\"!" << std::endl;
             return Vertex(-1, -1);
         }
@@ -232,7 +232,7 @@ Vertex get_vertex(std::string &s, int number_line){
 
     for(; i < s.size(); i++){
         if(s[i] != ' '){
-            output << number_line << ":" << i + 1 << ": вместо \" \" найдено\"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": вместо \" \" найдено\"" << s[i] << "\"!" << std::endl;
         } else {
             i++;
             break;
@@ -241,7 +241,7 @@ Vertex get_vertex(std::string &s, int number_line){
 
     for(; i < s.size(); i++){
         if(s[i] != '|'){
-            output << number_line << ":" << i + 1 << ": вместо \"|\" найдено\"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": вместо \"|\" найдено\"" << s[i] << "\"!" << std::endl;
         } else {
             i++;
             break;
@@ -263,7 +263,7 @@ int get_edges(std::string s, int number_line){
         if('0' <= s[i] && s[i] <= '9'){
             name1 += s[i];
         } else if(s[i] != ','){
-            output << number_line << ":" << i + 1 << ": ожидался номер вершины, но получен символ \"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": ожидался номер вершины, но получен символ \"" << s[i] << "\"!" << std::endl;
             return 2;
         } else {
             i++;
@@ -275,7 +275,7 @@ int get_edges(std::string s, int number_line){
         if('0' <= s[i] && s[i] <= '9'){
             name2 += s[i];
         } else if(s[i] != ' '){
-            output << number_line << ":" << i + 1 << ": ожидался номер вершины, но получен символ \"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": ожидался номер вершины, но получен символ \"" << s[i] << "\"!" << std::endl;
             return 2;
         } else {
             i++;
@@ -292,7 +292,7 @@ int get_edges(std::string s, int number_line){
 
     for(; i < s.size(); i++){
         if(s[i] != ':'){
-            output << number_line << ":" << i + 1 << ": вместо \":\" найдено\"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": вместо \":\" найдено\"" << s[i] << "\"!" << std::endl;
         } else {
             i++;
             break;
@@ -301,7 +301,7 @@ int get_edges(std::string s, int number_line){
 
     for(; i < s.size(); i++){
         if(s[i] != ' '){
-            output << number_line << ":" << i + 1 << ": вместо \" \" найдено\"" << s[i] << "\"!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": вместо \" \" найдено\"" << s[i] << "\"!" << std::endl;
         } else {
             i++;
             break;
@@ -311,7 +311,7 @@ int get_edges(std::string s, int number_line){
     while(i < s.size()) {
         for (; i < s.size(); i++) {
             if (s[i] != '#') {
-                output << number_line << ":" << i + 1 << ": вместо \"#\" найдено\"" << s[i] << "\"!" << std::endl;
+                std::cerr << number_line << ":" << i + 1 << ": вместо \"#\" найдено\"" << s[i] << "\"!" << std::endl;
             } else {
                 i++;
                 break;
@@ -328,13 +328,13 @@ int get_edges(std::string s, int number_line){
                         dfa.all_vertex[dfa.id_vertex[std::stoi(name1)] - 1].get_count_transtions()++;
                     } else {
                         dfa.is_dfa = false;
-                        output << number_line << ":" << i + 1 << ": литерал \"" << letter << "\" уже был введён!"
+                        std::cerr << number_line << ":" << i + 1 << ": литерал \"" << letter << "\" уже был введён!"
                                << std::endl;
-                        output << number_line << ":" << i + 1 << ": ОСТОРОЖНО ТЕПЕРЬ АВТОМАТ НЕДЕРМИНИРОВАН!"
+                        std::cerr << number_line << ":" << i + 1 << ": ОСТОРОЖНО ТЕПЕРЬ АВТОМАТ НЕДЕРМИНИРОВАН!"
                                << std::endl;
                     }
                 } else {
-                    output << number_line << ":" << i + 1 << ": литерал \"" << letter << "\" не входит в язык!"
+                    std::cerr << number_line << ":" << i + 1 << ": литерал \"" << letter << "\" не входит в язык!"
                            << std::endl;
                 }
                 letter = "";
@@ -346,11 +346,11 @@ int get_edges(std::string s, int number_line){
         }
 
         if(letter != ""){
-            output << number_line << ":" << i + 1 << ": не найдет символ \"#\"!";
+            std::cerr << number_line << ":" << i + 1 << ": не найдет символ \"#\"!";
         }
 
         if(i < s.size() && s[i] != ' '){
-            output << number_line << ":" << i + 1 << ": ожидался пробел между литералами!" << std::endl;
+            std::cerr << number_line << ":" << i + 1 << ": ожидался пробел между литералами!" << std::endl;
         } else {
             i++; // чтобы пробел пройти, если он есть
         }
@@ -475,17 +475,17 @@ int main(int argc, char* argv[]) {
                 } else if(k <= dfa.count_vertex + 2){
                     Vertex vertex = get_vertex(line, k);
                     if(dfa.id_vertex[vertex.get_name()] != 0){ // если уже повторялась вершина = пропустим
-                        output << k << ": вершина с номером " << vertex.get_name() << " уже была создана!" << std::endl;
+                        std::cerr << k << ": вершина с номером " << vertex.get_name() << " уже была создана!" << std::endl;
                         dfa.vertex_unique = false;
                         continue;
                     }
                     if(vertex.get_name() == -1){ // если не удалось создать вершину = пропустим
-                        output << k << ": не удалось создать вершину, ввод некорректен!" << std::endl;
+                        std::cerr << k << ": не удалось создать вершину, ввод некорректен!" << std::endl;
                         continue;
                     }
                     if(vertex.get_state() == 0 && dfa.there_is_start_state){
                         dfa.there_is_only_start_state = false;
-                        output << k << ": добавилась ещё одна стартовая вершина!" << std::endl;
+                        std::cerr << k << ": добавилась ещё одна стартовая вершина!" << std::endl;
                     }
                     if(vertex.get_state() == 0){ // от состояния вершины, будем записывать её в разные массивы
                         dfa.id_vertex[vertex.get_name()] = dfa.all_vertex.size() + 1;
@@ -502,7 +502,7 @@ int main(int argc, char* argv[]) {
                 } else if(k > dfa.count_vertex + 2){
                     int number = get_edges(line, k);
                     if(number == 0){
-                        output << k << ": как минимум одной вершины из заданных не существует в автомате!" << std::endl;
+                        std::cerr << k << ": как минимум одной вершины из заданных не существует в автомате!" << std::endl;
                     } else if(number == 1){
                         // вот сюда заходит, если всё ок
                     }
@@ -518,3 +518,7 @@ int main(int argc, char* argv[]) {
     input.close();
     output.close();
 }
+
+// TODO: убрать большое количество копипасты
+// TODO: перевести всё на english
+// TODO:
