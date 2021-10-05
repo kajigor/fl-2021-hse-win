@@ -54,7 +54,7 @@ def t_TO_EDGE(t):
   return t
 
 def t_LETTER(t):
-  r'(?<=\#)([^\\#]|\\.)+(?=\#)'
+  r'(?<=\#)([^(\\#|\n)]|\\.)+(?=\#)'
   t.type = reserved.get(t.value, 'LETTER')
   return t  
 
