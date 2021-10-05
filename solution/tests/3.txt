@@ -1,0 +1,9 @@
+int main() {
+	string s = "";
+	int a = 3 * (5 - 42) / 34 + 1;
+	if (a > 0) {
+		s = "YES";
+	} else {
+		s = "NO";
+	}
+}
