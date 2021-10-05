@@ -12,6 +12,15 @@ class State:
     self.in_edges = []
     self.out_edges = []
 
+  def __eq__(self, other):
+    if (self.number == other.number or \
+        self.symbols == other.symbols and \
+        self.is_terminal == other.is_terminal and \
+        self.in_edges == other.in_edges and \
+        self.out_edges == other.out_edges):
+        return True
+    return False      
+
   def add_symbol(self, symbol):
     self.symbols.append(symbol)
 
@@ -22,13 +31,23 @@ class State:
     self.in_edge.append(edge)
 
   def add_out_edge(self, edge):
-    self.out_edges.append(edge)        
+    self.out_edges.append(edge)
+
+  def print_to(self):
+    print(self.number)          
 
 class Edge:
   def __init__(self):
     self.from_state = 0
     self.to_state = 0
     self.symbols = []
+
+  def __eq__(self, other):
+    if (self.from_state == other.from_state and \
+        self.to_state == other.to_state and \
+        self.symbols == other.symbols):
+        return True
+    return False      
 
   def init_from_state(self, state_number):
     self.from_state = state_number
@@ -37,7 +56,16 @@ class Edge:
     self.to_state = state_number    
 
   def add_symbol(self, symbol):
-    self.symbols.append(symbol)      
+    self.symbols.append(symbol)  
+
+  def print_to(self):
+    print(self.from_state, end = "")
+    print(" --> ", end = "")  
+    print(self.to_state, end = "")
+    self.symbols.sort()
+    print(" (", end = "")
+    print(', '.join(self.symbols), end = "")
+    print(")")    
 
 class Automat:
   def __init__(self):
@@ -78,7 +106,7 @@ class Automat:
     print(', '.join(self.alphabet), end = "")
     print(")")
 
-    print("Start state:", end="\n")
+    print("Start state:")
     print("             " + str(self.start_state))
 
     self.terminal_states.sort()
@@ -87,16 +115,10 @@ class Automat:
     print("             ", end = "")
     print(', '.join(sarr))
 
-    print("Edges:    ")
+    print("Edges:")
     for edge in self.edges:
       print("             ", end = "")
-      print(edge.from_state, end = "")
-      print(" --> ", end = "")
-      print(edge.to_state, end = "")
-      edge.symbols.sort()
-      print(" (", end = "")
-      print(', '.join(edge.symbols), end = "")
-      print(")")
+      edge.print_to()
 
   def check_start_state(self):
     if (self.start_state == -1):

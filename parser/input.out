@@ -4,5 +4,5 @@ Start state:
              0
 Terminals -- 0 state(s):
              1
-Edges:    
+Edges:
              0 --> 1 (a, b)
