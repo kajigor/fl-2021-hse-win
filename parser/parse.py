@@ -8,14 +8,14 @@ class State:
   def __init__(self, number_):
     self.number = number_
     self.symbols = []
-    self.is_terminal = 0
+    self.type = 'average'
     self.in_edges = []
     self.out_edges = []
 
   def __eq__(self, other):
     if (self.number == other.number or \
         self.symbols == other.symbols and \
-        self.is_terminal == other.is_terminal and \
+        self.type == other.type and \
         self.in_edges == other.in_edges and \
         self.out_edges == other.out_edges):
         return True
@@ -25,16 +25,21 @@ class State:
     self.symbols.append(symbol)
 
   def make_terminal(self):
-    self.is_terminal = 1
+    self.type = 'terminal'
 
   def add_in_edge(self, edge):
-    self.in_edge.append(edge)
+    self.in_edges.append(edge)
 
   def add_out_edge(self, edge):
     self.out_edges.append(edge)
 
   def print_to(self):
-    print(self.number)          
+    print('(', end = '')
+    print("number: ", end = "")
+    print(self.number, end = ", ")
+    print("type: ", end = "")
+    print(self.type, end = "")
+    print(")")         
 
 class Edge:
   def __init__(self):
@@ -61,9 +66,10 @@ class Edge:
   def print_to(self):
     print(self.from_state, end = "")
     print(" --> ", end = "")  
-    print(self.to_state, end = "")
+    print(self.to_state, end = ", ")
+    print("symbols: ", end = "")
     self.symbols.sort()
-    print(" (", end = "")
+    print("(", end = "")
     print(', '.join(self.symbols), end = "")
     print(")")    
 
@@ -111,9 +117,14 @@ class Automat:
 
     self.terminal_states.sort()
     sarr = [str(a) for a in self.terminal_states]
-    print("Terminals -- " + str(self.count_terminal) + " state(s):", end="\n")
+    print("Terminals -- " + str(len(self.terminal_states)) + " state(s):", end="\n")
     print("             ", end = "")
     print(', '.join(sarr))
+
+    print("All states:")
+    for state in self.states:
+      print("           ", end = "")
+      state.print_to()
 
     print("Edges:")
     for edge in self.edges:
@@ -167,6 +178,8 @@ def p_alphabet(p):
 def p_states_count(p):
   'States_count : Q COLON NUM'
   automat.init_count_states(p[3])
+  for i in range(p[3]):
+      automat.states.append(State(i))
 
 def p_start_state(p):
   'Start_state : START COLON NUM'
@@ -186,7 +199,8 @@ def p_str_alphabet_symbols(p):
 def p_str_terminal_nums(p):
   '''str_terminal_nums : NUM COMMA str_terminal_nums
                        | NUM''' 
-  automat.add_terminal_state(p[1])                                 
+  automat.add_terminal_state(p[1])
+  automat.states[p[1]].make_terminal()                               
 
 def p_str_edges(p):
   '''str_edges : str_edge COMMA str_edges
@@ -204,7 +218,9 @@ def p_str_edge_symbols(p):
 
 def p_end_edge(p):
   '''end_edge : CPARENTHESES'''
-  automat.add_edge(current_edge)                                                             
+  automat.add_edge(current_edge)  
+  automat.states[current_edge.from_state].add_out_edge(current_edge) 
+  automat.states[current_edge.to_state].add_in_edge(current_edge)                                                          
 
 def p_error(p):
   raise Exception("Syntax error")

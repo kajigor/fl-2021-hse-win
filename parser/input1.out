@@ -2,7 +2,9 @@ Alphabet -- 4 symbol(s):
              (--, :, d, k)
 Start state:
              0
-Terminals -- 0 state(s):
+Terminals -- 1 state(s):
              0
+All states:
+           (number: 0, type: terminal)
 Edges:
-             0 --> 0 (--, :, d, k)
+             0 --> 0, symbols: (--, :, d, k)
