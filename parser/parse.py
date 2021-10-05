@@ -24,8 +24,8 @@ class State:
   def add_symbol(self, symbol):
     self.symbols.append(symbol)
 
-  def make_terminal(self):
-    self.type = 'terminal'
+  def change_type(self, type):
+    self.type = type
 
   def add_in_edge(self, edge):
     self.in_edges.append(edge)
@@ -79,7 +79,7 @@ class Automat:
     self.alphabet = []
     self.count_states = 0
     self.start_state = -1
-    self.count_terminal = 0
+    self.runoff_state = -1
     self.terminal_states = []
     self.edges = []
     self.states = []
@@ -96,8 +96,8 @@ class Automat:
   def init_start_state(self, state):
     self.start_state = state
 
-  def init_count_terminal(self, count):
-    self.count_terminal = count
+  def init_runoff_state(self, state):
+    self.runoff_state = state  
 
   def add_terminal_state(self, state_number):
     self.terminal_states.append(state_number)
@@ -128,7 +128,7 @@ class Automat:
 
     print("Edges:")
     for edge in self.edges:
-      print("             ", end = "")
+      print("            ", end = "")
       edge.print_to()
 
   def check_start_state(self):
@@ -137,18 +137,19 @@ class Automat:
 
   def check_states_uniqueness(self):
     for i in range(len(self.states)):
-      for j in range(i, self.states):
+      for j in range(i, len(self.states)):
         if (self.states[i] == self.states[j]):
           raise Exception("Automat has identical states")
 
   def check_alphabet_uniqueness(self):
     for i in range(len(self.alphabet)):
-      for j in range(i, self.alphabet):
+      for j in range(i, len(self.alphabet)):
         if (self.alphabet[i] == self.alphabet[j]):
           raise Exception("Symbols of the alphabet are not unique")
 
-  def check_determinancy(self):
-    if (False):
+  def check_determinancy_and_compliteness(self):
+    for st in self.states:
+
       raise Exception("Automat is not deterministic")  
 
   def checker(self):
@@ -168,6 +169,7 @@ def p_automaton(p):
   '''Automat : Alphabet
                | States_count
                | Start_state
+               | Runoff_state
                | Terminals
                | Edges '''
 
@@ -184,6 +186,12 @@ def p_states_count(p):
 def p_start_state(p):
   'Start_state : START COLON NUM'
   automat.init_start_state(p[3])
+  automat.states[p[3]].change_type('start')
+
+def p_runoff_state(p):
+  'Runoff_state : RUNOFF COLON NUM'
+  automat.init_runoff_state(p[3])
+  automat.states[p[3]].change_type('runoff')
 
 def p_terminals(p):
   'Terminals : T COLON NUM DASH str_terminal_nums'
@@ -200,7 +208,7 @@ def p_str_terminal_nums(p):
   '''str_terminal_nums : NUM COMMA str_terminal_nums
                        | NUM''' 
   automat.add_terminal_state(p[1])
-  automat.states[p[1]].make_terminal()                               
+  automat.states[p[1]].change_type('terminal')                               
 
 def p_str_edges(p):
   '''str_edges : str_edge COMMA str_edges

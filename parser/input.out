@@ -5,7 +5,7 @@ Start state:
 Terminals -- 1 state(s):
              1
 All states:
-           (number: 0, type: average)
+           (number: 0, type: start)
            (number: 1, type: terminal)
 Edges:
-             0 --> 1, symbols: (a, b)
+            0 --> 1, symbols: (a, b)

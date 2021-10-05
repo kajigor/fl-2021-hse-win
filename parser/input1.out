@@ -6,5 +6,6 @@ Terminals -- 1 state(s):
              0
 All states:
            (number: 0, type: terminal)
+           (number: 1, type: runoff)
 Edges:
-             0 --> 0, symbols: (--, :, d, k)
+            0 --> 0, symbols: (--, :, d, k)

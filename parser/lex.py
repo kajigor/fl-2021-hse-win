@@ -5,6 +5,7 @@ reserved = {
   'Alphabet': 'ALPHABET',
   'Q': 'Q',
   'start': 'START',
+  'runoff' : 'RUNOFF',
   'T' : 'T',
   'edges' : 'EDGES'
 }
@@ -22,7 +23,7 @@ tokens = [
 
 
 def t_NUM(t):
-  r'[0-9]+'
+  r'0|-?[1-9]+'
   t.value = int(t.value)
   return t
 
@@ -35,6 +36,7 @@ t_SEMICOLON = r';'
 t_ALPHABET = r'Alphabet'
 t_Q = r'Q'
 t_START = r'start'
+t_RUNOFF = r'runoff'
 t_T = r'T'
 t_EDGES = r'edges'
 
