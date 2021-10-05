@@ -1,7 +1,7 @@
 Alphabet 2
 a
 b
-States 2
+States -2
 Edges 4
 0 to 1 by a
 0 to 1 by b

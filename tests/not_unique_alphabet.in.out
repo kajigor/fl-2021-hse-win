@@ -1,5 +1,5 @@
 DFA {
-  Alphabet 2: {a, b}
+  Alphabet 2: {b, b}
   States 2: {0, 1}
   Transpositions:
     between states 0 and 0: {}
@@ -8,4 +8,4 @@ DFA {
     between states 1 and 1: {}
   Terminals 1: {0}
 }
-Graph is DFA
+Symbols alphabet is not unique

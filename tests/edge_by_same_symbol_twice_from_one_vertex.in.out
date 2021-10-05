@@ -4,8 +4,9 @@ DFA {
   Transpositions:
     between states 0 and 0: {}
     between states 0 and 1: {a, b}
-    between states 1 and 0: {a, b}
+    between states 1 and 0: {a, a}
     between states 1 and 1: {}
   Terminals 1: {0}
 }
-Graph is DFA
+Graph is not DFA
+Same edge appearance twice in the same vertex's list
