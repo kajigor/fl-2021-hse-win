@@ -1,0 +1,27 @@
+1) Vertexes are unique
+2) Initial state found: 1
+3) Elements of the alphabet are unique
+4) Automate is deterministic
+5) Automate is full
+========= 5/5 are COMPLETE! ========= 
+
+Automate is good!	LOOK: 
+
+Alphabet:
+		0: 1
+		1: 2
+
+
+Vertexes:
+		1: Start
+		3: Terminal
+		2: Normal
+
+
+Edges:
+		From: 1		Crossover: 1		To: 3
+		From: 1		Crossover: 2		To: 2
+		From: 3		Crossover: 2		To: 2
+		From: 3		Crossover: 1		To: 3
+		From: 2		Crossover: 1		To: 2
+		From: 2		Crossover: 2		To: 2

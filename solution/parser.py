@@ -82,21 +82,14 @@ def t_START(t):
     return t
 
 
-def initial_state_checking():
-    global ERROR
-    for v, s in Automate.unique_vertexes.items():
-        if s == 'Start':
-            return "Initial state found: " + str(v)
-    ERROR += 1
-    return "ERROR: initial state does not exist"
-
-
 def uniqueness_of_states_checking():
     global ERROR
     for v in Automate.vertexes:
         if Automate.unique_vertexes.get(v.i) is None:
             if v.terminality != 'Start':
                 Automate.unique_vertexes.update({v.i: v.terminality})
+            else:
+                Automate.unique_vertexes.update({v.i: 'Start'})
         else:
             if Automate.unique_vertexes[v.i] == v.terminality:
                 continue
@@ -104,6 +97,15 @@ def uniqueness_of_states_checking():
                 ERROR += 1
                 return "ERROR: vertex names are not unique"
     return "Vertexes are unique"
+
+
+def initial_state_checking():
+    global ERROR
+    for v, s in Automate.unique_vertexes.items():
+        if s == 'Start':
+            return "Initial state found: " + str(v)
+    ERROR += 1
+    return "ERROR: initial state does not exist"
 
 
 def uniqueness_alphabet_checking():
