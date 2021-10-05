@@ -1,1 +1,580 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    LIST
+
+Grammar
+
+Rule 0     S' -> Automaton
+Rule 1     Automaton -> start_state
+Rule 2     Automaton -> States
+Rule 3     Automaton -> term_state
+Rule 4     Automaton -> Alphabet
+Rule 5     Automaton -> edges
+Rule 6     start_state -> START ARROW NUM
+Rule 7     empty -> <empty>
+Rule 8     term_state -> TERM COLON OPEN_BRACKET NUM term_state_list CLOSE_BRACKET
+Rule 9     term_state -> TERM COLON OPEN_BRACKET empty CLOSE_BRACKET
+Rule 10    term_state_list -> COMMA NUM term_state_list
+Rule 11    term_state_list -> empty
+Rule 12    States -> STATES COLON OPEN_BRACKET NUM states_list CLOSE_BRACKET
+Rule 13    States -> STATES COLON OPEN_BRACKET empty CLOSE_BRACKET
+Rule 14    states_list -> COMMA NUM states_list
+Rule 15    states_list -> empty
+Rule 16    Alphabet -> ALPHABET COLON OPEN_BRACKET WORD Words CLOSE_BRACKET
+Rule 17    Alphabet -> ALPHABET COLON OPEN_BRACKET empty CLOSE_BRACKET
+Rule 18    Words -> COMMA WORD Words
+Rule 19    Words -> empty
+Rule 20    edges -> VERTEX_FROM OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list
+Rule 21    edges -> VERTEX_FROM empty
+Rule 22    edge_list -> VERTICAL_LINE OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list
+Rule 23    edge_list -> empty
+
+Terminals, with rules where they appear
+
+ALPHABET             : 16 17
+ARROW                : 6
+CLOSE_BRACKET        : 8 9 12 13 16 17 20 22
+COLON                : 8 9 12 13 16 17
+COMMA                : 10 14 18
+LIST                 : 
+NUM                  : 6 8 10 12 14
+OPEN_BRACKET         : 8 9 12 13 16 17 20 22
+START                : 6
+STATES               : 12 13
+TERM                 : 8 9
+VERTEX_FROM          : 20 21
+VERTEX_TO            : 20 22
+VERTICAL_LINE        : 22
+WORD                 : 16 18 20 22
+error                : 
+
+Nonterminals, with rules where they appear
+
+Alphabet             : 4
+Automaton            : 0
+States               : 2
+Words                : 16 18
+edge_list            : 20 22
+edges                : 5
+empty                : 9 11 13 15 17 19 21 23
+start_state          : 1
+states_list          : 12 14
+term_state           : 3
+term_state_list      : 8 10
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . Automaton
+    (1) Automaton -> . start_state
+    (2) Automaton -> . States
+    (3) Automaton -> . term_state
+    (4) Automaton -> . Alphabet
+    (5) Automaton -> . edges
+    (6) start_state -> . START ARROW NUM
+    (12) States -> . STATES COLON OPEN_BRACKET NUM states_list CLOSE_BRACKET
+    (13) States -> . STATES COLON OPEN_BRACKET empty CLOSE_BRACKET
+    (8) term_state -> . TERM COLON OPEN_BRACKET NUM term_state_list CLOSE_BRACKET
+    (9) term_state -> . TERM COLON OPEN_BRACKET empty CLOSE_BRACKET
+    (16) Alphabet -> . ALPHABET COLON OPEN_BRACKET WORD Words CLOSE_BRACKET
+    (17) Alphabet -> . ALPHABET COLON OPEN_BRACKET empty CLOSE_BRACKET
+    (20) edges -> . VERTEX_FROM OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list
+    (21) edges -> . VERTEX_FROM empty
+
+    START           shift and go to state 7
+    STATES          shift and go to state 8
+    TERM            shift and go to state 9
+    ALPHABET        shift and go to state 10
+    VERTEX_FROM     shift and go to state 11
+
+    Automaton                      shift and go to state 1
+    start_state                    shift and go to state 2
+    States                         shift and go to state 3
+    term_state                     shift and go to state 4
+    Alphabet                       shift and go to state 5
+    edges                          shift and go to state 6
+
+state 1
+
+    (0) S' -> Automaton .
+
+
+
+state 2
+
+    (1) Automaton -> start_state .
+
+    $end            reduce using rule 1 (Automaton -> start_state .)
+
+
+state 3
+
+    (2) Automaton -> States .
+
+    $end            reduce using rule 2 (Automaton -> States .)
+
+
+state 4
+
+    (3) Automaton -> term_state .
+
+    $end            reduce using rule 3 (Automaton -> term_state .)
+
+
+state 5
+
+    (4) Automaton -> Alphabet .
+
+    $end            reduce using rule 4 (Automaton -> Alphabet .)
+
+
+state 6
+
+    (5) Automaton -> edges .
+
+    $end            reduce using rule 5 (Automaton -> edges .)
+
+
+state 7
+
+    (6) start_state -> START . ARROW NUM
+
+    ARROW           shift and go to state 12
+
+
+state 8
+
+    (12) States -> STATES . COLON OPEN_BRACKET NUM states_list CLOSE_BRACKET
+    (13) States -> STATES . COLON OPEN_BRACKET empty CLOSE_BRACKET
+
+    COLON           shift and go to state 13
+
+
+state 9
+
+    (8) term_state -> TERM . COLON OPEN_BRACKET NUM term_state_list CLOSE_BRACKET
+    (9) term_state -> TERM . COLON OPEN_BRACKET empty CLOSE_BRACKET
+
+    COLON           shift and go to state 14
+
+
+state 10
+
+    (16) Alphabet -> ALPHABET . COLON OPEN_BRACKET WORD Words CLOSE_BRACKET
+    (17) Alphabet -> ALPHABET . COLON OPEN_BRACKET empty CLOSE_BRACKET
+
+    COLON           shift and go to state 15
+
+
+state 11
+
+    (20) edges -> VERTEX_FROM . OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list
+    (21) edges -> VERTEX_FROM . empty
+    (7) empty -> .
+
+    OPEN_BRACKET    shift and go to state 16
+    $end            reduce using rule 7 (empty -> .)
+
+    empty                          shift and go to state 17
+
+state 12
+
+    (6) start_state -> START ARROW . NUM
+
+    NUM             shift and go to state 18
+
+
+state 13
+
+    (12) States -> STATES COLON . OPEN_BRACKET NUM states_list CLOSE_BRACKET
+    (13) States -> STATES COLON . OPEN_BRACKET empty CLOSE_BRACKET
+
+    OPEN_BRACKET    shift and go to state 19
+
+
+state 14
+
+    (8) term_state -> TERM COLON . OPEN_BRACKET NUM term_state_list CLOSE_BRACKET
+    (9) term_state -> TERM COLON . OPEN_BRACKET empty CLOSE_BRACKET
+
+    OPEN_BRACKET    shift and go to state 20
+
+
+state 15
+
+    (16) Alphabet -> ALPHABET COLON . OPEN_BRACKET WORD Words CLOSE_BRACKET
+    (17) Alphabet -> ALPHABET COLON . OPEN_BRACKET empty CLOSE_BRACKET
+
+    OPEN_BRACKET    shift and go to state 21
+
+
+state 16
+
+    (20) edges -> VERTEX_FROM OPEN_BRACKET . VERTEX_TO WORD CLOSE_BRACKET edge_list
+
+    VERTEX_TO       shift and go to state 22
+
+
+state 17
+
+    (21) edges -> VERTEX_FROM empty .
+
+    $end            reduce using rule 21 (edges -> VERTEX_FROM empty .)
+
+
+state 18
+
+    (6) start_state -> START ARROW NUM .
+
+    $end            reduce using rule 6 (start_state -> START ARROW NUM .)
+
+
+state 19
+
+    (12) States -> STATES COLON OPEN_BRACKET . NUM states_list CLOSE_BRACKET
+    (13) States -> STATES COLON OPEN_BRACKET . empty CLOSE_BRACKET
+    (7) empty -> .
+
+    NUM             shift and go to state 23
+    CLOSE_BRACKET   reduce using rule 7 (empty -> .)
+
+    empty                          shift and go to state 24
+
+state 20
+
+    (8) term_state -> TERM COLON OPEN_BRACKET . NUM term_state_list CLOSE_BRACKET
+    (9) term_state -> TERM COLON OPEN_BRACKET . empty CLOSE_BRACKET
+    (7) empty -> .
+
+    NUM             shift and go to state 25
+    CLOSE_BRACKET   reduce using rule 7 (empty -> .)
+
+    empty                          shift and go to state 26
+
+state 21
+
+    (16) Alphabet -> ALPHABET COLON OPEN_BRACKET . WORD Words CLOSE_BRACKET
+    (17) Alphabet -> ALPHABET COLON OPEN_BRACKET . empty CLOSE_BRACKET
+    (7) empty -> .
+
+    WORD            shift and go to state 27
+    CLOSE_BRACKET   reduce using rule 7 (empty -> .)
+
+    empty                          shift and go to state 28
+
+state 22
+
+    (20) edges -> VERTEX_FROM OPEN_BRACKET VERTEX_TO . WORD CLOSE_BRACKET edge_list
+
+    WORD            shift and go to state 29
+
+
+state 23
+
+    (12) States -> STATES COLON OPEN_BRACKET NUM . states_list CLOSE_BRACKET
+    (14) states_list -> . COMMA NUM states_list
+    (15) states_list -> . empty
+    (7) empty -> .
+
+    COMMA           shift and go to state 31
+    CLOSE_BRACKET   reduce using rule 7 (empty -> .)
+
+    states_list                    shift and go to state 30
+    empty                          shift and go to state 32
+
+state 24
+
+    (13) States -> STATES COLON OPEN_BRACKET empty . CLOSE_BRACKET
+
+    CLOSE_BRACKET   shift and go to state 33
+
+
+state 25
+
+    (8) term_state -> TERM COLON OPEN_BRACKET NUM . term_state_list CLOSE_BRACKET
+    (10) term_state_list -> . COMMA NUM term_state_list
+    (11) term_state_list -> . empty
+    (7) empty -> .
+
+    COMMA           shift and go to state 35
+    CLOSE_BRACKET   reduce using rule 7 (empty -> .)
+
+    term_state_list                shift and go to state 34
+    empty                          shift and go to state 36
+
+state 26
+
+    (9) term_state -> TERM COLON OPEN_BRACKET empty . CLOSE_BRACKET
+
+    CLOSE_BRACKET   shift and go to state 37
+
+
+state 27
+
+    (16) Alphabet -> ALPHABET COLON OPEN_BRACKET WORD . Words CLOSE_BRACKET
+    (18) Words -> . COMMA WORD Words
+    (19) Words -> . empty
+    (7) empty -> .
+
+    COMMA           shift and go to state 39
+    CLOSE_BRACKET   reduce using rule 7 (empty -> .)
+
+    Words                          shift and go to state 38
+    empty                          shift and go to state 40
+
+state 28
+
+    (17) Alphabet -> ALPHABET COLON OPEN_BRACKET empty . CLOSE_BRACKET
+
+    CLOSE_BRACKET   shift and go to state 41
+
+
+state 29
+
+    (20) edges -> VERTEX_FROM OPEN_BRACKET VERTEX_TO WORD . CLOSE_BRACKET edge_list
+
+    CLOSE_BRACKET   shift and go to state 42
+
+
+state 30
+
+    (12) States -> STATES COLON OPEN_BRACKET NUM states_list . CLOSE_BRACKET
+
+    CLOSE_BRACKET   shift and go to state 43
+
+
+state 31
+
+    (14) states_list -> COMMA . NUM states_list
+
+    NUM             shift and go to state 44
+
+
+state 32
+
+    (15) states_list -> empty .
+
+    CLOSE_BRACKET   reduce using rule 15 (states_list -> empty .)
+
+
+state 33
+
+    (13) States -> STATES COLON OPEN_BRACKET empty CLOSE_BRACKET .
+
+    $end            reduce using rule 13 (States -> STATES COLON OPEN_BRACKET empty CLOSE_BRACKET .)
+
+
+state 34
+
+    (8) term_state -> TERM COLON OPEN_BRACKET NUM term_state_list . CLOSE_BRACKET
+
+    CLOSE_BRACKET   shift and go to state 45
+
+
+state 35
+
+    (10) term_state_list -> COMMA . NUM term_state_list
+
+    NUM             shift and go to state 46
+
+
+state 36
+
+    (11) term_state_list -> empty .
+
+    CLOSE_BRACKET   reduce using rule 11 (term_state_list -> empty .)
+
+
+state 37
+
+    (9) term_state -> TERM COLON OPEN_BRACKET empty CLOSE_BRACKET .
+
+    $end            reduce using rule 9 (term_state -> TERM COLON OPEN_BRACKET empty CLOSE_BRACKET .)
+
+
+state 38
+
+    (16) Alphabet -> ALPHABET COLON OPEN_BRACKET WORD Words . CLOSE_BRACKET
+
+    CLOSE_BRACKET   shift and go to state 47
+
+
+state 39
+
+    (18) Words -> COMMA . WORD Words
+
+    WORD            shift and go to state 48
+
+
+state 40
+
+    (19) Words -> empty .
+
+    CLOSE_BRACKET   reduce using rule 19 (Words -> empty .)
+
+
+state 41
+
+    (17) Alphabet -> ALPHABET COLON OPEN_BRACKET empty CLOSE_BRACKET .
+
+    $end            reduce using rule 17 (Alphabet -> ALPHABET COLON OPEN_BRACKET empty CLOSE_BRACKET .)
+
+
+state 42
+
+    (20) edges -> VERTEX_FROM OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET . edge_list
+    (22) edge_list -> . VERTICAL_LINE OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list
+    (23) edge_list -> . empty
+    (7) empty -> .
+
+    VERTICAL_LINE   shift and go to state 50
+    $end            reduce using rule 7 (empty -> .)
+
+    edge_list                      shift and go to state 49
+    empty                          shift and go to state 51
+
+state 43
+
+    (12) States -> STATES COLON OPEN_BRACKET NUM states_list CLOSE_BRACKET .
+
+    $end            reduce using rule 12 (States -> STATES COLON OPEN_BRACKET NUM states_list CLOSE_BRACKET .)
+
+
+state 44
+
+    (14) states_list -> COMMA NUM . states_list
+    (14) states_list -> . COMMA NUM states_list
+    (15) states_list -> . empty
+    (7) empty -> .
+
+    COMMA           shift and go to state 31
+    CLOSE_BRACKET   reduce using rule 7 (empty -> .)
+
+    states_list                    shift and go to state 52
+    empty                          shift and go to state 32
+
+state 45
+
+    (8) term_state -> TERM COLON OPEN_BRACKET NUM term_state_list CLOSE_BRACKET .
+
+    $end            reduce using rule 8 (term_state -> TERM COLON OPEN_BRACKET NUM term_state_list CLOSE_BRACKET .)
+
+
+state 46
+
+    (10) term_state_list -> COMMA NUM . term_state_list
+    (10) term_state_list -> . COMMA NUM term_state_list
+    (11) term_state_list -> . empty
+    (7) empty -> .
+
+    COMMA           shift and go to state 35
+    CLOSE_BRACKET   reduce using rule 7 (empty -> .)
+
+    term_state_list                shift and go to state 53
+    empty                          shift and go to state 36
+
+state 47
+
+    (16) Alphabet -> ALPHABET COLON OPEN_BRACKET WORD Words CLOSE_BRACKET .
+
+    $end            reduce using rule 16 (Alphabet -> ALPHABET COLON OPEN_BRACKET WORD Words CLOSE_BRACKET .)
+
+
+state 48
+
+    (18) Words -> COMMA WORD . Words
+    (18) Words -> . COMMA WORD Words
+    (19) Words -> . empty
+    (7) empty -> .
+
+    COMMA           shift and go to state 39
+    CLOSE_BRACKET   reduce using rule 7 (empty -> .)
+
+    Words                          shift and go to state 54
+    empty                          shift and go to state 40
+
+state 49
+
+    (20) edges -> VERTEX_FROM OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list .
+
+    $end            reduce using rule 20 (edges -> VERTEX_FROM OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list .)
+
+
+state 50
+
+    (22) edge_list -> VERTICAL_LINE . OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list
+
+    OPEN_BRACKET    shift and go to state 55
+
+
+state 51
+
+    (23) edge_list -> empty .
+
+    $end            reduce using rule 23 (edge_list -> empty .)
+
+
+state 52
+
+    (14) states_list -> COMMA NUM states_list .
+
+    CLOSE_BRACKET   reduce using rule 14 (states_list -> COMMA NUM states_list .)
+
+
+state 53
+
+    (10) term_state_list -> COMMA NUM term_state_list .
+
+    CLOSE_BRACKET   reduce using rule 10 (term_state_list -> COMMA NUM term_state_list .)
+
+
+state 54
+
+    (18) Words -> COMMA WORD Words .
+
+    CLOSE_BRACKET   reduce using rule 18 (Words -> COMMA WORD Words .)
+
+
+state 55
+
+    (22) edge_list -> VERTICAL_LINE OPEN_BRACKET . VERTEX_TO WORD CLOSE_BRACKET edge_list
+
+    VERTEX_TO       shift and go to state 56
+
+
+state 56
+
+    (22) edge_list -> VERTICAL_LINE OPEN_BRACKET VERTEX_TO . WORD CLOSE_BRACKET edge_list
+
+    WORD            shift and go to state 57
+
+
+state 57
+
+    (22) edge_list -> VERTICAL_LINE OPEN_BRACKET VERTEX_TO WORD . CLOSE_BRACKET edge_list
+
+    CLOSE_BRACKET   shift and go to state 58
+
+
+state 58
+
+    (22) edge_list -> VERTICAL_LINE OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET . edge_list
+    (22) edge_list -> . VERTICAL_LINE OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list
+    (23) edge_list -> . empty
+    (7) empty -> .
+
+    VERTICAL_LINE   shift and go to state 50
+    $end            reduce using rule 7 (empty -> .)
+
+    edge_list                      shift and go to state 59
+    empty                          shift and go to state 51
+
+state 59
+
+    (22) edge_list -> VERTICAL_LINE OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list .
+
+    $end            reduce using rule 22 (edge_list -> VERTICAL_LINE OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list .)
+

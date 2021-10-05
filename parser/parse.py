@@ -31,14 +31,12 @@ alphabet =[]
 edges = []
 states = []   
 term_states = []      
-count_strings = 0
-start = []
 index_edges = {}
+edges_to = []
 def print_automato():
-     print("States:\n")            
+     print("\nStates:")            
      for i in states:
-          print("q", end="")
-          print(i, end=": ")
+          print(i.name, end=": ")
           if(i.is_terminal):
             print("terminal")
           elif(i.is_start):
@@ -47,106 +45,108 @@ def print_automato():
             print("stock")
           else:
             print("normal") 
-     print("\nEdges\n")          
+     print("\nEdges:\n")          
      for i in edges:
-          print("from q", end="")
+          print("from ", end="")
           print(i.state_from, end="")
           print(" to ", end="")
-          print("q", end="")
           print(i.state_to, end=". ")
-          print("Symbols: ")
+          print("Symbols: ", end=' ')
           print(i.symbols)
                
 def p_automaton(p):
       '''Automaton : start_state
-                    | term_state
                     | States
+                    | term_state
                     | Alphabet
                     | edges 
-                    '''
+                    '''               
 def p_start_state(p):
-  'start_state: START ARROW NUM'
-  start.append(p[0])
+  'start_state : START ARROW NUM'
+  global start 
+  start = p[3]
 
+def p_empty(p):
+    'empty :'
+    pass    
 def p_term_state(p):
-  'term_state: TERM COLON OPEN_BRACKET NUM term_state_list CLOSE_BRACKET'
-  term_states.append(4)
-
+  '''term_state : TERM COLON OPEN_BRACKET NUM term_state_list CLOSE_BRACKET
+                 | TERM COLON OPEN_BRACKET empty CLOSE_BRACKET'''
+  if p[5]!=")":              
+    term_states.append(p[4])
 
 def p_term_state_list(p):
-  'term_state_list: COMMA NUM term_state_list'
-  term_states.append(2) 
-
+  '''term_state_list : COMMA NUM term_state_list  
+                    | empty'''
+  if p[1]==',':                  
+    term_states.append(p[2]) 
 
 def p_states(p):
-  'States: STATES COLON OPEN_BRACKET NUM states_list CLOSE_BRACKET'
-  current_state=State(p[4])
-  for i in start:
-    if i== current_state.name:
+  '''States : STATES COLON OPEN_BRACKET NUM states_list CLOSE_BRACKET
+             | STATES COLON OPEN_BRACKET empty CLOSE_BRACKET'''
+  if p[5]!=")":           
+    current_state=State(p[4])
+    if start== current_state.name:
       current_state.is_start = True
-  for i in term_states:
-    if i == current_state.name:
-      current_state.is_terminal = True
-  states.append(current_state)
+    for i in term_states:
+      if i == current_state.name:
+        current_state.is_terminal = True
+    states.append(current_state)
+
   
 def p_states_list(p):
-  'states_list: COMMA NUM states_list' 
-  current_state=State(p[2])
-  if start == current_state.name:
-    current_state.is_start = True
-  for i in term_states:
-    if i == current_state.name:
-      current_state.is_terminal = True
-  states.append(current_state)
+  '''states_list : COMMA NUM states_list
+                  | empty'''
+  if p[1]==",":                 
+    current_state=State(p[2])
+    if start == current_state.name:
+      current_state.is_start = True
+    for i in term_states:
+      if i == current_state.name:
+        current_state.is_terminal = True
+    states.append(current_state)
   
 def p_alphabet(p):
-    'Alphabet: ALPHABET OPEN_BRACKET WORD Words CLOSE_BRACKET'
-    parser.object = "alphabet"
-    alphabet.append(p[3])
+    '''Alphabet : ALPHABET COLON OPEN_BRACKET WORD Words CLOSE_BRACKET
+                 | ALPHABET COLON OPEN_BRACKET empty CLOSE_BRACKET'''
+    if len(p) > 6:             
+      alphabet.append(p[4])
+
 def p_words(p):
-    'Words: COMMA WORD Words'
-    alphabet.append(p[2])  
-
-def p_start_list(p):
-    'start_list: LIST COLON'
-    parser.object = "list"
-
+    '''Words : COMMA WORD Words
+              | empty'''
+    if p[1]==",":          
+      alphabet.append(p[2])
 
 def p_edges(p):
-  'edges: VERTEX_FROM COLON OPEN_BRACKET VERTEX_TO POINT_COMMA WORD CLOSE_BRACKET edge_list'
-  parser.vertex_from = p[1]
-  pair = (p[1], p[4])
-  if pair in index_edges:
-    edges[index_edges[pair]].symbols.append(p[6])
-  else:
-    edge = Edge()
-    edge.add_state_to(p[4])
-    edge.add_state_from(p[1])
-    edge.symbols.append(p[6])
-    edges.append(edge) 
-    index_edges[pair] = len(edges)-1   
-
+  '''edges : VERTEX_FROM OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list
+          | VERTEX_FROM empty'''
+  if(len(p)>3): 
+    edges_to.append((p[3], p[4]))   
+    for pair in edges_to:
+        a, b = pair
+        pair2=(p[1], a)
+        if pair2 in index_edges:
+          edges[index_edges[pair2]].symbols.append(p[4])
+        else:
+          edge = Edge()
+          edge.add_to(a)
+          edge.add_from(p[1])
+          edge.symbols.append(b)
+          edges.append(edge) 
+          index_edges[pair2] = len(edges)-1 
+    edges_to.clear()
 
 def p_edge_list(p):
-    'edge_list: VERTICAL_LINE OPEN_BRACKET VERTEX_TO POINT_COMMA WORD CLOSE_BRACKET'
-    pair = (parser.vertex_from, p[3])
-
-    if pair in index_edges:
-      edges[index_edges[pair]].symbols.append(p[5])
-
-    else:
-      edge = Edge()
-      edge.add_state_to(p[3])
-      edge.add_state_from(parser.vertex_from)
-      edge.symbols.append(p[5])
-      edges.append(edge)    
-      index_edges[pair] = len(edges)-1
-
+    '''edge_list : VERTICAL_LINE OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list
+                  | empty'''
+    if p[1] == "|":              
+      edges_to.append((p[3], p[4]))
+    
 def p_error(p):
   print("Syntax error")
 
 parser = yacc.yacc()
-parser.vertex_from = 0
 sys.stdin = open(sys.argv[1], 'r')
 sys.stdout = open(sys.argv[1] + '.out', 'w')
 while True:
@@ -157,4 +157,4 @@ while True:
   if not s:
     continue
   result=parser.parse(s)
-print_automato()  
+print_automato()

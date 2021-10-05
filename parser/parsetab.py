@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ELSE ID IF LBR MULT NUM PLUS RBR THENif : IF expression THEN if ELSE if\n        | IF expression THEN if\n        | expression expression : expression PLUS expressionexpression : termterm : term MULT factorterm : factorfactor : NUMfactor : LBR expression RBR'
+_lr_signature = 'ALPHABET ARROW CLOSE_BRACKET COLON COMMA LIST NUM OPEN_BRACKET START STATES TERM VERTEX_FROM VERTEX_TO VERTICAL_LINE WORDAutomaton : start_state\n                    | States\n                    | term_state\n                    | Alphabet\n                    | edges \n                    start_state : START ARROW NUMempty :term_state : TERM COLON OPEN_BRACKET NUM term_state_list CLOSE_BRACKET\n                 | TERM COLON OPEN_BRACKET empty CLOSE_BRACKETterm_state_list : COMMA NUM term_state_list  \n                    | emptyStates : STATES COLON OPEN_BRACKET NUM states_list CLOSE_BRACKET\n             | STATES COLON OPEN_BRACKET empty CLOSE_BRACKETstates_list : COMMA NUM states_list\n                  | emptyAlphabet : ALPHABET COLON OPEN_BRACKET WORD Words CLOSE_BRACKET\n                 | ALPHABET COLON OPEN_BRACKET empty CLOSE_BRACKETWords : COMMA WORD Words\n              | emptyedges : VERTEX_FROM OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list\n          | VERTEX_FROM emptyedge_list : VERTICAL_LINE OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list\n                  | empty'
     
-_lr_action_items = {'IF':([0,12,17,],[2,2,2,]),'NUM':([0,2,7,9,10,12,17,],[6,6,6,6,6,6,6,]),'LBR':([0,2,7,9,10,12,17,],[7,7,7,7,7,7,7,]),'$end':([1,3,4,5,6,13,14,15,16,18,],[0,-3,-5,-7,-8,-4,-6,-9,-2,-1,]),'ELSE':([3,4,5,6,13,14,15,16,18,],[-3,-5,-7,-8,-4,-6,-9,17,-1,]),'PLUS':([3,4,5,6,8,11,13,14,15,],[9,-5,-7,-8,9,9,9,-6,-9,]),'THEN':([4,5,6,8,13,14,15,],[-5,-7,-8,12,-4,-6,-9,]),'RBR':([4,5,6,11,13,14,15,],[-5,-7,-8,15,-4,-6,-9,]),'MULT':([4,5,6,14,15,],[10,-7,-8,-6,-9,]),}
+_lr_action_items = {'START':([0,],[7,]),'STATES':([0,],[8,]),'TERM':([0,],[9,]),'ALPHABET':([0,],[10,]),'VERTEX_FROM':([0,],[11,]),'$end':([1,2,3,4,5,6,11,17,18,33,37,41,42,43,45,47,49,51,58,59,],[0,-1,-2,-3,-4,-5,-7,-21,-6,-13,-9,-17,-7,-12,-8,-16,-20,-23,-7,-22,]),'ARROW':([7,],[12,]),'COLON':([8,9,10,],[13,14,15,]),'OPEN_BRACKET':([11,13,14,15,50,],[16,19,20,21,55,]),'NUM':([12,19,20,31,35,],[18,23,25,44,46,]),'VERTEX_TO':([16,55,],[22,56,]),'CLOSE_BRACKET':([19,20,21,23,24,25,26,27,28,29,30,32,34,36,38,40,44,46,48,52,53,54,57,],[-7,-7,-7,-7,33,-7,37,-7,41,42,43,-15,45,-11,47,-19,-7,-7,-7,-14,-10,-18,58,]),'WORD':([21,22,39,56,],[27,29,48,57,]),'COMMA':([23,25,27,44,46,48,],[31,35,39,31,35,39,]),'VERTICAL_LINE':([42,58,],[50,50,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'if':([0,12,17,],[1,16,18,]),'expression':([0,2,7,9,12,17,],[3,8,11,13,3,3,]),'term':([0,2,7,9,12,17,],[4,4,4,4,4,4,]),'factor':([0,2,7,9,10,12,17,],[5,5,5,5,14,5,5,]),}
+_lr_goto_items = {'Automaton':([0,],[1,]),'start_state':([0,],[2,]),'States':([0,],[3,]),'term_state':([0,],[4,]),'Alphabet':([0,],[5,]),'edges':([0,],[6,]),'empty':([11,19,20,21,23,25,27,42,44,46,48,58,],[17,24,26,28,32,36,40,51,32,36,40,51,]),'states_list':([23,44,],[30,52,]),'term_state_list':([25,46,],[34,53,]),'Words':([27,48,],[38,54,]),'edge_list':([42,58,],[49,59,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,14 +26,28 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> if","S'",1,None,None,None),
-  ('if -> IF expression THEN if ELSE if','if',6,'p_if','parse.py',9),
-  ('if -> IF expression THEN if','if',4,'p_if','parse.py',10),
-  ('if -> expression','if',1,'p_if','parse.py',11),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_plus','parse.py',22),
-  ('expression -> term','expression',1,'p_expression_term','parse.py',26),
-  ('term -> term MULT factor','term',3,'p_term_times','parse.py',30),
-  ('term -> factor','term',1,'p_term_factor','parse.py',34),
-  ('factor -> NUM','factor',1,'p_factor_num','parse.py',38),
-  ('factor -> LBR expression RBR','factor',3,'p_factor_expr','parse.py',42),
+  ("S' -> Automaton","S'",1,None,None,None),
+  ('Automaton -> start_state','Automaton',1,'p_automaton','parse.py',60),
+  ('Automaton -> States','Automaton',1,'p_automaton','parse.py',61),
+  ('Automaton -> term_state','Automaton',1,'p_automaton','parse.py',62),
+  ('Automaton -> Alphabet','Automaton',1,'p_automaton','parse.py',63),
+  ('Automaton -> edges','Automaton',1,'p_automaton','parse.py',64),
+  ('start_state -> START ARROW NUM','start_state',3,'p_start_state','parse.py',67),
+  ('empty -> <empty>','empty',0,'p_empty','parse.py',72),
+  ('term_state -> TERM COLON OPEN_BRACKET NUM term_state_list CLOSE_BRACKET','term_state',6,'p_term_state','parse.py',76),
+  ('term_state -> TERM COLON OPEN_BRACKET empty CLOSE_BRACKET','term_state',5,'p_term_state','parse.py',77),
+  ('term_state_list -> COMMA NUM term_state_list','term_state_list',3,'p_term_state_list','parse.py',83),
+  ('term_state_list -> empty','term_state_list',1,'p_term_state_list','parse.py',84),
+  ('States -> STATES COLON OPEN_BRACKET NUM states_list CLOSE_BRACKET','States',6,'p_states','parse.py',90),
+  ('States -> STATES COLON OPEN_BRACKET empty CLOSE_BRACKET','States',5,'p_states','parse.py',91),
+  ('states_list -> COMMA NUM states_list','states_list',3,'p_states_list','parse.py',103),
+  ('states_list -> empty','states_list',1,'p_states_list','parse.py',104),
+  ('Alphabet -> ALPHABET COLON OPEN_BRACKET WORD Words CLOSE_BRACKET','Alphabet',6,'p_alphabet','parse.py',116),
+  ('Alphabet -> ALPHABET COLON OPEN_BRACKET empty CLOSE_BRACKET','Alphabet',5,'p_alphabet','parse.py',117),
+  ('Words -> COMMA WORD Words','Words',3,'p_words','parse.py',124),
+  ('Words -> empty','Words',1,'p_words','parse.py',125),
+  ('edges -> VERTEX_FROM OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list','edges',6,'p_edges','parse.py',131),
+  ('edges -> VERTEX_FROM empty','edges',2,'p_edges','parse.py',132),
+  ('edge_list -> VERTICAL_LINE OPEN_BRACKET VERTEX_TO WORD CLOSE_BRACKET edge_list','edge_list',6,'p_edge_list','parse.py',154),
+  ('edge_list -> empty','edge_list',1,'p_edge_list','parse.py',155),
 ]

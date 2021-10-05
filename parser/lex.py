@@ -17,7 +17,6 @@ tokens = [
   'WORD',
   'VERTEX_TO',
   'VERTEX_FROM',
-  'POINT_COMMA'
 ] 
 
 def t_START(t):
@@ -40,11 +39,11 @@ def t_WORD(t):
   t.value = t.value[1: -1]
   return t
 def t_VERTEX_TO(t):
-  r'\([\d]+;'
-  t.value = t.value[1: -1]
+  r'[\d]+\;'
+  t.value = t.value[:-1]
   return t
 def t_VERTEX_FROM(t):
-  r'[\d]+:'
+  r'[\d]+\:'
   t.value = t.value[:-1]
   return t  
 def t_NUM(t):
@@ -52,7 +51,6 @@ def t_NUM(t):
   t.value = int(t.value)
   return t
   
-t_POINT_COMMA=r'\;'
 t_COMMA =r'\,'  
 t_ARROW = r'\-\>'
 t_COLON = r'\:'
@@ -74,7 +72,7 @@ lexer = lex.lex()
 with open(sys.argv[1], 'r') as f:
   input=f.read()
 lexer.input(input)
-sys.stdout = open(sys.argv[1] + '.out', 'w')
+sys.stdout = open(sys.argv[1] + '2.out', 'w')
 
 while True:
   tok = lexer.token()
