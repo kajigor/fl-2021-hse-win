@@ -76,22 +76,23 @@ class Automat:
 
   def print_automat(self):
     self.alphabet.sort()
-    print("Alphabet:  ", end="")
-    print("(", end = "")
+    print("Alphabet -- " + str(self.alphabet_size) + " symbol(s):", end="\n")
+    print("             (", end = "")
     print(', '.join(self.alphabet), end = "")
     print(")")
 
-    print("Start:      ", end="")
-    print(self.start_state)
+    print("Start state:", end="\n")
+    print("             " + str(self.start_state))
 
     self.terminal_states.sort()
     sarr = [str(a) for a in self.terminal_states]
-    print("Terminals:  ", end="")
+    print("Terminals -- " + str(self.count_terminal) + " state(s):", end="\n")
+    print("             ", end = "")
     print(', '.join(sarr))
 
     print("Edges:    ")
     for edge in self.edges:
-      print("            ", end = "")
+      print("             ", end = "")
       print(edge.from_state, end = "")
       print(" --> ", end = "")
       print(edge.to_state, end = "")
@@ -112,6 +113,7 @@ def p_automaton(p):
 
 def p_alphabet(p):
   'Alphabet : ALPHABET COLON NUM DASH OPARENTHESES str_alphabet_symbols CPARENTHESES'
+  automat .init_alphabet_size(p[3])
 
 def p_states_count(p):
   'States_count : Q COLON NUM'

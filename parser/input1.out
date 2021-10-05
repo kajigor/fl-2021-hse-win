@@ -1,5 +1,8 @@
-Alphabet:  (--, :, d, k)
-Start:      0
-Terminals:  0
+Alphabet -- 4 symbol(s):
+             (--, :, d, k)
+Start state:
+             0
+Terminals -- 0 state(s):
+             0
 Edges:    
-            0 --> 0 (--, :, d, k)
+             0 --> 0 (--, :, d, k)
