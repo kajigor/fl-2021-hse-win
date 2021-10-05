@@ -95,7 +95,8 @@ def uniqueness_of_states_checking():
     global ERROR
     for v in Automate.vertexes:
         if Automate.unique_vertexes.get(v.i) is None:
-            Automate.unique_vertexes.update({v.i: v.terminality})
+            if v.terminality != 'Start':
+                Automate.unique_vertexes.update({v.i: v.terminality})
         else:
             if Automate.unique_vertexes[v.i] == v.terminality:
                 continue
