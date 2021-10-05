@@ -1,0 +1,11 @@
+Alphabet -- 2 symbol(s):
+             (a, b)
+Start state:
+             1
+Terminals -- 1 state(s):
+             2
+All states:
+           (number: 1, type: start)
+           (number: 2, type: runoff)
+Edges:
+            1 --> 2, symbols: (a, b)

@@ -1,0 +1,6 @@
+Alphabet: 2 -- ("a", "b")
+Q: 2
+start: 1
+runoff: 2
+T: 1 -- 2
+edges: (1; 2; "a", "b")

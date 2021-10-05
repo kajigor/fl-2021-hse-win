@@ -1,0 +1,12 @@
+Alphabet -- 8 symbol(s):
+             ( , --, :, @, \", \\, ^, k)
+Start state:
+             1
+Terminals -- 1 state(s):
+             1
+All states:
+           (number: 1, type: start)
+           (number: 2, type: runoff)
+Edges:
+            1 --> 2, symbols: ( , --, :, @, \", \\, ^, k)
+            2 --> 2, symbols: ( , --, :, @, \", \\, ^, k)

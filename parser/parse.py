@@ -129,8 +129,9 @@ class Automat:
     print(', '.join(sarr))
 
     print("All states:")
-    for state in self.states:
+    for i in range(1, len(self.states)):
       print("           ", end = "")
+      state = self.states[i]
       state.print_to()
 
     print("Edges:")
@@ -141,7 +142,12 @@ class Automat:
   def check_empty_automat(self):
     if (self.count_states == 0):
       self.is_valid = False
-      raise Exception("Empty Automat")      
+      raise Exception("Empty Automat")
+
+  def check_empty_alphabet(self):
+    if (self.alphabet_size == 0):
+      self.is_valid = False
+      raise Exception("Empty Alphabet")
 
   def check_start_state(self):
     if (self.start_state == -1):
@@ -149,7 +155,7 @@ class Automat:
       raise Exception("Start state of the automat has not been detected")
 
   def check_states_uniqueness(self):
-    for i in range(len(self.states)):
+    for i in range(1, len(self.states)):
       for j in range(i + 1, len(self.states)):
         if (self.states[i] == self.states[j]):
           self.is_valid = False
@@ -163,7 +169,8 @@ class Automat:
           raise Exception("Symbols of the alphabet are not unique -- identical symbols: " + self.alphabet[i] + " (pos: " + str(i) + ") and " + self.alphabet[j] + " (pos: " + str(j) + ")")
 
   def check_determinancy_and_compliteness(self):
-    for st in self.states:
+    for i in range(1, len(self.states)):
+      st = self.states[i]
       if (st.type != 'runoff'):
         for symb in self.alphabet:
           count = 0
@@ -173,14 +180,15 @@ class Automat:
 
           if (count == 0):
             self.is_valid = False
-            raise Exception("Automat is not complete -- no edge with symbol " + str(symb) + " from state " + str(st.number))  
+            raise Exception("Automat is not complete -- no edge with symbol '" + str(symb) + "' " + "from state " + str(st.number))  
           if (count > 1):
             self.is_valid = False
-            raise Exception("Automat is not determinate -- for outgoing edges from state " + str(st.number) + " repeated symbol is " + str(symb))  
+            raise Exception("Automat is not determinate -- for outgoing edges from state " + str(st.number) + " repeated symbol is '" + str(symb) + "'")  
 
   def checker(self):
     try:
       self.check_empty_automat()
+      self.check_empty_alphabet()
       self.check_start_state()
       self.check_states_uniqueness()
       self.check_alphabet_uniqueness()
@@ -209,7 +217,7 @@ def p_alphabet(p):
 def p_states_count(p):
   'States_count : Q COLON NUM'
   automat.init_count_states(p[3])
-  for i in range(p[3]):
+  for i in range(p[3] + 1):
       automat.states.append(State(i))
 
 def p_start_state(p):
