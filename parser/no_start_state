@@ -1,0 +1,5 @@
+ Alphabet: 2 -- ("c", "d")
+ Q: 2
+ start:
+ T: 1 -- 1
+ edges: (0; 1; "c", "d")

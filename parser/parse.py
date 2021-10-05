@@ -25,7 +25,8 @@ class State:
     self.symbols.append(symbol)
 
   def change_type(self, type):
-    self.type = type
+    if (self.type == 'average'):
+      self.type = type
 
   def add_in_edge(self, edge):
     self.in_edges.append(edge)
@@ -83,6 +84,7 @@ class Automat:
     self.terminal_states = []
     self.edges = []
     self.states = []
+    self.is_valid = True
 
   def init_alphabet_size(self, size):
     self.alphabet_size = size
@@ -131,20 +133,28 @@ class Automat:
       print("            ", end = "")
       edge.print_to()
 
+  def check_empty_automat(self):
+    if (self.count_states == 0):
+      self.is_valid = False
+      raise Exception("Empty Automat")      
+
   def check_start_state(self):
     if (self.start_state == -1):
+      self.is_valid = False
       raise Exception("Start state of the automat has not been detected")
 
   def check_states_uniqueness(self):
     for i in range(len(self.states)):
       for j in range(i, len(self.states)):
         if (self.states[i] == self.states[j]):
+          self.is_valid = False
           raise Exception("Automat has identical states")
 
   def check_alphabet_uniqueness(self):
     for i in range(len(self.alphabet)):
       for j in range(i, len(self.alphabet)):
         if (self.alphabet[i] == self.alphabet[j]):
+          self.is_valid = False
           raise Exception("Symbols of the alphabet are not unique")
 
   def check_determinancy_and_compliteness(self):
@@ -157,18 +167,22 @@ class Automat:
               count += 1
 
           if (count == 0):
+            self.is_valid = False
             raise Exception("Automat is not complete")  
           if (count > 1):
+            self.is_valid = False
             raise Exception("Automat is not determinate")  
 
   def checker(self):
     try:
-      heck_start_state()
-      check_states_uniqueness()
-      check_alphabet_uniqueness()
-      check_determinancy_and_compliteness()
+      self.check_empty_automat()
+      self.check_start_state()
+      self.check_states_uniqueness()
+      self.check_alphabet_uniqueness()
+      self.check_determinancy_and_compliteness()
     except Exception as err:
-      print("Error:\n    " + str(err))  
+      self.is_valid = False
+      print("Error: " + str(err))  
 
 
 automat = Automat()
@@ -183,7 +197,8 @@ def p_automaton(p):
                | Edges '''
 
 def p_alphabet(p):
-  'Alphabet : ALPHABET COLON NUM DASH OPARENTHESES str_alphabet_symbols CPARENTHESES'
+  '''Alphabet : ALPHABET COLON NUM DASH OPARENTHESES str_alphabet_symbols CPARENTHESES
+              | ALPHABET COLON NUM'''
   automat .init_alphabet_size(p[3])
 
 def p_states_count(p):
@@ -194,8 +209,12 @@ def p_states_count(p):
 
 def p_start_state(p):
   'Start_state : START COLON NUM'
-  automat.init_start_state(p[3])
-  automat.states[p[3]].change_type('start')
+  try:
+    automat.init_start_state(p[3])
+    automat.states[p[3]].change_type('start')
+  except Exception:
+    automat.validity = "Start state of the automat has not been detected"
+
 
 def p_runoff_state(p):
   'Runoff_state : RUNOFF COLON NUM'
@@ -230,7 +249,8 @@ def p_str_edge(p):
 
 def p_str_edge_symbols(p):
   '''str_edge_symbols : SYMBOL COMMA str_edge_symbols
-                      | SYMBOL'''   
+                      | SYMBOL
+                      | DASH'''   
   current_edge.add_symbol(p[1]) 
 
 def p_end_edge(p):
@@ -260,4 +280,6 @@ while True:
   except Exception as err:
     print("Error: " + str(err))
 
-automat.print_automat()    
+automat.checker()
+if (automat.is_valid == True):
+  automat.print_automat()
