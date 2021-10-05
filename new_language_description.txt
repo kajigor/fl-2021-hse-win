@@ -8,6 +8,7 @@ c_1
 c_2
 \vdots
 c_|\sum|
+States |Q|
 Edges |e|
 x to y by c_1 c_2 \dotso c_|c|
 x to y by c_1 c_2 \dotso c_|c|
