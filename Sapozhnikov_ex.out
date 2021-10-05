@@ -1,3 +1,12 @@
-LexToken(machine,'Open',1,0)
-LexToken(alphabet,'â\x86\x90',1,1)
-LexToken(machine,'Close',1,27)
+I solemnly swear I am up to no good!
+Alphabet:
+â   
+Vertexes list:
+Edges list:
+Analysis:
+1. ERROR: initial state does not exist
+2. Vertex names are unique
+3. Elements of the alphabet are unique
+4. Machine is deterministic
+5. Machine is full
+Mischief Managed!
