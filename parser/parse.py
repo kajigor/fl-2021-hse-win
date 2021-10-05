@@ -149,15 +149,24 @@ class Automat:
 
   def check_determinancy_and_compliteness(self):
     for st in self.states:
+      if (st.type != 'runoff'):
+        for symb in self.alphabet:
+          count = 0
+          for e in st.out_edges:
+            if (symb in e.symbols):
+              count += 1
 
-      raise Exception("Automat is not deterministic")  
+          if (count == 0):
+            raise Exception("Automat is not complete")  
+          if (count > 1):
+            raise Exception("Automat is not determinate")  
 
   def checker(self):
     try:
       heck_start_state()
       check_states_uniqueness()
       check_alphabet_uniqueness()
-      check_determinancy()
+      check_determinancy_and_compliteness()
     except Exception as err:
       print("Error:\n    " + str(err))  
 
