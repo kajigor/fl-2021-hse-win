@@ -1,0 +1,6 @@
+alphabet { "b", "n" }
+states { q0, q11 }
+terminal { q11 }
+q0 ---> q11 [ "b" ]
+q0 ---> q0 [ "n" ]
+q11 ---> q1 [ "b", "n" ]

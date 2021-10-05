@@ -1,0 +1,5 @@
+[49~49]
+start q0
+terminal q1
+transition (q0 -> q0 , {49})
+transition (s0 -> q0 , {49})

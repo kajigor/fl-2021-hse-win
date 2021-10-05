@@ -1,0 +1,8 @@
+The list of words: 11
+The list of vertexes: 
+q0: start
+q1: terminal
+s0: non_terminal
+The list of edges: 
+Start vertex: q0. End vertex: q0. Transition words: 1
+Start vertex: s0. End vertex: q0. Transition words: 1

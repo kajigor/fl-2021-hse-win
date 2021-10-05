@@ -1,0 +1,11 @@
+Alphabet:
+    ['b', 'n']
+States:
+    name: q0, terminality: False, description: ''
+    name: q11, terminality: True, description: ''
+Edges:
+    state from: q0, state to: q11, symbols: ['b']
+    state from: q0, state to: q0, symbols: ['n']
+    state from: q11, state to: q1, symbols: ['b', 'n']
+Initial state:
+    q0

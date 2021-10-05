@@ -1,0 +1,11 @@
+Alphabet:
+    ['\\"', '\\\\']
+States:
+    name: q0, terminality: False, description: ''
+    name: q1, terminality: True, description: ''
+Edges:
+    state from: q0, state to: q1, symbols: ['\\"']
+    state from: q0, state to: q0, symbols: ['\\\\']
+    state from: q1, state to: q1, symbols: ['\\"', '\\\\']
+Initial state:
+    q0
