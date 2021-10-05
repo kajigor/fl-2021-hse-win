@@ -56,7 +56,7 @@ class MySymb(a: String, b: Int, c: Int) : Symbol {
 
 def alphabetInt: Alphabet<Int> = Int.inRange(0, 100)
 
-def alphabetString: Alphabet<String> = {for, if, else, while}
+def alphabetString: Alphabet<String> = {"for", "if", "else", "while"}
 
 def myAlphabet: Alphabet<MySymb> = Alphabet.describe {
 	a from alphabetString,
@@ -71,13 +71,13 @@ def myAlphabet: Alphabet<MySymb> = Alphabet.describe {
 
     Какой вид у `<body>`:
 
-    Ключевые слова: `start`, `else`, `deadend`, `alphabet`, `terminal`
+    Ключевые слова: `start`, `else`, `deadend`, `alphabet`, `terminal`, `itself`
     * `start`     -- стартовое состояние
 	* `else`      -- множество всех символов алфавита, для которых не прописасн отдельно переход
 	* `deadend`   -- состояние-тупик, из которого не прийти ни в какое другое. Не терминальное
 	* `alphabet`  -- множество всех символов алфавита
 	* `terminal`  -- после него идёт свой блок `{ <body> }`, в котором слово `terminal` запрещено.
-	* 
+	* `itself` -- то же состояние, что и слева от стрелки
 	Подсвечивыаются в VS Code с моим экстеншеном отдельно (другим цветом) от основных ключевых слов.
 
 	Описание состояний:

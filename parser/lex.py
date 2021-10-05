@@ -2,17 +2,17 @@ import ply.lex as lex
 import sys
 
 reserved = {
-    'def': 'def',
-    'class': 'class',
-    'override': 'override',
-    'fun': 'fun',
-    'return': 'return',
-    'start': 'start',
-    'else': 'else',
-    'deadend': 'deadend',
-    'alphabet': 'alphabet',
-    'terminal': 'terminal',
-    'itself': 'itself'
+    'def': 'DEF',
+    'class': 'CLASS',
+    'override': 'OVERRIDE',
+    'fun': 'FUN',
+    'return': 'RETURN',
+    'start': 'START',
+    'else': 'ELSE',
+    'deadend': 'DEADEND',
+    'alphabet': 'ALPHABET',
+    'terminal': 'TERMINAL',
+    'itself': 'ITSELF'
 }
 
 tokens = [
