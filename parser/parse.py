@@ -3,6 +3,37 @@ from lex import tokens
 import sys
 
 # автомат -- граф, характеризуется состояними (вершины State) и ребрами перехода (ребра Edges)
+class Edge:
+  def __init__(self, symbol):
+    self.from_state = 0
+    self.to_state = 0
+    self.symbols = [symbol]
+
+  def __eq__(self, other):
+    if (self.from_state == other.from_state and \
+        self.to_state == other.to_state and \
+        self.symbols == other.symbols):
+        return True
+    return False      
+
+  def init_from_state(self, state_number):
+    self.from_state = state_number
+
+  def init_to_state(self, state_number):
+    self.to_state = state_number    
+
+  def add_symbol(self, symbol):
+    self.symbols.append(symbol)  
+
+  def print_to(self):
+    print(self.from_state, end = "")
+    print(" --> ", end = "")  
+    print(self.to_state, end = ", ")
+    print("symbols: ", end = "")
+    self.symbols.sort()
+    print("(", end = "")
+    print(', '.join(self.symbols), end = "")
+    print(")")  
 
 class State:
   def __init__(self, number_):
@@ -13,7 +44,7 @@ class State:
     self.out_edges = []
 
   def __eq__(self, other):
-    if (self.number == other.number or \
+    if (self.number != other.number and \
         self.symbols == other.symbols and \
         self.type == other.type and \
         self.in_edges == other.in_edges and \
@@ -40,39 +71,13 @@ class State:
     print(self.number, end = ", ")
     print("type: ", end = "")
     print(self.type, end = "")
-    print(")")         
-
-class Edge:
-  def __init__(self):
-    self.from_state = 0
-    self.to_state = 0
-    self.symbols = []
-
-  def __eq__(self, other):
-    if (self.from_state == other.from_state and \
-        self.to_state == other.to_state and \
-        self.symbols == other.symbols):
-        return True
-    return False      
-
-  def init_from_state(self, state_number):
-    self.from_state = state_number
-
-  def init_to_state(self, state_number):
-    self.to_state = state_number    
-
-  def add_symbol(self, symbol):
-    self.symbols.append(symbol)  
-
-  def print_to(self):
-    print(self.from_state, end = "")
-    print(" --> ", end = "")  
-    print(self.to_state, end = ", ")
-    print("symbols: ", end = "")
-    self.symbols.sort()
-    print("(", end = "")
-    print(', '.join(self.symbols), end = "")
-    print(")")    
+    #print(" outgoing -- ")
+    #for e in self.out_edges:
+      #e.print_to()
+    #print(" ingoing -- ")  
+    #for e in self.in_edges:
+      #e.print_to()
+    print(")")                
 
 class Automat:
   def __init__(self):
@@ -105,7 +110,7 @@ class Automat:
     self.terminal_states.append(state_number)
 
   def add_edge(self, edge):
-    self.edges.append(edge)  
+    self.edges.append(edge)
 
   def print_automat(self):
     self.alphabet.sort()
@@ -145,17 +150,17 @@ class Automat:
 
   def check_states_uniqueness(self):
     for i in range(len(self.states)):
-      for j in range(i, len(self.states)):
+      for j in range(i + 1, len(self.states)):
         if (self.states[i] == self.states[j]):
           self.is_valid = False
-          raise Exception("Automat has identical states")
+          raise Exception("Automat has identical states -- numbers: " + str(i) + " and " + str(j))
 
   def check_alphabet_uniqueness(self):
     for i in range(len(self.alphabet)):
-      for j in range(i, len(self.alphabet)):
+      for j in range(i + 1, len(self.alphabet)):
         if (self.alphabet[i] == self.alphabet[j]):
           self.is_valid = False
-          raise Exception("Symbols of the alphabet are not unique")
+          raise Exception("Symbols of the alphabet are not unique -- identical symbols: " + self.alphabet[i] + " (pos: " + str(i) + ") and " + self.alphabet[j] + " (pos: " + str(j) + ")")
 
   def check_determinancy_and_compliteness(self):
     for st in self.states:
@@ -168,10 +173,10 @@ class Automat:
 
           if (count == 0):
             self.is_valid = False
-            raise Exception("Automat is not complete")  
+            raise Exception("Automat is not complete -- no edge with symbol " + str(symb) + " from state " + str(st.number))  
           if (count > 1):
             self.is_valid = False
-            raise Exception("Automat is not determinate")  
+            raise Exception("Automat is not determinate -- for outgoing edges from state " + str(st.number) + " repeated symbol is " + str(symb))  
 
   def checker(self):
     try:
@@ -185,8 +190,8 @@ class Automat:
       print("Error: " + str(err))  
 
 
-automat = Automat()
-current_edge = Edge()      
+automat = Automat()   
+edge_is_done = 1 
 
 def p_automaton(p):
   '''Automat : Alphabet
@@ -199,7 +204,7 @@ def p_automaton(p):
 def p_alphabet(p):
   '''Alphabet : ALPHABET COLON NUM DASH OPARENTHESES str_alphabet_symbols CPARENTHESES
               | ALPHABET COLON NUM'''
-  automat .init_alphabet_size(p[3])
+  automat.init_alphabet_size(p[3])
 
 def p_states_count(p):
   'States_count : Q COLON NUM'
@@ -209,12 +214,8 @@ def p_states_count(p):
 
 def p_start_state(p):
   'Start_state : START COLON NUM'
-  try:
-    automat.init_start_state(p[3])
-    automat.states[p[3]].change_type('start')
-  except Exception:
-    automat.validity = "Start state of the automat has not been detected"
-
+  automat.init_start_state(p[3])
+  automat.states[p[3]].change_type('start')
 
 def p_runoff_state(p):
   'Runoff_state : RUNOFF COLON NUM'
@@ -243,21 +244,28 @@ def p_str_edges(p):
                | str_edge'''
 
 def p_str_edge(p):
-  '''str_edge : OPARENTHESES NUM SEMICOLON NUM SEMICOLON str_edge_symbols end_edge''' 
-  current_edge.init_from_state(p[2])   
-  current_edge.init_to_state(p[4])
+  'str_edge : OPARENTHESES NUM SEMICOLON NUM SEMICOLON str_edge_symbols end_edge'
+  automat.edges[-1].from_state = p[2]
+  automat.edges[-1].to_state = p[4]
+
+  automat.states[p[2]].add_out_edge(automat.edges[-1])
+  automat.states[p[4]].add_in_edge(automat.edges[-1])
 
 def p_str_edge_symbols(p):
   '''str_edge_symbols : SYMBOL COMMA str_edge_symbols
                       | SYMBOL
-                      | DASH'''   
-  current_edge.add_symbol(p[1]) 
+                      | DASH''' 
+  global edge_is_done                      
+  if (edge_is_done == 1):
+    automat.edges.append(Edge(p[1]))
+  else:
+    automat.edges[-1].add_symbol(p[1])
+  edge_is_done = 0
 
 def p_end_edge(p):
   '''end_edge : CPARENTHESES'''
-  automat.add_edge(current_edge)  
-  automat.states[current_edge.from_state].add_out_edge(current_edge) 
-  automat.states[current_edge.to_state].add_in_edge(current_edge)                                                          
+  global edge_is_done
+  edge_is_done = 1  
 
 def p_error(p):
   raise Exception("Syntax error")
