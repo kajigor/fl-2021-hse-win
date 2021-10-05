@@ -1,3 +1,4 @@
+from typing import Tuple
 import ply.yacc as yacc
 import sys
 
@@ -192,12 +193,14 @@ def p_move(p):
 
 
 def p_error(p):
-    print("Syntax error")
+    raise Exception("Syntax error")
 
 
 parser = yacc.yacc()
 
 sys.stdin = open(sys.argv[1], 'r')
+sys.stdout = open(sys.argv[1] + '.out', 'w')
+correct_input = True
 while True:
     try:
         s = input()
@@ -206,11 +209,10 @@ while True:
     try:
         parser.parse(s)
     except Exception as e:
+        correct_input = False
         print(str(e))
         break
 
-
-sys.stdout = open(sys.argv[1] + '.out', 'w')
-
-if automat.check():
-    automat.print()
+if correct_input:
+    if automat.check():
+        automat.print()
