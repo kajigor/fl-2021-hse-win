@@ -1,20 +1,18 @@
 Automata is correct
 Total amount of states is: 4
 Alphabet is :"0" "1" 
-Start state is: 0
-Terminal states is: 6 
+Start state is: 4
+Terminal states is: 0 
 Transits is :
-0 -> 1 by symbols: "1" 
+0 -> 2 by symbols: "1" 
 1 -> 0 by symbols: "1" 
 1 -> 3 by symbols: "0" 
 3 -> 1 by symbols: "0" 
 0 -> 2 by symbols: "0" 
 2 -> 0 by symbols: "0" 
-2 -> 3 by symbols: "1" 
-3 -> 2 by symbols: "1" 
-Automata has Start State
+Start State is missing
 Each state is unique
 Alphabet consists only of unique symbols
 Automata is determine
-Automata is full
+Automata is not full
 All Transits are correct

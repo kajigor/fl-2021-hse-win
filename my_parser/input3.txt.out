@@ -2,7 +2,13 @@ Automata is correct
 Total amount of states is: 2
 Alphabet is :"0" "1" 
 Start state is: 0
-Terminal states is: 1 
+Terminal states is: 2 
 Transits is :
 0 -> 1 by symbols: "0" "1" 
 1 -> 0 by symbols: "0" "1" 
+Automata has Start State
+Each state is unique
+Alphabet consists only of unique symbols
+Automata is determine
+Automata is full
+All Transits are correct
