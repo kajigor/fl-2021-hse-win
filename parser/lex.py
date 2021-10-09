@@ -1,6 +1,7 @@
 import ply.lex as lex
 import sys
 
+spec_symbols = {'=', '\'', '(', ')', '[', ']', '{', '}', '|', 'n', '#'}
 tokens = [
     'COMMA',
     'ALT',
@@ -13,12 +14,24 @@ tokens = [
     'EQ',
     'RULENAME',
     'PLAINTEXT',
+    'COMMENT'
 ]
 
 
 def t_PLAINTEXT(t):
     r'\'(\\\'|[^\'])+\''
     t.value = t.value[1:-1]
+    s = ""
+    for i in range(len(t.value)):
+        if i > 0 and t.value[i - 1] == '\\' and t.value[i] in spec_symbols:
+            if t.value[i - 1] == '\\' and t.value[i] == 'n':
+                s += '\n'
+            else:
+                s += t.value[i]
+        elif t.value[i] != '\\':
+            s += t.value[i]
+    t.value = s
+    print(t.value)
     return t
 
 
@@ -31,9 +44,9 @@ t_RBRACE = r'\}'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_EQ = r'\='
-t_RULENAME = r'([^\[\]\(\)\{\}\=\|\\\']|\\\[|\\\]|\\\(|\\\)|\\\{|\\\}|\\\=|\\\||\\\\|\\\')+'
+t_RULENAME = r'([^\[\]\(\)\{\}\=\|\\\'\#]|\\\#|\\\[|\\\]|\\\(|\\\)|\\\{|\\\}|\\\=|\\\||\\\\|\\\')+'
+t_COMMENT = r'\#.*$'
 t_ignore = ' \t'
-
 
 def t_newline(t):
     r'\n+'
