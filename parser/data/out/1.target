@@ -1,0 +1,20 @@
+#ifndef GENERATED_DFA
+#define GENERATED_DFA
+
+#include <unordered_map>
+#include <vector>
+#include <string>
+#include <set>
+
+struct DFA {
+    int n = 2;
+    int m = 2;
+    int q = 0;
+    int t = 1;
+
+    std::unordered_map<std::string, size_t> word_to_num = {{"dsa", 1}, {"asd", 0}} ;
+    std::vector< std::vector<size_t> > next_state = {{0, 1} , {1, 0} } ;
+    std::vector<size_t> terminals = {1} ;
+};
+
+#endif //GENERATED_DFA

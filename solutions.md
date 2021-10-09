@@ -36,7 +36,9 @@ t: 1
 
 # 3
 
+`cd parser`
 Запуск: `./run.sh <input file>`
+Тестирование: `./test.sh`
 
 # 4
 

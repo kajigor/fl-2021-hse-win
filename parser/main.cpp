@@ -21,8 +21,6 @@ std::string serialize_vector(const auto& v) {
     }
     ss.seekp(-2, std::ios_base::end);
     ss << '}';
-    ss.seekp(-1, std::ios_base::end);
-    ss << '\0';
 
     return ss.str();
 }
