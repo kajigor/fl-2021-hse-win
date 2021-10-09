@@ -17,7 +17,7 @@ tokens = [
 
 
 def t_PLAINTEXT(t):
-    r'\'[^\']+\''
+    r'\'(\\\'|[^\'])+\''
     t.value = t.value[1:-1]
     return t
 
@@ -31,7 +31,7 @@ t_RBRACE = r'\}'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_EQ = r'\='
-t_RULENAME = r'([^,|\[|\]|\(|\)|\{|\}|\=|\|]|\')+'
+t_RULENAME = r'([^\[\]\(\)\{\}\=\|\\\']|\\\[|\\\]|\\\(|\\\)|\\\{|\\\}|\\\=|\\\||\\\\|\\\')+'
 t_ignore = ' \t'
 
 
