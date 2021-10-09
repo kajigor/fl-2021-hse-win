@@ -9,7 +9,7 @@ std::string serialize_vector(size_t v) {
 }
 
 std::string serialize_vector(std::pair<const std::string, size_t> v) {
-    return '{' + v.first + ", " + std::to_string(v.second) + '}';
+    return "{\"" + v.first + "\", " + std::to_string(v.second) + '}';
 }
 
 std::string serialize_vector(const auto& v) {
@@ -43,6 +43,7 @@ auto serialize(const int q, const auto& words, const auto& states, const auto& t
     << "\n"
     << "#include <unordered_map>\n"
     << "#include <vector>\n"
+    << "#include <string>\n"
     << "#include <set>\n"
     << "\n"
     << "struct DFA {\n"
@@ -52,8 +53,8 @@ auto serialize(const int q, const auto& words, const auto& states, const auto& t
     << "    int t = " << t << ";\n"
     << "\n"
     << "    std::unordered_map<std::string, size_t> word_to_num = " << words_str << ";\n"
-    << "    std::vector< std::vector<size_t> > next_state(n, std::vector<size_t>(m)) = " << states_str << ";\n"
-    << "    std::vector<size_t> terminals(t) = " << terminals_str << ";\n"
+    << "    std::vector< std::vector<size_t> > next_state = " << states_str << ";\n"
+    << "    std::vector<size_t> terminals = " << terminals_str << ";\n"
     << "};\n"
     << "\n"
     << "#endif //GENERATED_DFA\n";
@@ -113,14 +114,14 @@ int main() {
 
         auto check_word = [](const auto& word) {
             char prev = '\0';
-            constexpr auto err_msg = "after \"\\\" must be \"\\\" or \"m\"";
-            for (char cur : word) {
-                if (prev == '\\' && cur != '\\' && cur != 'n') {
+            constexpr auto err_msg = "after \"\\\" must be \"\\\" or \"n\"";
+            for (size_t i=1; i < word.size(); ++i) {
+                if (word[i - 1] == '\\' && word[i] != '\\' && word[i] != 'n' && word[i] != '\"') {
                     throw std::runtime_error(err_msg);
                 }
-                prev = cur;
+                i += word[i - 1] == '\\' && word[i] == '\\';
             }
-            if (prev == '\\') {
+            if (word.back() == '\\') {
                 throw std::runtime_error(err_msg);
             }
         };
