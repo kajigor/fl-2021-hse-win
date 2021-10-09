@@ -2,28 +2,69 @@
 #include <sstream>
 #include <unordered_map>
 #include <vector>
+#include <set>
 
 struct parse_exception { int line_num; };
+
+std::string serialize_vector(size_t v) {
+    return std::to_string(v);
+}
+
+std::string serialize_vector(std::pair<const std::string, size_t> v) {
+    return '{' + v.first + ", " + std::to_string(v.second) + '}';
+}
+
+std::string serialize_vector(const auto& v) {
+    std::stringstream ss;
+    
+    ss << '{';
+    for (const auto& i : v) {
+        ss << serialize_vector(i) << ", ";
+    }
+    ss.seekp(-2, std::ios_base::end);
+    ss << '}';
+    ss.seekp(-1, std::ios_base::end);
+    ss << '\0';
+
+    return ss.str();
+}
 
 auto serialize(const int q, const auto& words, const auto& states, const auto& terminals) {
     const int n = states.size();
     const int m = states[0].size();
     const int t = terminals.size();
-    std::string result = R"(class DFA {
 
-    int dsa;
+    std::string words_str = serialize_vector(words);
+    std::string states_str = serialize_vector(states);
+    std::string terminals_str = serialize_vector(terminals);
 
-};
-    )";
-    
+    std::stringstream ss;
+    ss
+    << "#ifndef GENERATED_DFA\n"
+    << "#define GENERATED_DFA\n"
+    << "\n"
+    << "#include <unordered_map>\n"
+    << "#include <vector>\n"
+    << "#include <set>\n"
+    << "\n"
+    << "struct DFA {\n"
+    << "    int n = " << n << ";\n"
+    << "    int m = " << m << ";\n"
+    << "    int q = " << q << ";\n"
+    << "    int t = " << t << ";\n"
+    << "\n"
+    << "    std::unordered_map<std::string, size_t> word_to_num = " << words_str << ";\n"
+    << "    std::vector< std::vector<size_t> > next_state(n, std::vector<size_t>(m)) = " << states_str << ";\n"
+    << "    std::vector<size_t> terminals(t) = " << terminals_str << ";\n"
+    << "};\n"
+    << "\n"
+    << "#endif //GENERATED_DFA\n";
 
-    return result;
+    return ss.str();
 }
 
 
 int main() {
-    using std::cin, std::cout, std::cerr;
-
     auto read_line = [line_num = 0](auto& is, const char start_char) mutable {
         ++line_num;
         std::string line;
@@ -36,6 +77,8 @@ int main() {
     };
 
     try {
+        using std::cin;
+
         std::stringstream ss(read_line(cin, 's')); //TODO: error if not (\w|\s)*
 
         size_t n, m, q, t;
@@ -58,7 +101,7 @@ int main() {
 
         std::unordered_map<std::string, size_t> word_to_num;
         std::vector< std::vector<size_t> > next_state(n, std::vector<size_t>(m));
-        std::vector<size_t> terminals(t);
+        std::set<size_t> terminals;
 
         for (size_t i=0; i < m; ++i) {
             const auto& [it, is_inserted] = word_to_num.emplace(read_line(cin, 'w'), i); //TODO: change \\ to \ etc.
@@ -78,17 +121,18 @@ int main() {
         }
 
         ss = std::stringstream(read_line(cin, 't'));
-        for (auto& i : terminals) {
-            ss >> i;
+        for (size_t i=0; i < t; ++i) {
+            int t_state;
+            ss >> t_state; // TODO: check for repeating
+            terminals.insert(t_state);
         } //TODO: check for empty ss
 
-        cout << serialize(q, word_to_num, next_state, terminals);
-
+        std::cout << serialize(q, word_to_num, next_state, terminals);
     } catch (parse_exception& e) {
-        cerr << "Can't parse " << e.line_num << " line\n";
+        std::cerr << "Can't parse " << e.line_num << " line\n";
         return 1;
     } catch (std::invalid_argument& e) {
-        cerr << e.what() << '\n';
+        std::cerr << e.what() << '\n';
         return 2;
     }
 
