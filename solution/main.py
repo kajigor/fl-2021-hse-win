@@ -2,6 +2,16 @@ import ply.lex as lex
 import sys
 import re
 
+
+class Graph:
+    def __init__(self):
+        self.alphabet = global_alphabet  # алфавит языка
+        self.start_vertex = int(start_vertex)
+        self.terminal_vertexes = terminal_vertexes
+        self.edges = edges
+        self.vertex_cnt = int(vertex_cnt)
+
+
 tokens = [
     'alphabet',
     'Q',
@@ -17,6 +27,7 @@ terminal_vertexes = []
 edges = []
 one_start_vertex = True
 passed_checkers = True
+correct_input = True
 
 
 def t_newline(t):
@@ -25,7 +36,8 @@ def t_newline(t):
 
 
 def t_error(t):
-    fout.write("Incorrect input format '%s'" % t.value[0] + "\n")
+    global correct_input
+    correct_input = False
     t.lexer.skip(1)
 
 
@@ -99,18 +111,18 @@ def t_function(t):
     return t
 
 
-def alphabet_checking():
+def alphabet_checking(graph):
     global passed_checkers
-    if len(global_alphabet) == len(set(global_alphabet)):
+    if len(graph.alphabet) == len(set(graph.alphabet)):
         return "PASSED: Alphabet elements are unique"
     else:
         passed_checkers = False
         return "NOT PASSED: Alphabet elements are not unique"
 
 
-def start_vertex_checking():
+def start_vertex_checking(graph):
     global passed_checkers
-    if start_vertex == "":
+    if graph.start_vertex == "":
         passed_checkers = False
         return "NOT PASSED: Initial state does not found"
     elif one_start_vertex == False:
@@ -120,22 +132,22 @@ def start_vertex_checking():
         return "RASSED: Initial state is the only one"
 
 
-def machine_states_checking():
+def machine_states_checking(graph):
     global passed_checkers
-    if len(terminal_vertexes) == len(set(terminal_vertexes)):
+    if len(graph.terminal_vertexes) == len(set(graph.terminal_vertexes)):
         return "PASSED: States are unique"
     else:
         passed_checkers = False
         return "NOT PASSED: States are not unique"
 
 
-def determinism_and_completeness_checking():
+def determinism_and_completeness_checking(fout, graph):
     global passed_checkers
     l = []
     checker = True
-    for i in range(int(vertex_cnt)):
+    for i in range(int(graph.vertex_cnt)):
         l.append("")
-    for i in edges:
+    for i in graph.edges:
         l[int(i[0])] = l[int(i[0])] + i[2]
     for i in l:
         if len(i) != len(set(i)):
@@ -147,7 +159,7 @@ def determinism_and_completeness_checking():
         fout.write("PASSED: machine is deterministic\n")
     checker = True
     for i in l:
-        if len(set(i)) < len(global_alphabet):
+        if len(set(i)) < len(graph.alphabet):
             passed_checkers = False
             fout.write("NOT PASSED: machine is not complete\n")
             checker = False
@@ -156,31 +168,43 @@ def determinism_and_completeness_checking():
         fout.write("PASSED: machine is complete\n")
 
 
-lexer = lex.lex()
+def print_analysis(fout, graph):
+    if correct_input == False:
+        fout.write("Incorrect input format" + "\n")
+    fout.write("Analyzing the machine...\nAlphabet:\n")
+    for s in graph.alphabet:
+        fout.write(s + ' ')
+    fout.write("\nVertex count:\n" + str(graph.vertex_cnt) + "\nStart state: \n" + str(
+        graph.start_vertex) + "\nTerminal states: \n")
+    for i in graph.terminal_vertexes:
+        fout.write(i + ' ')
+    fout.write("\nEdges: \n")
+    for i in graph.edges:
+        fout.write("transition from " + i[0] + " to " + i[1] + " by \"" + i[2] + "\"\n")
 
-fin = open(sys.argv[1], 'r').read()
-lexer.input(fin)
-fout = open(sys.argv[1] + '.out', 'w')
 
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
+def test_machine(fout, graph):
+    fout.write("\nTesting the machine...\n")
+    fout.write(alphabet_checking(graph) + "\n")
+    fout.write(start_vertex_checking(graph) + "\n")
+    fout.write(machine_states_checking(graph) + "\n")
+    determinism_and_completeness_checking(fout, graph)
+    if passed_checkers:
+        fout.write("Well done!\n")
 
-fout.write("Analyzing the machine...\nAlphabet:\n")
-for s in global_alphabet:
-    fout.write(s + ' ')
-fout.write("\nVertex count:\n" + vertex_cnt + "\nStart state: \n" + start_vertex + "\nTerminal states: \n")
-for i in terminal_vertexes:
-    fout.write(i + ' ')
-fout.write("\nEdges: \n")
-for i in edges:
-    fout.write("transition from " + i[0] + " to " + i[1] + " by \"" + i[2] + "\"\n")
 
-fout.write("\nTesting the machine...\n")
-fout.write(alphabet_checking() + "\n")
-fout.write(start_vertex_checking() + "\n")
-fout.write(machine_states_checking() + "\n")
-determinism_and_completeness_checking()
-if passed_checkers:
-    fout.write("Well done!\n")
+def main():
+    lexer = lex.lex()
+    fin = open(sys.argv[1], 'r').read()
+    lexer.input(fin)
+    fout = open(sys.argv[1] + '.out', 'w')
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+    graph = Graph()
+    print_analysis(fout, graph)
+    test_machine(fout, graph)
+
+
+main()
