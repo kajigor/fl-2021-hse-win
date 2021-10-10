@@ -1,4 +1,4 @@
 # !/bin/bash
 
-python main.py
+python3 main.py
 dot -Tpng output.dot > output.png
