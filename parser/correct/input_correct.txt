@@ -1,4 +1,4 @@
-Start -> 0 
+Start -> 0
 Term : (1, 5)
 States : (0, 1, 2, 3, 4, 5, 6)
 Alphabet : ('a', 'b', 'c')
