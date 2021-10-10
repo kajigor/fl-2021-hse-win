@@ -2,6 +2,7 @@ import ply.yacc as yacc
 import sys
 from automata.fa.dfa import DFA
 from visual_automata.fa.dfa import VisualDFA
+from pathlib import Path
 
 from my_lex import tokens
 
@@ -131,9 +132,7 @@ class Automata:
             initial_state=self.find_start_state().name,
             final_states=set([x.name for x in self.find_terminal_states()]),
         )
-        dfa.show_diagram()
-        dfa.table
-        dfa.show_diagram(filename=(sys.argv[1] + '.out'), path='/Users/emilialekhman/Desktop/fl/fl-2021-hse-win/my parser/')
+        dfa.show_diagram(filename=(sys.argv[1] + '.out'), path=Path())
 
 
 def p_automata(p):
