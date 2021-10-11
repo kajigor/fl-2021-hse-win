@@ -1,0 +1,17 @@
+def g (int c) {
+    return 4 * c;
+}
+
+def f (int a, char b, int c, bool d) {
+    char res;
+    if (d   ) {
+        int cnt : 0;
+        res : res + b;
+    }
+    else {
+        res :  res +  '\n';
+    }
+    res : res * g(c);
+    return res;
+}
+
