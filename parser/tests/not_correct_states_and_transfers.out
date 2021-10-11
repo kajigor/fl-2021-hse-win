@@ -1,0 +1,22 @@
+AUTOMATE:
+	STATES:
+		q0
+		q1
+		stok
+	START:
+		q2
+	END:
+		q3
+	ALPHABET:
+		"(0)"
+		"1"
+	FUNCTION:
+		['q0', '"(0)"', 'q1']
+		['q0', '"4"', 'q0']
+		['q1', '"(0)"', 'stok']
+		['q1', '"1"', 'q1']
+		['stok', '"(0)"', 'stok']
+		['stok', '"1"', 'stok']
+ERROR: transfer: "4" is not exist
+ERROR: state: "q2" is not exist
+ERROR: state: "q3" is not exist
