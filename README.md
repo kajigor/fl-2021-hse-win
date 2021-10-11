@@ -46,3 +46,9 @@ EXPR : SYMB
      | EXPR PLUS EXPR
      | EXPR ALT EXPR
 ```
+## Запуск парсера
+
+Для запуска нужна библиотека для отображения графов - graphviz
+``` bash
+sudo apt install graphviz
+```
