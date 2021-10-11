@@ -1,10 +1,9 @@
-import os
-
 keywords: list = ['if', 'else', 'while', ':', ';']
 available_types: list = ['int', 'char', 'bool']
 error_string: str = 'Error while parsing !'
 stop_symbols: list = [' ', ',', ';', '(', ')', '{', '}']
-arithmetic_operators: list = ['^', '-', '*', '/', '+', '-', '==', '/=', '<=', '>=', '<', '>', '!', '&&', '||']
+arithmetic_operators: list = ['^', '-', '*', '/', '+', '-']
+logic_operators: list = ['==', '/=', '<=', '>=', '<', '>', '!', '&&', '||']
 cur_pos: int = 0
 s: str = str()
 list_of_tokens: list = list()
@@ -44,10 +43,18 @@ def calc_expr():
         if cur_pos >= len(s):
             return
 
+        if s[cur_pos] == '(':
+            list_of_tokens.append(Token('(', 'open circular bracket'))
+            return
+        if s[cur_pos] == ')':
+            list_of_tokens.append(Token(')', 'close circular bracket'))
+            return
+
         cur_word: str = str()
         while cur_pos < len(s) and s[cur_pos] not in stop_symbols:
             cur_word += s[cur_pos]
             cur_pos += 1
+        skip_spaces_and_porting()
 
         if cur_word == 'if' or cur_word == 'while':
             if cur_word == 'if':
@@ -115,7 +122,10 @@ def calc_expr():
             list_of_tokens.append(Token(cur_word, 'function'))
 
         elif cur_word in arithmetic_operators:
-            list_of_tokens.append(Token(cur_word, 'arithmetics operator'))
+            list_of_tokens.append(Token(cur_word, 'arithmetic operator'))
+
+        elif cur_word in logic_operators:
+            list_of_tokens.append(Token(cur_word, 'logic operator'))
 
         elif cur_word[0] == "'":
             list_of_tokens.append(Token(cur_word, 'string'))
@@ -163,6 +173,7 @@ def parse_function_definition(S: str) -> Function:
             return empty_function
         list_of_params.append(tokens[i])
 
+    list_of_tokens.append(Function(name, list_of_params))
     return Function(name, list_of_params)
 
 
@@ -190,4 +201,12 @@ def solve(file_name: str):
                 f: Function = parse_function(function_definition)
 
         for elem in list_of_tokens:
-            print(elem.token_value, elem.token_type)
+            if type(elem) == Token:
+                print("Token( value : '{0}', type = '{1}' )".format(elem.token_value, elem.token_type))
+            elif type(elem) == Function:
+                res: str = "Function( name : {0}, arity : {1}, types of params : [".format(elem.name, elem.get_arity())
+                for t in elem.list_of_params:
+                    res += t + ', '
+                res = res[0:len(res) - 2]
+                res += '] )'
+                print(res)
