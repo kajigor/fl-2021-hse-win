@@ -19,10 +19,11 @@ if (true) {
 ```
 Оператор:  
 ```c++
-int operator @(int a, int b) {
+int operator_8_0 @(int a, int b) {
         return a * a + b * b;
 }
 ```
+где 8 - приоритет, а 0 - левоассоциативность.  
 Метод:  
 ```c++
 int foo () {

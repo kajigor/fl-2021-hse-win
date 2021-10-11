@@ -1,4 +1,4 @@
-int operator @(int a, int b) {
+int operator_8_0 @(int a, int b) {
 	if (a > b && a /= 0) {
 		return 1;
 	} 
