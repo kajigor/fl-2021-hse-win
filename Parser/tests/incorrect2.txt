@@ -1,0 +1,4 @@
+START = Lank
+Lang = A + ('b' | ('b' + 'a'))*
+A = 'a'*
+% Test comment

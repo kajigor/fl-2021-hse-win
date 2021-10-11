@@ -1,0 +1,4 @@
+START = Lang
+Lang = B + ('b' | ('b' + 'a'))*
+A = 'a'*
+% Test comment
