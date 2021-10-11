@@ -3,7 +3,7 @@ import datetime
 from recursive_parser import solve, arithmetic_operators
 import string
 
-file_size_range = (int(1e5), int(1e7))
+file_size_range = (int(1e5), 4 * int(1e7))
 variable_name_max_len = 10
 number_max_len = 10
 expr_max_len = 300
@@ -75,11 +75,11 @@ def get_recursive_parser_time(s: str):
 def get_time_data() -> list:
     data: list = list()
     file_size_ = file_size_range[0]
-    tmp = int(5)
+    tmp = int(4)
     while file_size_ <= file_size_range[1]:
         for j in range(tmp):
-            sz = random.randrange(int(file_size_ / 10), file_size_)
-            print(int(file_size_ / 10), sz, file_size_, end=' ')
+            sz = random.randrange(int(file_size_ / 2), file_size_)
+            print(int(file_size_ / 2), sz, file_size_, end=' ')
             s: str = 'int main (int argc) {\n'
             s += generate_random_correct_input(sz)
             s += '}\n'
@@ -90,8 +90,8 @@ def get_time_data() -> list:
                 sum_time += get_recursive_parser_time('input1.txt')
             sum_time /= 5
             data.append((sz, sum_time))
-            print(j, tmp)
-        file_size_ *= 10
-        tmp = int(2 * tmp)
+            print(j, tmp, file_size_)
+        file_size_ *= 2
+        tmp = int(1.4 * tmp)
 
     return data

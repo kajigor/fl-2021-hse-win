@@ -45,9 +45,11 @@ def calc_expr():
 
         if s[cur_pos] == '(':
             list_of_tokens.append(Token('(', 'open circular bracket'))
+            cur_pos += 1
             return
         if s[cur_pos] == ')':
             list_of_tokens.append(Token(')', 'close circular bracket'))
+            cur_pos += 1
             return
 
         cur_word: str = str()
@@ -74,7 +76,6 @@ def calc_expr():
 
             if s[cur_pos] != ')':
                 pass
-            list_of_tokens.append(Token(')', 'close circular bracket'))
             cur_pos += 1
 
             skip_spaces_and_porting()
