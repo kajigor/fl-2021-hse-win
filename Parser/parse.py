@@ -25,7 +25,8 @@ class Result:
 
 def p_lang(p):
     '''Language : Rule
-                | Start_nonterm '''
+                | Start_nonterm
+                | COMMENT'''
 
 def p_rule(p):
     ''' Rule : ID EQUALITY Expr '''
@@ -38,7 +39,7 @@ def p_start(p):
 
 def p_expr_symbol(p):
     ''' Expr : SYMBOL '''
-    p[0] = Node("Symbol - " + p[1], [], parser.my_result.num_of_nodes)
+    p[0] = Node("Symbol: " + p[1], [], parser.my_result.num_of_nodes)
     parser.my_result.add_node(p[0])
 
 def p_expr_arg(p):

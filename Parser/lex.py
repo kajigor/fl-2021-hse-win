@@ -16,6 +16,7 @@ tokens = [
   'R_BRACKETS',
   'L_SQUARE',
   'R_SQUARE',
+  'COMMENT'
 ] + list(reserved.values())
 
 def t_ID(t):
@@ -30,6 +31,7 @@ def t_SYMBOL(t):
   return t
 
 t_ignore = ' \t'
+t_COMMENT = '^%.*'
 t_EQUALITY = '='
 t_MULT = '\*'
 t_PLUS = '\+'
