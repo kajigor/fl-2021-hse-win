@@ -74,7 +74,7 @@ def get_var_value(s):
     index += 1
     while index < len(s) and s[index] == ' ':
         index += 1
-    while index_checking(s, index, {';'}):
+    while index_checking(s, index, {';', ')'}):
         result += char_checking(s[index])
         index += 1
     return result
@@ -166,7 +166,7 @@ def get_condition(s):
     index = 0
     while index < len(s):
         if s[index] != ' ' and s[index] != ')' and s[index] != ';':
-            result += s[index]
+            result += char_checking(s[index])
         index += 1
     return result
 
@@ -212,7 +212,7 @@ def t_last_par(t):
 
 
 def t_var_init(t):
-    r"""(int|int2|string)\s+\w+\s*=\s*.*;"""
+    r"""(int|int2|string)\s+\w+\s*=\s*[^;]*;"""
     new_vertex = create_name("Variable init")
     init_vertex(new_vertex, t.value)
     file_out.write(new_vertex + to_arrow + create_value_vertex(get_var_value(t.value)) + "\n")
@@ -228,7 +228,7 @@ def t_return(t):
 
 
 def t_var(t):
-    r"""\w+\s*=\s*.*;"""
+    r"""\w+\s*=\s*.*(;|\))"""
     new_vertex = create_name("Variable assignment")
     file_out.write(stack[-1] + to_arrow + new_vertex + "\n")
     file_out.write(
@@ -285,7 +285,7 @@ def t_body_end(t):
 
 
 def t_skip(t):
-    r"""(\s+|\n|\;|\))"""
+    r"""(\s+|\n)"""
     return t
 
 
