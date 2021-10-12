@@ -12,7 +12,7 @@ precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
     ('right', 'UMINUS'),
-    ('right', 'POW'),
+    ('right', 'POW')
 )
 
 
@@ -61,13 +61,27 @@ def p_read_decl(p):
         p[0] = p[1] + p[2] + p[3]
 
 
+def p_conditional(p):
+    '''expression : fst_part
+                  | fst_part snd_part'''
+    if len(p) == 3:
+        p[0] = p[1] + p[2]
+    else:
+        p[0] = p[1]
+
+
+def p_conditional_snd_part(p):
+    '''snd_part : CONDITIONAL_OPERATOR_ELSE body'''
+    p[0] = p[1] + p[2]
+
+
 def p_conditional_first_part(p):
-    '''expression : CONDITIONAL_OPERATOR_IF OPEN_CIRC_BR logic_expression CLOSE_CIRC_BR body'''
+    '''fst_part : CONDITIONAL_OPERATOR_IF OPEN_CIRC_BR expression CLOSE_CIRC_BR body'''
     p[0] = p[1] + p[2] + p[3] + p[4] + p[5]
 
 
 def p_cycle(p):
-    '''expression : CYCLE_OPERATOR OPEN_CIRC_BR logic_expression CLOSE_CIRC_BR body'''
+    '''expression : CYCLE_OPERATOR OPEN_CIRC_BR expression CLOSE_CIRC_BR body'''
     p[0] = p[1] + p[2] + p[3] + p[4] + p[5]
 
 
@@ -91,7 +105,7 @@ def p_declaration(p):
 
 
 def p_bool_expression(p):
-    '''logic_expression : expression EQUAL expression
+    '''expression : expression EQUAL expression
                   | expression NONEQUAL expression
                   | expression LEQ expression
                   | expression LE expression
@@ -107,13 +121,19 @@ def p_bool_expression(p):
 
 
 def p_expression_plus(p):
-    'expression : expression PLUS term'
-    p[0] = p[1] + p[3]
+    '''expression : expression PLUS term
+                  | expression INCREMENT term'''
+    p[0] = str(p[1]) + str(p[3])
 
 
 def p_expression_minus(p):
-    'expression : expression MINUS term'
-    p[0] = p[1] - p[3]
+    'expression : expression MINUS expression'
+    p[0] = str(p[1]) + p[2] + str(p[3])
+
+
+def p_return_expression(p):
+    'expression : END_OF_FUNCTION expression'
+    p[0] = str(p[1]) + p[2]
 
 
 def p_expression_term(p):
