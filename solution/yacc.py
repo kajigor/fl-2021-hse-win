@@ -142,12 +142,12 @@ def p_expression_term(p):
 
 def p_term_times(p):
     'term : term TIMES factor'
-    p[0] = p[1] * p[3]
+    p[0] = str(p[1]) + p[2] + str(p[3])
 
 
 def p_term_div(p):
     'term : term DIVIDE factor'
-    p[0] = p[1] / p[3]
+    p[0] = str(p[1]) + p[2] + str(p[3])
 
 
 def p_term_factor(p):
@@ -182,7 +182,7 @@ def p_factor_expr(p):
 
 def p_expr_uminus(p):
     'expression : MINUS expression %prec UMINUS'
-    p[0] = -p[2]
+    p[0] = "-" + str(p[2])
 
 
 def p_error(p):
