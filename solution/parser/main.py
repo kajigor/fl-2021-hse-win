@@ -221,9 +221,15 @@ def expression_process(s):
                 if s[index] == ')':
                     bal -= 1
                 index += 1
-        elif is_digit(s[index]):
+        elif is_digit(s[index]) or (s[index] == '-' and len(s) != index - 1 and is_digit(s[index + 1])):
             # number
+            index += 1
             while index < len(s) and is_digit(s[index]):
+                index += 1
+        elif s[index] == "\"":
+            # string
+            index += 1
+            while len(s) < index and s[index] != "\"":
                 index += 1
         elif is_letter(s[index]):
             # word
@@ -265,9 +271,15 @@ def expression_process(s):
         if s == "":
             # empty
             return create_name("")
-        if is_digit(s[0]):
+        if is_digit(s[0]) or (s[0] == '-' and len(s) != 1 and is_digit(s[1])):
             # alone number
+            if s[0] == '-':
+                new_vertex = create_name("Unary minus")
+                file_out.write(new_vertex + to_arrow + create_name("Number=\"" + s[1::] + "\"") + "\n")
+                return new_vertex
             return create_name("Number=\"" + s + "\"")
+        if len(s) >= 2 and s[0] == "\"" and s[len(s) - 1] == "\"":
+            return create_name("String=" + s)
         if len(s) >= 2 and s[0] == '(' and s[len(s) - 1] == ')':
             # expression in brackets
             new_vertex = create_name("Brackets")
