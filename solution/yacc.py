@@ -192,10 +192,10 @@ def p_error(p):
         print("Syntax error at EOF")
 
 
-def solve(file_name: str):
+def solve_yacc(file_name: str):
     parser = yacc.yacc()
     f = open(file_name, 'r')
     s = f.read()
     f.close()
-    sys.stdout = open(file_name + '.out', 'w')
+    # sys.stdout = open(file_name + '.out', 'w')
     result = parser.parse(s)

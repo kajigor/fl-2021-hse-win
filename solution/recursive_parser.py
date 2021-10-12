@@ -145,7 +145,11 @@ def calc_expr():
         return
 
 
-def parse_function(S: str) -> Function:
+def parse_function(S: str, t: bool) -> Function:
+    global s, cur_pos, list_of_functions, list_of_tokens
+    if t:
+        list_of_functions = list()
+        list_of_tokens = list()
     pos = S.find('\n')
     first_line = S[:pos]
     function_interior: str = S[pos + 1:len(S) - 2]
@@ -187,7 +191,7 @@ def parse_function_interior(S: str):
         calc_expr()
 
 
-def solve(file_name: str):
+def solve(file_name: str, t: bool):
     with open(file_name, 'r') as file_in:
         while True:
             s = file_in.readline()
@@ -199,11 +203,12 @@ def solve(file_name: str):
                     s = file_in.readline()
                     function_definition += s
                 print(function_definition)
-                f: Function = parse_function(function_definition)
+                f: Function = parse_function(function_definition, t)
 
         for elem in list_of_tokens:
             if type(elem) == Token:
                 print("Token( value : '{0}', type = '{1}' )".format(elem.token_value, elem.token_type))
+                pass
             elif type(elem) == Function:
                 res: str = "Function( name : {0}, arity : {1}, types of params : [".format(elem.name, elem.get_arity())
                 for t in elem.list_of_params:

@@ -2,8 +2,9 @@ import random
 import datetime
 from recursive_parser import solve, arithmetic_operators
 import string
+from yacc import solve_yacc
 
-file_size_range = (int(1e5), 4 * int(1e7))
+file_size_range = (int(1e5), int(1e6))
 variable_name_max_len = 10
 number_max_len = 10
 expr_max_len = 300
@@ -65,33 +66,36 @@ def generate_random_correct_input(file_size: int) -> str:
     return res
 
 
-def get_recursive_parser_time(s: str):
+def get_recursive_parser_time(s: str, t: int):
     start_time = datetime.datetime.now()
-    solve(s)
+    if t == 1:
+        solve(s, True)
+    else:
+        solve_yacc(s)
     finish_time = datetime.datetime.now()
     return (finish_time - start_time).microseconds
 
 
-def get_time_data() -> list:
+def get_time_data(t: int) -> list:
     data: list = list()
     file_size_ = file_size_range[0]
-    tmp = int(4)
+    tmp = int(8)
     while file_size_ <= file_size_range[1]:
         for j in range(tmp):
             sz = random.randrange(int(file_size_ / 2), file_size_)
             print(int(file_size_ / 2), sz, file_size_, end=' ')
-            s: str = 'int main (int argc) {\n'
+            s: str = 'def main (int argc) {\n'
             s += generate_random_correct_input(sz)
             s += '}\n'
             with open('input1.txt', 'w') as file_in:
                 file_in.write(s)
             sum_time = 0
-            for k in range(10):
-                sum_time += get_recursive_parser_time('input1.txt')
+            for k in range(5):
+                sum_time += get_recursive_parser_time('input1.txt', t)
             sum_time /= 5
             data.append((sz, sum_time))
-            print(j, tmp, file_size_)
+            print(j, tmp, sum_time)
         file_size_ *= 2
-        tmp = int(1.4 * tmp)
+        tmp = int(1.5 * tmp)
 
     return data
