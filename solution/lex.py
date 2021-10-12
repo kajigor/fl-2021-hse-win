@@ -19,13 +19,14 @@ tokens = [
              'FUNCTION',
              'VARIABLE',
              'PLUS',
+             'INCREMENT',
              'MINUS',
              'TIMES',
              'DIVIDE',
-             'OPEN_CIRCULAR_BRACKET',
-             'CLOSE_CIRCULAR_BRACKET',
-             'OPEN_SHAPED_BRACKET',
-             'CLOSE_SHAPED_BRACKET',
+             'OPEN_CIRC_BR',
+             'CLOSE_CIRC_BR',
+             'OPEN_SHAPED_BR',
+             'CLOSE_SHAPED_BR',
              'LINKING_OPERATOR',
              'POW',
              'EQUAL',
@@ -43,13 +44,14 @@ tokens = [
          ] + list(reserved.values())
 
 t_PLUS = r'\+'
+t_INCREMENT = r'\+='
 t_MINUS = r'\-'
 t_TIMES = r'\*'
 t_DIVIDE = r'\\'
-t_OPEN_CIRCULAR_BRACKET = r'\('
-t_CLOSE_CIRCULAR_BRACKET = r'\)'
-t_OPEN_SHAPED_BRACKET = r'\{'
-t_CLOSE_SHAPED_BRACKET = r'\}'
+t_OPEN_CIRC_BR = r'\('
+t_CLOSE_CIRC_BR = r'\)'
+t_OPEN_SHAPED_BR = r'\{'
+t_CLOSE_SHAPED_BR = r'\}'
 t_LINKING_OPERATOR = r'\;'
 t_POW = r'\^'
 t_EQUAL = r'\=='
