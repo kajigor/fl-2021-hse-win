@@ -29,7 +29,6 @@ def p_function_declaration_with_args(p):
     '''func_decl : FUNCTION_DEFINITION FUNCTION OPEN_CIRC_BR decl_args_list CLOSE_CIRC_BR body'''
     p[0] = p[1] + p[2] + p[3] + p[4] + p[5] + "{" + p[6] + "}"
     print("Function: " + p[2] + ", arity: " + str(p[4].count(',') + 1))
-    print(p[6])
 
 
 def p_function_declaration_without_args(p):
