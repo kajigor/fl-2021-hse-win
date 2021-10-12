@@ -15,6 +15,7 @@ precedence = (
     ('right', 'POW'),
 )
 
+
 def p_code(p):
     '''code : code func_decl
             | func_decl'''
@@ -34,11 +35,6 @@ def p_function_declaration_with_args(p):
 def p_function_declaration_without_args(p):
     '''func_decl : FUNCTION_DEFINITION FUNCTION OPEN_CIRC_BR CLOSE_CIRC_BR body'''
     print("Function: " + p[2] + ", arity: 0")
-
-
-def p_body(p):
-    'body : OPEN_SHAPED_BR expression CLOSE_SHAPED_BR'
-    p[0] = p[2]
 
 
 def p_read_decl_args(p):
@@ -65,6 +61,21 @@ def p_read_decl(p):
         p[0] = p[1] + p[2] + p[3]
 
 
+def p_conditional_first_part(p):
+    '''expression : CONDITIONAL_OPERATOR_IF OPEN_CIRC_BR logic_expression CLOSE_CIRC_BR body'''
+    p[0] = p[1] + p[2] + p[3] + p[4] + p[5]
+
+
+def p_cycle(p):
+    '''expression : CYCLE_OPERATOR OPEN_CIRC_BR logic_expression CLOSE_CIRC_BR body'''
+    p[0] = p[1] + p[2] + p[3] + p[4] + p[5]
+
+
+def p_body(p):
+    'body : OPEN_SHAPED_BR expression CLOSE_SHAPED_BR'
+    p[0] = p[1] + p[2] + p[3]
+
+
 def p_expression_link(p):
     '''expression : expression LINKING_OPERATOR expression
                   | expression LINKING_OPERATOR'''
@@ -77,6 +88,22 @@ def p_expression_link(p):
 def p_declaration(p):
     '''expression : VARIABLE ASSIGNMENT_OPERATOR expression'''
     p[0] = p[1] + p[2] + str(p[3])
+
+
+def p_bool_expression(p):
+    '''logic_expression : expression EQUAL expression
+                  | expression NONEQUAL expression
+                  | expression LEQ expression
+                  | expression LE expression
+                  | expression GEQ expression
+                  | expression GE expression
+                  | NOT expression
+                  | expression AND expression
+                  | expression OR expression '''
+    if len(p) == 3:
+        p[0] = p[1] + str(p[2])
+    else:
+        p[0] = str(p[1]) + p[2] + str(p[3])
 
 
 def p_expression_plus(p):
@@ -117,6 +144,11 @@ def p_function_call_with_args(p):
 def p_function_call_without_args(p):
     'factor : FUNCTION OPEN_CIRC_BR args_list CLOSE_CIRC_BR'
     p[0] = p[1] + p[2] + p[3] + p[4]
+
+
+def p_factor_variable(p):
+    'factor : VARIABLE'
+    p[0] = p[1]
 
 
 def p_factor_num(p):

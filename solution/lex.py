@@ -2,7 +2,7 @@ import ply.lex as lex
 import sys
 
 reserved = {
-    'if:': 'CONDITIONAL_OPERATOR_IF',
+    'if': 'CONDITIONAL_OPERATOR_IF',
     'else': 'CONDITIONAL_OPERATOR_ELSE',
     'while': 'CYCLE_OPERATOR',
     'int': 'TYPE_INT',
@@ -75,15 +75,18 @@ def t_NUMBER(t):
     t.value = int(t.value)
     return t
 
+
 def t_FUNCTION(t):
     r'((?<=def\s)[A-Za-z0-9]+)|([A-Za-z0-9]+(?=\())'
     t.type = reserved.get(t.value, "FUNCTION")
     return t
 
+
 def t_VARIABLE(t):
     r'[A-Za-z0-9]+'
     t.type = reserved.get(t.value, "VARIABLE")
     return t
+
 
 def t_newline(t):
     r'\n+'
