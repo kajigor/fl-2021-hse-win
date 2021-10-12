@@ -1,13 +1,1 @@
-int foo (int n) {
-	int sum = 0;
-	for [int i = 0; i < n; i = i + 1] {
-	    if (i * 2 == 0) {
-		    sum = sum + i;
-	    }
-	}
-}
-
-
-int main() {
-	int x = foo(10);
-}
+a /= 0;

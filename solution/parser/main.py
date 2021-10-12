@@ -223,7 +223,8 @@ def expression_process(s):
                 if s[index] == ')':
                     bal -= 1
                 index += 1
-        elif is_digit(s[index]) or (s[index] == '-' and len(s) != index - 1 and is_digit(s[index + 1])):
+        elif is_digit(s[index]) or (s[index] == '-' and len(s) != index - 1 and is_digit(s[index + 1]) and
+                                    (index == 0 or s[index - 1] == '(')):
             # number
             index += 1
             while index < len(s) and is_digit(s[index]):
@@ -359,7 +360,7 @@ def t_last_par(t):
 
 
 def t_var_init(t):
-    r"""(int|int2|string)\s+\w+\s*=\s*[^;]*;"""
+    r"""(int|int2|string)\s+\w+\s*[^\/&^<&^>&^=&(\w|\s)]=\s*[^;]*;"""
     new_vertex = create_name("Variable init")
     init_vertex(new_vertex, t.value)
     init_value_tree(get_var_value(t.value), new_vertex)
@@ -375,7 +376,7 @@ def t_return(t):
 
 
 def t_var(t):
-    r"""\w*\s*[^=]=[^=]\s*.*(;|\])"""
+    r"""\w*\s*[^\/&^<&^>&^=&(\w|\s)]=.*(;|\])"""
     new_vertex = create_name("Variable assignment")
     add_edge(stack[-1], new_vertex)
     add_edge(new_vertex, create_name_vertex(get_type(t.value)))  # get_type, because of line starting
@@ -436,7 +437,7 @@ def t_skip(t):
 
 
 def t_condition(t):
-    r"""[^\;&^\]&^\n]+(\)|\]|\;)"""  # TODO think, how to use ^
+    r"""([^\;&^\]&^\n]|[\^])+(\)|\]|\;)"""
     new_vertex = create_name("Condition")
     add_edge(stack[-1], new_vertex)
     stack.append(new_vertex)
