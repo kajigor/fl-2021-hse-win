@@ -5,6 +5,7 @@ int foo (int n) {
 		    sum = sum + i;
 	    }
 	}
+	return sum;
 }
 
 

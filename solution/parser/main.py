@@ -255,13 +255,10 @@ def expression_process(s):
     if arr:
         # external operator found
         cur_operator = s[arr[1][0]:arr[1][1]]
+        new_cur_operator = ""
         for i in range(0, len(cur_operator)):
-            if i == len(cur_operator) - 1:
-                cur_operator = cur_operator[:i:] + char_checking(cur_operator[i])
-            elif i == 0:
-                cur_operator = char_checking(cur_operator[i]) + cur_operator[i + 1::]
-            else:
-                cur_operator = cur_operator[:i:] + char_checking(cur_operator[i]) + cur_operator[i + 1::]
+            new_cur_operator += char_checking(cur_operator[i])
+        cur_operator = new_cur_operator
         new_vertex = create_name("Operator=\"" + cur_operator + "\"")
         stack.append(new_vertex)
         add_edge(stack[-1], expression_process(s[0:arr[1][0]:]))
@@ -360,7 +357,7 @@ def t_last_par(t):
 
 
 def t_var_init(t):
-    r"""(int|int2|string)\s+\w+\s*[^\/&^<&^>&^=&(\w|\s)]=\s*[^;]*;"""
+    r"""(int|int2|string)\s+\w+\s*=[^\/&^<&^>&^=]\s*[^;]*;"""
     new_vertex = create_name("Variable init")
     init_vertex(new_vertex, t.value)
     init_value_tree(get_var_value(t.value), new_vertex)
@@ -376,7 +373,7 @@ def t_return(t):
 
 
 def t_var(t):
-    r"""\w*\s*[^\/&^<&^>&^=&(\w|\s)]=.*(;|\])"""
+    r"""\w*\s*=[^\/&^<&^>&^=].*(;|\])"""
     new_vertex = create_name("Variable assignment")
     add_edge(stack[-1], new_vertex)
     add_edge(new_vertex, create_name_vertex(get_type(t.value)))  # get_type, because of line starting
@@ -437,7 +434,7 @@ def t_skip(t):
 
 
 def t_condition(t):
-    r"""([^\;&^\]&^\n]|[\^])+(\)|\]|\;)"""
+    r"""([^\;&^\]&^\n]|[\^]|[\&])+(\)|\]|\;)"""
     new_vertex = create_name("Condition")
     add_edge(stack[-1], new_vertex)
     stack.append(new_vertex)
@@ -453,7 +450,7 @@ def t_error(t):
 
 def main():
     file_out.write("digraph {\n")
-    file_out.write("v_0 [label=<root (Methods list)>]\n")
+    file_out.write("v_0 [label=<root>]\n")
     lexer = lex.lex()
     file_in = open("input.txt", 'r')
     lexer.input(file_in.read())
