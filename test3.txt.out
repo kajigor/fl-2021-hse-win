@@ -1,0 +1,18 @@
+------------------------------
+Alphabet symbol No. 1 : b$b
+Alphabet symbol No. 2 : q2312
+Alphabet symbol No. 3 : transition no. 1
+------------------------------
+Vertex No. 1 : q112312412
+Vertex No. 2 : q2
+------------------------------
+Initial vertex : q112312412
+------------------------------
+Final vertex No. 1 : q2
+------------------------------
+Transition No. 1 : q112312412>b$b>q2
+Transition No. 2 : q112312412>transition no. 1>q2
+Transition No. 3 : q112312412>q2312>q112312412
+Transition No. 4 : q2>q2312>q112312412
+Transition No. 5 : q2>transition no. 1>q2
+Transition No. 6 : q2>b$b>q112312412
