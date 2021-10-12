@@ -1,0 +1,21 @@
+['10', '10_10', '10_10_10']
+vertex name: q0
+start: True
+terminal: False
+{q1,10} {q2,10_10} 
+-----------------
+vertex name: q1
+start: False
+terminal: False
+{q2,10_10_10} 
+-----------------
+vertex name: q2
+start: False
+terminal: True
+{q2,10} 
+-----------------
+Running "check_unique_vertexes": ok
+Running "check_start": ok
+Running "check_unique_words": ok
+Running "check_determination": ok
+Running "check_fullness": fail
