@@ -5,11 +5,9 @@ tokens = ['method', 'var_init', 'last_par', 'body_begin', 'body_end',
 file_out = open("output.dot", 'w')
 stack = ["v_0"]
 index_of_vertex = 1
-to_arrow = " -> "
-operators = {"^": [2, True], "--": [3, True], "*": [4, False],
-             "/": [4, False], "+": [5, False], "-": [5, False], "==": [6, True], "/=": [6, True], "<=": [6, True],
-             "<": [6, True], ">=": [6, True], ">": [6, True], "!": [7, True], "&&": [8, True],
-             "||": [9, True], "=": [10, True]}  # [prio, is_not_left_associativity]
+operators = {"^": [0, True], "*": [1, False], "/": [1, False], "+": [2, False], "-": [2, False], "==": [3, True],
+             "/=": [3, True], "<=": [3, True], "<": [3, True], ">=": [3, True], ">": [3, True], "!": [4, True],
+             "&&": [5, True], "||": [6, True], "=": [7, True]}  # [prio, is_not_left_associativity]
 
 
 def error(ch):
@@ -17,6 +15,10 @@ def error(ch):
     file_out.close()
     print("Illegal character '%s'" % ch)
     exit()
+
+
+def add_edge(a, b):
+    file_out.write(a + " -> " + b + "\n")
 
 
 def create_name(name):
@@ -183,16 +185,16 @@ def get_condition(s):
 
 
 def init_vertex(vertex, s):
-    file_out.write(stack[-1] + to_arrow + vertex + "\n")
-    file_out.write(vertex + to_arrow + create_name_vertex(get_name(s)) + "\n")
-    file_out.write(vertex + to_arrow + create_type_vertex(get_type(s)) + "\n")
+    add_edge(stack[-1], vertex)
+    add_edge(vertex, create_type_vertex(get_type(s)))
+    add_edge(vertex, create_name_vertex(get_name(s)))
 
 
 def init_value_tree(expression, new_vertex):
     value_vertex = create_value_vertex()
-    file_out.write(new_vertex + to_arrow + value_vertex + "\n")
+    add_edge(new_vertex, value_vertex)
     stack.append(value_vertex)
-    file_out.write(stack[-1] + to_arrow + expression_process(expression) + "\n")
+    add_edge(stack[-1], expression_process(expression))
     stack.pop()
 
 
@@ -261,8 +263,8 @@ def expression_process(s):
                 cur_operator = cur_operator[:i:] + char_checking(cur_operator[i]) + cur_operator[i + 1::]
         new_vertex = create_name("Operator=\"" + cur_operator + "\"")
         stack.append(new_vertex)
-        file_out.write(stack[-1] + to_arrow + expression_process(s[0:arr[1][0]:]) + "\n")
-        file_out.write(stack[-1] + to_arrow + expression_process(s[arr[1][1]::]) + "\n")
+        add_edge(stack[-1], expression_process(s[0:arr[1][0]:]))
+        add_edge(stack[-1], expression_process(s[arr[1][1]::]))
         stack.pop()
         return new_vertex
     else:
@@ -275,7 +277,7 @@ def expression_process(s):
             # alone number
             if s[0] == '-':
                 new_vertex = create_name("Unary minus")
-                file_out.write(new_vertex + to_arrow + create_name("Number=\"" + s[1::] + "\"") + "\n")
+                add_edge(new_vertex, create_name("Number=\"" + s[1::] + "\""))
                 return new_vertex
             return create_name("Number=\"" + s + "\"")
         if len(s) >= 2 and s[0] == "\"" and s[len(s) - 1] == "\"":
@@ -284,7 +286,7 @@ def expression_process(s):
             # expression in brackets
             new_vertex = create_name("Brackets")
             stack.append(new_vertex)
-            file_out.write(stack[-1] + to_arrow + expression_process(s[1:len(s) - 1:]) + "\n")
+            add_edge(stack[-1], expression_process(s[1:len(s) - 1:]))
             stack.pop()
             return new_vertex
         if len(s) > 2 and is_letter(s[index]):
@@ -301,9 +303,9 @@ def expression_process(s):
             # alone method
             new_vertex = create_name("Method assignment")
             stack.append(new_vertex)
-            file_out.write(stack[-1] + to_arrow + create_name_vertex(name) + "\n")
+            add_edge(stack[-1], create_name_vertex(name))
             stack.append(create_parameters_list_vertex())
-            file_out.write(stack[-2] + to_arrow + stack[-1] + "\n")
+            add_edge(stack[-2], stack[-1])
             index += 1
             while index < len(s) and s[index] != ')':
                 result = ""
@@ -312,9 +314,9 @@ def expression_process(s):
                     index += 1
                 index += 1
                 parameter_vertex = create_parameter_vertex()
-                file_out.write(stack[-1] + to_arrow + parameter_vertex + "\n")
+                add_edge(stack[-1], parameter_vertex)
                 stack.append(parameter_vertex)
-                file_out.write(stack[-1] + to_arrow + expression_process(result) + "\n")
+                add_edge(stack[-1], expression_process(result))
                 stack.pop()
             stack.pop()
             stack.pop()
@@ -328,14 +330,14 @@ def t_method(t):
     init_vertex(new_vertex, t.value)
     stack.append(new_vertex)
     stack.append(create_parameters_list_vertex())
-    file_out.write(stack[-2] + to_arrow + stack[-1] + "\n")
+    add_edge(stack[-2], stack[-1])
     return t
 
 
 def t_body_begin(t):
     r"""\{"""
     new_vertex = create_name("Body")
-    file_out.write(stack[-1] + to_arrow + new_vertex + "\n")
+    add_edge(stack[-1], new_vertex)
     stack.append(new_vertex)
     return t
 
@@ -367,7 +369,7 @@ def t_var_init(t):
 def t_return(t):
     r"""return.*;"""
     new_vertex = create_name("Return")
-    file_out.write(stack[-1] + to_arrow + new_vertex + "\n")
+    add_edge(stack[-1], new_vertex)
     init_value_tree(get_return_value(t.value), new_vertex)
     return t
 
@@ -375,9 +377,8 @@ def t_return(t):
 def t_var(t):
     r"""\w*\s*[^=]=[^=]\s*.*(;|\])"""
     new_vertex = create_name("Variable assignment")
-    file_out.write(stack[-1] + to_arrow + new_vertex + "\n")
-    file_out.write(
-        new_vertex + to_arrow + create_name_vertex(get_type(t.value)) + "\n")  # get_type, because of line starting
+    add_edge(stack[-1], new_vertex)
+    add_edge(new_vertex, create_name_vertex(get_type(t.value)))  # get_type, because of line starting
     init_value_tree(get_var_value(t.value), new_vertex)
     return t
 
@@ -385,7 +386,7 @@ def t_var(t):
 def t_if(t):
     r"""if\s*\("""
     new_vertex = create_name("If statement")
-    file_out.write(stack[-1] + to_arrow + new_vertex + "\n")
+    add_edge(stack[-1], new_vertex)
     stack.append(new_vertex)
     return t
 
@@ -394,7 +395,7 @@ def t_else(t):
     r"""\}\s*else"""
     new_vertex = create_name("Else statement")
     stack.pop()
-    file_out.write(stack[-1] + to_arrow + new_vertex + "\n")
+    add_edge(stack[-1], new_vertex)
     stack.append(new_vertex)
     return t
 
@@ -402,22 +403,22 @@ def t_else(t):
 def t_operator(t):
     r"""(int|int2|string)\s+operator\_\d+\_\d\s+.+\s*\("""
     new_vertex = create_name("Operator")
-    file_out.write(stack[-1] + to_arrow + new_vertex + "\n")
-    file_out.write(new_vertex + to_arrow + create_name_vertex(get_operator_name(t.value)) + "\n")
-    file_out.write(new_vertex + to_arrow + create_type_vertex(get_type(t.value)) + "\n")
-    file_out.write(new_vertex + to_arrow + create_name("Priority=\"" + get_prio(t.value) + "\"") + "\n")
-    file_out.write(new_vertex + to_arrow + create_name("Associativity=\"" + get_assoc(t.value) + "\"") + "\n")
+    add_edge(stack[-1], new_vertex)
+    add_edge(new_vertex, create_name_vertex(get_operator_name(t.value)))
+    add_edge(new_vertex, create_type_vertex(get_type(t.value)))
+    add_edge(new_vertex, create_name("Priority=\"" + get_prio(t.value) + "\""))
+    add_edge(new_vertex, create_name("Associativity=\"" + get_assoc(t.value) + "\""))
     operators[get_operator_name(t.value)] = [int(get_prio(t.value)), get_assoc(t.value) != 1]
     stack.append(new_vertex)
     stack.append(create_parameters_list_vertex())
-    file_out.write(stack[-2] + to_arrow + stack[-1] + "\n")
+    add_edge(stack[-2], stack[-1])
     return t
 
 
 def t_for(t):
     r"""for\s*\["""
     new_vertex = create_name("For statement")
-    file_out.write(stack[-1] + to_arrow + new_vertex + "\n")
+    add_edge(stack[-1], new_vertex)
     stack.append(new_vertex)
     return t
 
@@ -437,9 +438,9 @@ def t_skip(t):
 def t_condition(t):
     r"""[^\;&^\]&^\n]+(\)|\]|\;)"""  # TODO think, how to use ^
     new_vertex = create_name("Condition")
-    file_out.write(stack[-1] + to_arrow + new_vertex + "\n")
+    add_edge(stack[-1], new_vertex)
     stack.append(new_vertex)
-    file_out.write(stack[-1] + to_arrow + get_condition(t.value[:len(t.value) - 1:]) + "\n")
+    add_edge(stack[-1], get_condition(t.value[:len(t.value) - 1:]))
     stack.pop()
     return t
 
