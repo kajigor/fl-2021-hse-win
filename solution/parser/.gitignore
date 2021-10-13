@@ -1,6 +1,4 @@
 *.out
 *.dot
-*.png
-*.jpg
+output.png
 .idea/
-
