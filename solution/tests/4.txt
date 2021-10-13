@@ -8,3 +8,4 @@ int main() {
 	int2 y = 110;
 	int2 z = foo(x, y) / 2;
 }
+
