@@ -9,7 +9,6 @@ reserved = {
     'char': 'TYPE_CHAR',
     'string': 'TYPE_STRING',
     'bool': 'TYPE_BOOLEAN',
-    'main': 'MAIN',
     'return': 'END_OF_FUNCTION',
     'def': 'FUNCTION_DEFINITION'
 }
@@ -101,7 +100,6 @@ def t_error(t):
 lexer = lex.lex()
 
 lexer.input(open(sys.argv[1], 'r').read())
-# sys.stdout = open(sys.argv[1] + '.out', 'w')
 
 while True:
     tok = lexer.token()

@@ -119,6 +119,11 @@ def p_bool_expression(p):
         p[0] = str(p[1]) + p[2] + str(p[3])
 
 
+def p_expression_pow(p):
+    'expression : expression POW factor'
+    p[0] = str(p[1]) + p[2] + str(p[3])
+
+
 def p_expression_plus(p):
     '''expression : expression PLUS term
                   | expression INCREMENT term'''
@@ -163,6 +168,11 @@ def p_function_call_with_args(p):
 def p_function_call_without_args(p):
     'factor : FUNCTION OPEN_CIRC_BR args_list CLOSE_CIRC_BR'
     p[0] = p[1] + p[2] + p[3] + p[4]
+
+
+def p_factor_char_or_string(p):
+    'factor : QUOT expression QUOT'
+    p[0] = p[1] + str(p[2]) + p[3]
 
 
 def p_factor_variable(p):
