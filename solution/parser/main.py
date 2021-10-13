@@ -5,9 +5,9 @@ tokens = ['method', 'var_init', 'last_par', 'body_begin', 'body_end',
 file_out = open("output.dot", 'w')
 stack = ["v_0"]
 index_of_vertex = 1
-operators = {"^": [0, True], "*": [1, False], "/": [1, False], "+": [2, False], "-": [2, False], "==": [3, True],
-             "/=": [3, True], "<=": [3, True], "<": [3, True], ">=": [3, True], ">": [3, True], "!": [4, True],
-             "&&": [5, True], "||": [6, True], "=": [7, True]}  # [prio, is_not_left_associativity]
+operators = {"^": [0, True], "*": [1, False], "/": [1, False], "+": [2, False], "-": [2, False],
+             "==": [3, True], "/=": [3, True], "<=": [3, True], "<": [3, True], ">=": [3, True],
+             ">": [3, True], "&&": [4, True], "||": [5, True], "=": [6, True]}  # [prio, is_not_left_associativity]
 
 
 def error(ch):
@@ -213,6 +213,9 @@ def expression_process(s):
         if s[index] == ' ':
             # space
             index += 1
+        elif s[index] == '!':
+            # unary !
+            index += 1
         elif s[index] == '(':
             # brackets
             bal = 1
@@ -232,8 +235,9 @@ def expression_process(s):
         elif s[index] == "\"":
             # string
             index += 1
-            while len(s) < index and s[index] != "\"":
+            while index_checking(s, index, {'\"'}):
                 index += 1
+            index += 1
         elif is_letter(s[index]):
             # word
             while index < len(s) and (is_letter(s[index]) or is_digit(s[index]) or s[index] == '_'):
@@ -243,7 +247,7 @@ def expression_process(s):
             result = ""
             start = index
             while index < len(s) and (s[index] != ' ' and s[index] != '(' and s[index] != ')'
-                                      and not is_letter(s[index]) and not is_digit(s[index])):
+                                      and s[index] != '\"' and not is_letter(s[index]) and not is_digit(s[index])):
                 result += s[index]
                 index += 1
             if result in operators:
@@ -271,6 +275,13 @@ def expression_process(s):
         if s == "":
             # empty
             return create_name("")
+        if s[0] == '!':
+            # unary !
+            new_vertex = create_name("Not")
+            stack.append(new_vertex)
+            add_edge(stack[-1], expression_process(s[1::]))
+            stack.pop()
+            return new_vertex
         if is_digit(s[0]) or (s[0] == '-' and len(s) != 1 and is_digit(s[1])):
             # alone number
             if s[0] == '-':
