@@ -1,0 +1,2 @@
+START = Lang
+Lang = ('a' + EPSILON)* + ('e' + 'b'* + ['n'] + 'f')*

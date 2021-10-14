@@ -3,6 +3,7 @@ import sys
 
 reserved = {
   'START': 'START',
+  'EPSILON': 'EPSILON'
 }
 
 tokens = [
