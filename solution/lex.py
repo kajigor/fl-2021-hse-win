@@ -97,12 +97,15 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-lexer = lex.lex()
+def run_lexer(file_name):
+    lexer = lex.lex()
 
-lexer.input(open(sys.argv[1], 'r').read())
+    lexer.input(open(file_name, 'r').read())
+    sys.stdout = open(file_name + '.out', 'a')
+    print("Yacc parser output:")
 
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        print(tok)

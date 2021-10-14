@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import sys
-import generated_data
+#import generated_data
 from recursive_parser import solve
 from yacc import solve_yacc
 from tests_generator import get_time_data
@@ -25,7 +25,8 @@ def run_tests(generate_new_data: bool = False):
     plt.legend()
     plt.show()
 
-
-solve(sys.argv[1], False)
-# solve_yacc(sys.argv[1])
+print("Insert file name: ")
+file_name = input()
+solve(file_name, False)
+solve_yacc(file_name)
 # run_tests()

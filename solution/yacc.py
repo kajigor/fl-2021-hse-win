@@ -1,6 +1,6 @@
 import ply.yacc as yacc
 import sys
-from lex import tokens
+from lex import tokens, run_lexer
 
 precedence = (
     ('right', 'OR'),
@@ -52,12 +52,12 @@ def p_read_decl_args(p):
 
 
 def p_read_decl(p):
-    '''args_list : args_list COMMA VARIABLE
-                 | VARIABLE '''
+    '''args_list : args_list COMMA factor
+                 | factor '''
     if len(p) == 2:
-        p[0] = p[1]
+        p[0] = str(p[1])
     else:
-        p[0] = p[1] + p[2] + p[3]
+        p[0] = p[1] + p[2] + str(p[3])
 
 
 def p_conditional(p):
@@ -99,7 +99,8 @@ def p_expression_link(p):
 
 
 def p_declaration(p):
-    '''expression : VARIABLE ASSIGNMENT_OPERATOR expression'''
+    '''expression : VARIABLE ASSIGNMENT_OPERATOR expression
+                  | var_def ASSIGNMENT_OPERATOR expression'''
     p[0] = p[1] + p[2] + str(p[3])
 
 
@@ -160,12 +161,12 @@ def p_term_factor(p):
     p[0] = p[1]
 
 
-def p_function_call_with_args(p):
+def p_function_call_without_args(p):
     'factor : FUNCTION OPEN_CIRC_BR  CLOSE_CIRC_BR'
     p[0] = p[1] + p[2] + p[3]
 
 
-def p_function_call_without_args(p):
+def p_function_call_with_args(p):
     'factor : FUNCTION OPEN_CIRC_BR args_list CLOSE_CIRC_BR'
     p[0] = p[1] + p[2] + p[3] + p[4]
 
@@ -175,8 +176,16 @@ def p_factor_char_or_string(p):
     p[0] = p[1] + str(p[2]) + p[3]
 
 
+def p_var_definition(p):
+    '''var_def : TYPE_INT VARIABLE
+            | TYPE_CHAR VARIABLE
+            | TYPE_STRING VARIABLE
+            | TYPE_BOOLEAN VARIABLE'''
+    p[0] = p[1] + p[2]
+
+
 def p_factor_variable(p):
-    'factor : VARIABLE'
+    '''factor : VARIABLE'''
     p[0] = p[1]
 
 
@@ -203,9 +212,10 @@ def p_error(p):
 
 
 def solve_yacc(file_name: str):
+    run_lexer(file_name)
     parser = yacc.yacc()
     f = open(file_name, 'r')
     s = f.read()
     f.close()
-    # sys.stdout = open(file_name + '.out', 'w')
+    sys.stdout = open(file_name + '.out', 'a')
     result = parser.parse(s)

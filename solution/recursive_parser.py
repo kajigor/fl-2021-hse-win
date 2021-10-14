@@ -1,3 +1,5 @@
+import sys
+
 keywords: list = ['if', 'else', 'while', ':', ';']
 available_types: list = ['int', 'char', 'bool']
 error_string: str = 'Error while parsing !'
@@ -192,6 +194,7 @@ def parse_function_interior(S: str):
 
 
 def solve(file_name: str, t: bool):
+    sys.stdout = open(file_name + '.out', 'w')
     with open(file_name, 'r') as file_in:
         while True:
             s = file_in.readline()
@@ -205,6 +208,7 @@ def solve(file_name: str, t: bool):
                 print(function_definition)
                 f: Function = parse_function(function_definition, t)
 
+        print("Recursive parser output:")
         for elem in list_of_tokens:
             if type(elem) == Token:
                 print("Token( value : '{0}', type = '{1}' )".format(elem.token_value, elem.token_type))
