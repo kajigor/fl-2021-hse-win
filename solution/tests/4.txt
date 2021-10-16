@@ -1,11 +1,10 @@
-int2 foo (int2 a, int2 b) {
+binint foo (p_binint a, p_binint b) {
 	return 2 * a + b;
-}
-
+};
 int main() {
 	string s = "abc" + "def";
-	int2 x = 001;
-	int2 y = 110;
-	int2 z = foo(x, y) / 2;
-}
+	binint x = 001;
+	binint y = 110;
+	binint z = foo(x, y) / 2;
+};
 
