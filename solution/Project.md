@@ -1,0 +1,1 @@
+[Тут лежит проект, сделанный совместно с Гореловой Анастасией](https://github.com/Frosendroska/Graphic-visualization-of-the-DFA-work/tree/main)
