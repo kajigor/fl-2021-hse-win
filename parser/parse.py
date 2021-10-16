@@ -11,23 +11,40 @@ tokens = [
   'SEMICOLON',
   'NUM'
 ]
-cnt = 0
-alphabet = []
-edges = []
-dic = {}
-vertexes = []
+
+class Automate:
+  cnt = 0
+  alphabet = []
+  edges = []
+  dic = {}
+  vertexes = []
+  def print():
+    fout = open(sys.argv[1] + '.out', 'w')
+    fout.write("alphabet:\n")
+    for i in Automate.alphabet:
+      fout.write(i+'\n')
+    if ('Q0' in Automate.dic):
+      fout.write("Q0 is initial state\n")
+    else:
+      fout.write("T0 is initial state\n")
+    for i in Automate.dic:
+      for j in Automate.dic[i]:
+        fout.write("Edge from " + i + " to " + Automate.dic[i][j] + " by \"" + Automate.alphabet[int(j)-1] + "\"\n")
+    fout.close
+
 def t_EDGE(t):
   r'"(.)+"(?=\n)'
   t.value = t.value[1:-1]
   return t
+
 def t_VERTEX(t):
   r'Q([1-9][0-9]*|0)'
-
   return t
+
 def t_TERMINAL(t):
   r'T([1-9][0-9]*|0)'
-
   return t
+
 t_ARROW = r'->'
 t_COLON = r':'
 t_QUOTES = r'"'
@@ -52,32 +69,21 @@ def write_error(t):
   fout.close()
 
 def write_ans():
-  if (('Q0' not in dic) and ('T0' not in dic)):
+  if (('Q0' not in Automate.dic) and ('T0' not in Automate.dic)):
     print_err("Error: there is no started vertex in automaton")
-  for i in set(vertexes):
-    if (i not in dic):
+  for i in set(Automate.vertexes):
+    if (i not in Automate.dic):
       print_err("Error: there is no started vertex in automaton")
-  for i in dic:
-    if (len(dic[i]) != cnt):
+  for i in Automate.dic:
+    if (len(Automate.dic[i]) != Automate.cnt):
       print_err("Error: automaton is not complete, vertex " + i + " have not enough edges\n")
     if (i[0] == 'Q'):
       s = 'T' + i[1:] 
     else:
       s = 'Q' + i[1:]
-    if (s in dic):
+    if (s in Automate.dic):
       print_err("Error: vertex " + s[1:] + " have terminal and nonterminal versions")
-  fout = open(sys.argv[1] + '.out', 'w')
-  fout.write("alphabet:\n")
-  for i in alphabet:
-    fout.write(i+'\n')
-  if ('Q0' in dic):
-    fout.write("Q0 is initial state\n")
-  else:
-    fout.write("T0 is initial state\n")
-  for i in dic:
-    for j in dic[i]:
-      fout.write("Edge from " + i + " to " + dic[i][j] + " by \"" + alphabet[int(j)-1] + "\"\n")
-  fout.close
+  Automate.print()
 
 def print_err(str):
   fout = open(sys.argv[1] + '.out', 'w')
@@ -86,7 +92,6 @@ def print_err(str):
   exit()
 
 def main():
-  global cnt, edges, alphabet, dic
   lexer = lex.lex()
   fin = open(sys.argv[1], 'r')
   lexer.input(fin.read())
@@ -96,17 +101,17 @@ def main():
     write_error(tok)
     return
   else:
-    cnt = int(tok.value)
-    for i in range(int(cnt)):
+    Automate.cnt = int(tok.value)
+    for i in range(int(Automate.cnt)):
       tok = lexer.token()
       if ((not tok) or (tok.type != 'EDGE')):
         write_error(tok)
         return
       else:
-        if (tok.value in alphabet):
+        if (tok.value in Automate.alphabet):
           print_err("Error: the string " + tok.value + " is found twice in the alphabet")
-        alphabet.append(tok.value)
-  if (cnt != len(alphabet)):
+        Automate.alphabet.append(tok.value)
+  if (Automate.cnt != len(Automate.alphabet)):
     print_err("Error: wrong size of alphabet")
   tok = lexer.token()
   while True:
@@ -116,7 +121,7 @@ def main():
       write_error(tok)
       return
     else:
-      vertexes.append(tok.value)
+      Automate.vertexes.append(tok.value)
       t = lexer.token()
       if ((not t) or (t.type != 'COLON')):
         write_error(t)
@@ -140,15 +145,15 @@ def main():
             if ((not t) or (t.type != 'SEMICOLON')):
               write_error(t)
               return
-            vertexes.append(tok3.value)
-            if (tok.value in dic):
-              if (tok2.value in dic[tok.value]):
+            Automate.vertexes.append(tok3.value)
+            if (tok.value in Automate.dic):
+              if (tok2.value in Automate.dic[tok.value]):
                 print_err("Error: automaton is not deterministic because from " + tok.value + " two edges by \"" + tok2.value + "\"\n")
               else:
-                dic[tok.value].update({tok2.value : tok3.value})  
+                Automate.dic[tok.value].update({tok2.value : tok3.value})  
             else:
-              dic[tok.value] = {tok2.value : tok3.value}
-            edges.append((tok.value, tok2.value, tok3.value))
+              Automate.dic[tok.value] = {tok2.value : tok3.value}
+            Automate.edges.append((tok.value, tok2.value, tok3.value))
           else:
             tok = tok2
             break
