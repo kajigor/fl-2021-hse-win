@@ -209,10 +209,18 @@ def solve(file_name: str, t: bool):
                 f: Function = parse_function(function_definition, t)
 
         print("Recursive parser output:")
+        tmp = 0
         for elem in list_of_tokens:
             if type(elem) == Token:
+                if elem.token_value == '{':
+                    tmp += 1
+
+                for q in range(tmp):
+                    print('\t', end='')
                 print("Token( value : '{0}', type = '{1}' )".format(elem.token_value, elem.token_type))
-                pass
+                if elem.token_value == '}':
+                    tmp -= 1
+
             elif type(elem) == Function:
                 res: str = "Function( name : {0}, arity : {1}, types of params : [".format(elem.name, elem.get_arity())
                 for t in elem.list_of_params:
