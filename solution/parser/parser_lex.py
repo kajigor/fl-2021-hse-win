@@ -1,8 +1,9 @@
 import ply.lex as lex
+import sys
 
 tokens = ['method', 'var_init', 'last_par', 'body_begin', 'body_end',
           'skip', 'return', 'par', 'var', 'if', 'else', 'operator', 'for', 'condition']
-file_out = open("output.dot", 'w')
+file_out = open(sys.argv[1] + ".out", 'w')
 stack = ["v_0"]
 index_of_vertex = 1
 operators = {"^": [0, True], "*": [1, False], "/": [1, False], "+": [2, False], "-": [2, False],
@@ -246,8 +247,8 @@ def expression_process(s):
             # operator
             result = ""
             start = index
-            while index < len(s) and (s[index] != ' ' and s[index] != '(' and s[index] != ')'
-                                      and s[index] != '\"' and not is_letter(s[index]) and not is_digit(s[index])):
+            while index < len(s) and (s[index] != ' ' and s[index] != '(' and s[index] != ')' and s[index] != '\"' and
+                                      (not is_letter(s[index]) or s[index] == 'o') and not is_digit(s[index])):
                 result += s[index]
                 index += 1
             if result in operators:
@@ -334,7 +335,7 @@ def expression_process(s):
 
 
 def t_method(t):
-    r"""(int|int2|string)\s+\w*\s*\("""
+    r"""(int|binint|string)\s+\w*\s*\("""
     new_vertex = create_name("Method")
     init_vertex(new_vertex, t.value)
     stack.append(new_vertex)
@@ -352,14 +353,14 @@ def t_body_begin(t):
 
 
 def t_par(t):
-    r"""(int|int2|string)\s+\w+\s*\,"""
+    r"""(p\_int|p\_binint|p\_string)\s+\w+\s*\,"""
     new_vertex = create_parameter_vertex()
     init_vertex(new_vertex, t.value)
     return t
 
 
 def t_last_par(t):
-    r"""((int|int2|string)\s+\w+)?\s*\)"""
+    r"""((p\_int|p\_binint|p\_string)\s+\w+)?\s*\)"""
     if get_name(t.value) != "":
         new_vertex = create_parameter_vertex()
         init_vertex(new_vertex, t.value)
@@ -368,7 +369,7 @@ def t_last_par(t):
 
 
 def t_var_init(t):
-    r"""(int|int2|string)\s+\w+\s*=[^\/&^<&^>&^=]\s*[^;]*;"""
+    r"""(int|binint|string)\s+\w+\s*=[^\/&^<&^>&^=]\s*[^;]*;"""
     new_vertex = create_name("Variable init")
     init_vertex(new_vertex, t.value)
     init_value_tree(get_var_value(t.value), new_vertex)
@@ -401,7 +402,7 @@ def t_if(t):
 
 
 def t_else(t):
-    r"""\}\s*else"""
+    r"""\};\s*else"""
     new_vertex = create_name("Else statement")
     stack.pop()
     add_edge(stack[-1], new_vertex)
@@ -410,7 +411,7 @@ def t_else(t):
 
 
 def t_operator(t):
-    r"""(int|int2|string)\s+operator\_\d+\_\d\s+.+\s*\("""
+    r"""(int|binint|string)\s+operator\_\d+\_\d\s+.+\s*\("""
     new_vertex = create_name("Operator")
     add_edge(stack[-1], new_vertex)
     add_edge(new_vertex, create_name_vertex(get_operator_name(t.value)))
@@ -433,7 +434,7 @@ def t_for(t):
 
 
 def t_body_end(t):
-    r"""\}"""
+    r"""\};|\]"""
     stack.pop()  # Body exit
     stack.pop()  # Statement exit
     return t
@@ -463,7 +464,7 @@ def main():
     file_out.write("digraph {\n")
     file_out.write("v_0 [label=<root>]\n")
     lexer = lex.lex()
-    file_in = open("input.txt", 'r')
+    file_in = open(sys.argv[1], 'r')
     lexer.input(file_in.read())
     file_in.close()
     while True:
