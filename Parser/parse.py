@@ -68,12 +68,12 @@ def p_expr_arg(p):
     if len(p) == 2:
         p[0] = Node("ID: " + p[1], [], parser.my_result.num_of_nodes)
         parser.my_result.used_nodes.append(p[1])
+        parser.my_result.add_node(p[0])
     elif len(p) == 3:
         p[0] = Node("*", [p[1]], parser.my_result.num_of_nodes)
+        parser.my_result.add_node(p[0])
     elif len(p) == 4:
-        p[0] = Node("()", [p[2]], parser.my_result.num_of_nodes)
-    parser.my_result.add_node(p[0])
-
+        p[0] = p[2]
 def p_sqr_brkts(p):
     ''' Expr : L_SQUARE Expr R_SQUARE '''
     p[0] = Node("[]", [p[2]], parser.my_result.num_of_nodes)
