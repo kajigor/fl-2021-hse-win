@@ -40,6 +40,7 @@ def skip_spaces_and_porting():
 
 def calc_expr():
     global cur_pos, s
+    print(cur_pos)
     try:
         skip_spaces_and_porting()
         if cur_pos >= len(s):
@@ -51,6 +52,14 @@ def calc_expr():
             return
         if s[cur_pos] == ')':
             list_of_tokens.append(Token(')', 'close circular bracket'))
+            cur_pos += 1
+            return
+        if s[cur_pos] == '{':
+            list_of_tokens.append(Token('{', 'open shaped bracket'))
+            cur_pos += 1
+            return
+        if s[cur_pos] == '}':
+            list_of_tokens.append(Token('}', 'close shaped bracket'))
             cur_pos += 1
             return
 
@@ -69,8 +78,6 @@ def calc_expr():
             skip_spaces_and_porting()
             if s[cur_pos] != '(':
                 pass
-            list_of_tokens.append(Token('(', 'open circular bracket'))
-            cur_pos += 1
 
             skip_spaces_and_porting()
             calc_expr()
@@ -78,13 +85,10 @@ def calc_expr():
 
             if s[cur_pos] != ')':
                 pass
-            cur_pos += 1
 
             skip_spaces_and_porting()
             if s[cur_pos] != '{':
                 pass
-            list_of_tokens.append(Token('{', 'open shaped bracket'))
-            cur_pos += 1
 
             skip_spaces_and_porting()
             calc_expr()
@@ -92,16 +96,12 @@ def calc_expr():
 
             if s[cur_pos] != '}':
                 pass
-            list_of_tokens.append(Token('}', 'close shaped bracket'))
-            cur_pos += 1
 
         elif cur_word == 'else':
             list_of_tokens.append(Token('else', 'conditional operator'))
             skip_spaces_and_porting()
             if s[cur_pos] != '{':
                 pass
-            list_of_tokens.append(Token('{', 'open shaped bracket'))
-            cur_pos += 1
 
             skip_spaces_and_porting()
             calc_expr()
@@ -109,8 +109,6 @@ def calc_expr():
 
             if s[cur_pos] != '}':
                 pass
-            list_of_tokens.append(Token('}', 'close shaped bracket'))
-            cur_pos += 1
 
         elif cur_word == ':':
             list_of_tokens.append(Token(':', 'assignment operator'))
@@ -154,7 +152,8 @@ def parse_function(S: str, t: bool) -> Function:
         list_of_tokens = list()
     pos = S.find('\n')
     first_line = S[:pos]
-    function_interior: str = S[pos + 1:len(S) - 2]
+    function_interior: str = "{\n" + S[pos + 1:len(S) - 2] + "}\n"
+    print(function_interior)
     result_function = parse_function_definition(first_line)
     parse_function_interior(function_interior)
     return result_function
@@ -189,8 +188,9 @@ def parse_function_interior(S: str):
     cur_pos = 0
     s = S
     while cur_pos < len(s):
-        cur_pos += 1
         calc_expr()
+        cur_pos += 1
+
 
 
 def solve(file_name: str, t: bool):
