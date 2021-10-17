@@ -8,7 +8,7 @@
 
 Такое преобразование происходит постепенно:
 
-![](https://intuit.ru/EDI/08_01_19_2/1546899581-11707/tutorial/439/objects/3/files/03_01sm.gif)
+![](https://raw.githubusercontent.com/Fawentus/fl-2021-hse-win/proj/schemes/compilation.jpg)
 
 Лексический анализ - анализ исходной программы, при котором поток символов исходной программы считывается слева направо и группируется в токены, 
 представляющие собой совокупность последовательностей символов с определенным значением.
@@ -60,7 +60,7 @@
 
 Например для `x = 2 + 31 * y` AST выглядит так: 
 
-![](https://web.archive.org/web/20070715155911im_/http://www.redhat.com/magazine/002dec04/features/gcc/figs/ast.png)
+![](https://raw.githubusercontent.com/Fawentus/fl-2021-hse-win/proj/schemes/AST.jpg)
 
 Более сложный пример:
 
@@ -129,7 +129,7 @@ int main() {
  обработать что-то более сложное. Например, оптимизатор не смог помочь создателям игры GTA Online,
  которые (по мнению T0ST) использовали в цикле функцию `sscanf`, в свою очередь вызывающую `strlen` для неизменяемого
  файла. В том числе и из-за этого время загрузки игры было достаточно большим 
- (ссылка на статью [](https://nee.lv/2021/02/28/How-I-cut-GTA-Online-loading-times-by-70/)).
+ ([ссылка на статью](https://nee.lv/2021/02/28/How-I-cut-GTA-Online-loading-times-by-70/)).
  
     * Если выражение вычисляется более одного раза и его операнды 
  никогда не изменяются, повторные вычисления заменяются результатом, вычисленным в первом.
@@ -175,7 +175,7 @@ GCC разработан вокруг двух разных IR:
 
 Процесс компиляции в GCC выглядит так:
 
-![](https://web.archive.org/web/20070715155927im_/http://www.redhat.com/magazine/002dec04/features/gcc/figs/tree-ssa-phases.png)
+![](https://raw.githubusercontent.com/Fawentus/fl-2021-hse-win/proj/schemes/gcc.jpg)
 
 Изначально создается AST. Для каждого языка программирование это происходит по-своему.
 После этого происходит преобразование в GENERIC.
@@ -464,9 +464,10 @@ e = a < d ? a++ : a = d
 
 # Время компиляции
 
-Если интересно, можно попробовать [самому засечь время компиляции программы](https://stackoverflow.com/questions/3025443/how-to-calculate-gcc-compilation-time).
-[Здесь]() можно посмотреть на анализ времени компиляции разных программ, которое мне удалось получить.
-А [здесь](https://github.com/Fawentus/fl-2021-hse-win/blob/proj/gcc_compilation_time.md) - анализ времени компиляции других пользователей.
+Если интересно, можно попробовать [самому засечь](https://stackoverflow.com/questions/3025443/how-to-calculate-gcc-compilation-time)
+время компиляции программы.
+[Здесь](https://github.com/Fawentus/fl-2021-hse-win/blob/proj/gcc_compilation_time/my_ex.md) можно посмотреть на анализ времени компиляции разных программ, которое мне удалось получить.
+А [здесь](https://github.com/Fawentus/fl-2021-hse-win/blob/proj/gcc_compilation_time/ex.md) - анализ времени компиляции других пользователей.
 
 Хотя этих данных не так так много, можно сделать некоторые выводы: около TODO% времени тратит name lookup, около 
 TODO% - preprocessing, а около TODO% - parser. Остальные этапы в основном около TODO%.
