@@ -1,6 +1,6 @@
-Анализ времени компиляции других пользователей:
+## Анализ времени компиляции других пользователей:
 
-[Ссылка на автора](https://stackoverflow.com/users/1296119/fabio-dalla-libera):
+**1) [Автор](https://stackoverflow.com/users/1296119/fabio-dalla-libera) этого примера:**
 
 ```c++
 Execution times (seconds)
@@ -52,7 +52,7 @@ Execution times (seconds)
  TOTAL                 :  14.26             4.11            18.52             742072 kB
 ```
 
-[Ссылка на автора](https://stackoverflow.com/users/234175/greatwolf):
+**2) [Автор](https://stackoverflow.com/users/234175/greatwolf) этого примера:**
 
 ```c++
 Execution times (seconds)
@@ -89,7 +89,7 @@ Execution times (seconds)
  TOTAL                 :   0.79             36953 kB
 ```
 
-[Ссылка на автора](https://stackoverflow.com/users/247265/anon):
+**3) [Автор](https://stackoverflow.com/users/247265/anon) этого примера:**
 
 ```c++
 Execution times (seconds)
@@ -127,7 +127,7 @@ Execution times (seconds)
   TOTAL                 :   3.25             0.51             5.49             256741 kB
 ```
 
-[Ссылка на автора](https://stackoverflow.com/users/4943329/cyrusbehr):
+**4) [Автор](https://stackoverflow.com/users/4943329/cyrusbehr) этого примера:**
 
 ```c++
 Time variable                                   usr           sys          wall               GGC
@@ -262,7 +262,7 @@ Time variable                                   usr           sys          wall 
  TOTAL                              :   8.75          1.63         10.40         874064 kB
 ```
 
-[Ссылка на автора](https://stackoverflow.com/users/1147830/veio):
+**5) [Автор](https://stackoverflow.com/users/1147830/veio) этого примера:**
 
 ```c++
 Execution times (seconds)
@@ -332,7 +332,7 @@ Execution times (seconds)
  TOTAL                 :  22.71             3.29            26.03            2104543 kB
 ```
 
-[Ссылка на автора](https://stackoverflow.com/users/1247301/andreas-florath)
+**6) [Автор](https://stackoverflow.com/users/1247301/andreas-florath) этого примера:**
 
 ```c++
 Execution times (seconds)
@@ -348,7 +348,7 @@ Execution times (seconds)
  TOTAL                 :   1.23             0.24             1.48              66378 kB
 ```
 
-[Ссылка на автора этих двух примеров](https://stackoverflow.com/users/2614655/khurshid-normuradov)
+**7-8) [Автор](https://stackoverflow.com/users/2614655/khurshid-normuradov) этих двух примеров:**
 
 ```c++
 Execution times (seconds)
@@ -374,7 +374,7 @@ Execution times (seconds)
 ```
 
 
-[Ссылка на автора этих двух примеров](https://stackoverflow.com/users/9154776/user9154776)
+**9-10) [Автор](https://stackoverflow.com/users/9154776/user9154776) этих двух примеров:**
 
 ```c++
 Execution times (seconds)
