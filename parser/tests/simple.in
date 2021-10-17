@@ -1,0 +1,40 @@
+begin function main 0
+begin body
+    var int2 x = 1
+    var int10 y = 015
+    var string s = "lolkek"
+
+    begin only_if x == 0 then
+    begin body
+        skip
+        change y = 10
+    end body
+    end only_if
+
+    begin while y < 20
+    begin body
+        change y = y + 02
+        change x = x + 11
+    end body
+    end while
+
+    call inc 1 y
+
+    begin if y == 21 then
+    begin body
+        skip
+    end body
+    else
+    begin body
+        skip
+    end body
+    end if
+
+end body
+end function
+
+begin function inc 1 int10 x
+begin body
+    change x = x + 01
+end body
+end function
