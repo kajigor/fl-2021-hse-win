@@ -1,3 +1,5 @@
+import os
+
 import ply.lex as lex
 import sys
 
@@ -101,11 +103,23 @@ def run_lexer(file_name):
     lexer = lex.lex()
 
     lexer.input(open(file_name, 'r').read())
-    sys.stdout = open(file_name + '.out', 'a')
-    print("Yacc parser output:")
+    sys.stdout = open(file_name + '.tmp.out', 'w')
 
     while True:
         tok = lexer.token()
         if not tok:
             break
         print(tok)
+
+    sys.stdout = open(file_name + '.out', 'a')
+    print("Yacc parser output:")
+
+    tabs = 0
+    with open(file_name + '.tmp.out', "r") as file1:
+        for line in file1:
+            if '{' in line:
+                tabs += 1
+            print('\t'*tabs + line.strip())
+            if '}' in line:
+                tabs -= 1
+    os.remove(file_name + '.tmp.out')

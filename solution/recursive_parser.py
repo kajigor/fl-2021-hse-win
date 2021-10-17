@@ -195,6 +195,7 @@ def parse_function_interior(S: str):
 
 def solve(file_name: str, t: bool):
     sys.stdout = open(file_name + '.out', 'w')
+    print("Recursive parser output:")
     with open(file_name, 'r') as file_in:
         while True:
             s = file_in.readline()
@@ -208,7 +209,7 @@ def solve(file_name: str, t: bool):
                 print(function_definition)
                 f: Function = parse_function(function_definition, t)
 
-        print("Recursive parser output:")
+
         tmp = 0
         for elem in list_of_tokens:
             if type(elem) == Token:

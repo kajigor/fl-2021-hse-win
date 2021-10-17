@@ -25,8 +25,7 @@ def run_tests(generate_new_data: bool = False):
     plt.legend()
     plt.show()
 
-print("Insert file name: ")
-file_name = input()
+file_name = sys.argv[1]
 solve(file_name, False)
 solve_yacc(file_name)
 # run_tests()
