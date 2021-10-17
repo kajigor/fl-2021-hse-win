@@ -1,0 +1,2 @@
+Error in program.
+Expect syntax: 'var <type> <name> = <value>', buf found: 'var int2 x := ...'

@@ -1,0 +1,14 @@
+Error in program.
+Expect construction:
+
+begin if
+condition
+body
+else ...
+
+But found:
+
+begin if
+condition
+body
+иначе ...

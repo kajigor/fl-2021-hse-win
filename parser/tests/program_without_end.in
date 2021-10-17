@@ -32,7 +32,7 @@ begin body
     end body
     end if
 end body
-end function
+function
 begin function inc 01 int10 x
 begin body
     change x =

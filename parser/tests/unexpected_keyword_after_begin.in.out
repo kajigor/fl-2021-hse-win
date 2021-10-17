@@ -1,0 +1,2 @@
+Error in program.
+Expect begin one of those (only_if, if, while), buf found: 'begin only'

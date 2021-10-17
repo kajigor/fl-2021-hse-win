@@ -1,0 +1,2 @@
+Error in program.
+Expect syntax: 'change <name> = ...', but found: 'change y := ...'

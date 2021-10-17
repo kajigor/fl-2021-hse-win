@@ -1,6 +1,6 @@
 begin function main 00
 begin body
-    var int2 x = 10
+    var int2 x = 20
     var int10 y = 015
     var string s = "lolkek"
     begin only_if

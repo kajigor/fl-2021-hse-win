@@ -7,7 +7,7 @@ begin body
     x == 0
     begin body
         skip
-        change y =
+        change y :=
         10
     end body
     end only_if

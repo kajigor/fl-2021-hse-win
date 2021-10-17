@@ -26,7 +26,7 @@ begin body
     begin body
         skip
     end body
-    else
+    иначе
     begin body
         skip
     end body

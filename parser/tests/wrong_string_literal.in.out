@@ -1,0 +1,2 @@
+Error in program.
+Expect syntax: 'var string <name> = "data"', but found: 'var string <name> = lolkek'

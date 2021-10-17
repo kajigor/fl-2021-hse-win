@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
                     }
                 }
                 res += "operators:\n";
-                for (const auto &op : operators) {
+                for (const auto &op: operators) {
                     res += TAB + op.to_str() + "\n";
                 }
                 return res;
@@ -121,13 +121,23 @@ int main(int argc, char *argv[]) {
         }
 
         static bool is_number(const std::string &num) {
-            if (num.size() < 2) {
+            if (num.size() < 2 || num.size() > 9) {
                 return false;
             }
             if (num[0] == '0') {
                 // all digits in [0-9]
+                for (const auto &c : num) {
+                    if (c < '0' || c > '9') {
+                        return false;
+                    }
+                }
             } else if (num[0] == '1') {
                 // all digits in [0-1]
+                for (const auto &c : num) {
+                    if (c < '0' || c > '1') {
+                        return false;
+                    }
+                }
             } else {
                 throw My_exception(
                         "First symbol of int is 0 (decimal) or 1 (binary), buf found: '" + std::string(1, num[0]) +
@@ -157,7 +167,12 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        void check_var(const std::string &s) {  // TODO
+        static void check_var(const Variable &var, const std::vector<Variable> &vars) {
+            for (const auto &v : vars) {
+                if (v.name == var.name) {
+                    throw My_exception("Variable has name same as other variable: '" + var.name + "'");
+                }
+            }
         }
 
         static int read_begin(const std::string &obj, bool is_need_read_word_begin = true) {
@@ -201,9 +216,19 @@ int main(int argc, char *argv[]) {
             if (bounding != "=") {
                 throw My_exception(
                         "Expect syntax: 'var <type> <name> = <value>', buf found: 'var " + v.type + " " + v.name + " " +
-                        bounding + "...'");
+                        bounding + " ...'");
             }
-            v.value = read_whole_string();
+            if (v.type == "int2" || v.type == "int10") {
+                v.value = std::to_string(read_int());
+            } else {
+                std::string str = read_string();
+                if (str.size() < 2 || str[0] != '"' || str.back() != '"') {
+                    throw My_exception(
+                            "Expect syntax: 'var string <name> = \"data\"', but found: 'var string <name> = " + str +
+                            "'");
+                }
+                v.value = str.substr(1, str.size() - 2);
+            }
         }
 
         void read_signature(Function &func) {
@@ -213,8 +238,9 @@ int main(int argc, char *argv[]) {
                 std::string type = read_string();
                 check_type(type);
                 std::string name_var = read_string();
-                check_var(name_var);
-                func.argv.push_back({type, name_var, ""});
+                Variable var = {type, name_var, ""};
+                check_var(var, func.argv);
+                func.argv.push_back(var);
             }
         }
 
@@ -233,8 +259,8 @@ int main(int argc, char *argv[]) {
             std::string els = read_string();
             if (els != "else") {
                 throw My_exception(
-                        "Expect construction 'begin if\ncondition\nthen body\nelse...', "
-                        "but found: 'begin if\ncondition\nthen body\n'" + els + "...'");
+                        "Expect construction:\n\nbegin if\ncondition\nbody\nelse ...\n\n"
+                        "But found:\n\nbegin if\ncondition\nbody\n" + els + " ...");
             }
             read_body(iff.else_body);
             read_end("if");
@@ -272,6 +298,7 @@ int main(int argc, char *argv[]) {
                 } else if (starts_with == "var") {
                     Variable v;
                     read_variable(v);
+                    check_var(v, body.variables);
                     body.variables.push_back(v);
                 } else if (starts_with == "begin") {
                     body.operators.push_back({read_begin_smth()});
@@ -287,7 +314,7 @@ int main(int argc, char *argv[]) {
                     if (bounding != "=") {
                         throw My_exception(
                                 "Expect syntax: 'change <name> = ...', but found: 'change " + name_l + " " + bounding +
-                                "...'");
+                                " ...'");
                     }
                     std::string equation = read_whole_string();
                     body.operators.push_back({starts_with + " " + name_l + " = " + equation});
@@ -309,24 +336,20 @@ int main(int argc, char *argv[]) {
         }
 
         void read_program() {
-            try {
-                while (true) {
-                    Function cur;
-                    if (read_function(cur) == 0) {
-                        functions.push_back(cur);
-                    } else {
-                        break;
-                    }
+            while (true) {
+                Function cur;
+                if (read_function(cur) == 0) {
+                    functions.push_back(cur);
+                } else {
+                    break;
                 }
-            } catch (const std::exception &e) {
-                std::cerr << e.what() << "\n";
             }
         }
 
         void write_result() {
             std::cout << "Functions in program:\n";
             int counter = 0;
-            for (const auto &func : functions) {
+            for (const auto &func: functions) {
                 std::cout << ++counter << ": " << func.signature_to_str() << "\n\n";
                 std::cout << func.body.to_str() << "\n";
             }
@@ -334,7 +357,12 @@ int main(int argc, char *argv[]) {
 
     };
 
-    Program my_program;
-    my_program.read_program();
-    my_program.write_result();
+    try {
+        Program my_program;
+        my_program.read_program();
+        my_program.write_result();
+    } catch (const std::exception &e) {
+        std::cout << "Error in program.\n";
+        std::cout << e.what() << "\n";
+    }
 }
