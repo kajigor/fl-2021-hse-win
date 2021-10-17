@@ -1,0 +1,3 @@
+[submodule "kuksag"]
+	path = kuksag
+	url = git@github.com:kuksag/fl-2021-hse-win.git
