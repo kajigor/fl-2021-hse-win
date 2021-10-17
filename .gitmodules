@@ -1,0 +1,3 @@
+[submodule "language-parser"]
+	path = language-parser
+	url = git@github.com:kuksag/language-parser.git
