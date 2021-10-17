@@ -1,1 +1,1 @@
-Error: Expect operator between two expressions: "Symbol: (" and "Symbol: )"
+Error: ('Syntax error at symbol ', LexToken(SYMBOL,')',1,28))

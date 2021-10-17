@@ -89,12 +89,12 @@ def p_expr_args_alt(p):
     p[0] = Node("|", [p[1], p[3]], parser.my_result.num_of_nodes)
     parser.my_result.add_node(p[0])
 
-def p_expr_exception_oper(p):
-    ''' Expr : Expr Expr '''
-    raise Exception("Expect operator between two expressions: \"" + p[1].operation + "\" and \"" + p[2].operation + "\"")
+# def p_expr_exception_oper(p):
+#     ''' Expr : Expr Expr '''
+#     raise Exception("Expect operator between two expressions: \"" + p[1].operation + "\" and \"" + p[2].operation + "\"")
 
 def p_error(p):
-    raise Exception("Syntax error")
+    raise Exception("Syntax error at symbol ", p)
 
 parser = yacc.yacc()
 
