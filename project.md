@@ -1,4 +1,4 @@
-# Как парсится c++ (на примере GCC)
+# Как происходит компиляция c++
 
 В машинный код приложения на c и c++ переводятся один раз - перед запуском программы.
 Этот процесс и называется компиляцией. Компилятор переводит исходный код, написанный на одном из языков программирования,
@@ -79,6 +79,37 @@ return a;
 
 ![](https://upload.wikimedia.org/wikipedia/commons/c/c7/Abstract_syntax_tree_for_Euclidean_algorithm.svg)
 
+Данный пример был взят [отсюда](https://en.wikipedia.org/wiki/Abstract_syntax_tree).
+
+Ещё более сложный пример:
+
+```c++
+template<bool> struct a_t;
+
+template<> struct a_t<true> {
+    template<int> struct b {};
+};
+
+template<> struct a_t<false> {
+   enum { b };
+};
+
+typedef a_t<sizeof(void*)==sizeof(int)> a;
+
+enum { c, d };
+int main() {
+    a::b<c>d; // declaration or expression?
+}
+```
+
+Дерево для него будет выглядеть так:
+
+![](https://i.stack.imgur.com/Pdbnz.png)
+
+Этот пример был взят из [ответа](https://stackoverflow.com/questions/17388771/get-human-readable-ast-from-c-code/17393852#17393852) 
+на stackoverflow. Из этого и других ответов в этой же ветке можно понять, как 
+самому получить AST из кода c++ для лучшего понимания.
+
 ### Middle End
 
 На этом этапе есть две основные цели: оптимизация по времени работы и оптимизация по занимаемой памяти.
@@ -116,7 +147,8 @@ return a;
  Но эта оптимизация работает только с простыми случаями, даже самый хороший компилятор не всегда может
  обработать что-то более сложное. Например, оптимизатор не смог помочь создателям игры GTA Online,
  которые (по мнению T0ST) использовали в цикле функцию `sscanf`, в свою очередь вызывающую `strlen` для неизменяемого
- файла. В том числе и из-за этого время загрузки игры было достаточно большим (ссылка на статью [](https://nee.lv/2021/02/28/How-I-cut-GTA-Online-loading-times-by-70/)).
+ файла. В том числе и из-за этого время загрузки игры было достаточно большим 
+ (ссылка на статью [](https://nee.lv/2021/02/28/How-I-cut-GTA-Online-loading-times-by-70/)).
  
     * Если выражение вычисляется более одного раза и его операнды 
  никогда не изменяются, повторные вычисления заменяются результатом, вычисленным в первом.
@@ -190,11 +222,27 @@ GENERIC деревья по-прежнему являются структурн
 Процесс преобразования GENERIC в GIMPLE, называется gimplifier.
 Представление GIMPLE создается путем разбиения GENERIC выражений на кортежи, не более чем 
 из 3 операндов (за некоторыми исключениями, такими как, к примеру, вызовы функций).
-Разбития на кортежи происходит рекурсивно.
+Разбития на кортежи происходит рекурсивно. Такие рекурсивные синтаксические анализаторы спуска
+являются рукописными. Это сделано по нескольким причинам:
 
-Об этом подробнее можно почитать на [соответствующей странице](https://gcc.gnu.org/onlinedocs/gccint/GIMPLE.html#GIMPLE)
+1) Производительность. Рукописность парсера открывет большую свободу для оптимизаций, всё
+находится под контролем разработчика. Также быстрый синтаксического анализатор можно 
+использовать и в других инструментах разработки, где такие синтаксические анализаторы обычно
+не используются. Например, для подсветки синтаксиса и подсказок при написании кода в среде IDE.
+2) Поиск ошибок: из-за полного контроля работы, проще обрабатывать разные случаи, находить 
+и предлагать варианты исправления ошибок, [пример](http://clang.llvm.org/features.html#expressivediags).
+3) Простота: синтаксические анализаторы рекурсивного спуска относительно легко писать, понимать и отлаживать.
+Так как исходный код является открытым, эта действительно важно для расширения/улучшения анализатора.
+4) Некоторые исторические причины
+
+Ещё больше контекста можно найти [здесь](https://stackoverflow.com/questions/6319086/are-gcc-and-clang-parsers-really-handwritten).
+Также [здесь](https://gcc.gnu.org/wiki/New_C_Parser) можно найти ссылки на описание изменений,
+которые были добавлены в парсеры разных версий.
+
+О GIMPLE подробнее можно почитать на [соответствующей странице](https://gcc.gnu.org/onlinedocs/gccint/GIMPLE.html#GIMPLE)
 официального сайта. Там есть некоторые примеры, приведена иерархия операторов, 
 можно найти информацию об обработке исключений и еще много всего интересного.
+Ещё может быть полезным почитать [это](https://gcc.gnu.org/onlinedocs/gccint/Parsing-pass.html).
 
 Попробуем на примере понять, чем GENERIC отличается от GIMPLE.
 
@@ -329,6 +377,17 @@ RTL - это низкоуровневое представление, поэто
 Больше полезной и интересной информации можно найти на 
 [странице об RTL](https://gcc.gnu.org/onlinedocs/gccint/RTL.html) на официальном сайте.
 
+## Ещё немного об оптимизациях
+
+Хочется заметить, что разные версии компилятора могут оптимизировать программу по-разному. 
+Причём время работы программы может отличаться весьма существенно. Нпример, одно и то же решение 
+задачи, собранное GNU C++17 7.2.0 (msys2 mingw-w64-x86_64) inc (inc означает, что подключение 
+библиотеки [optimization.h](https://acm.math.spbu.ru/~sk1/algo/lib/optimization.h.html) будет корректным)
+получает Time Limit в тестирующей системе, в то время, как решение, собранное
+GNU C++14 5.1.0 (TDM-GCC-64) inc получает OK.
+
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/af85962d-1e18-4ddb-bc8e-6bf34344d3a4/SmartSelect_20211005-172654_Samsung_Internet.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20211017%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20211017T074808Z&X-Amz-Expires=86400&X-Amz-Signature=ebdd0aae5638eb49622971550dc9190a1e2cf2b415e50ee6a0812a3dd45c9913&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22SmartSelect_20211005-172654_Samsung%2520Internet.jpg%22)
+
 # Особенности синтаксиса с++
 
 ## Lexer hack
@@ -359,15 +418,45 @@ RTL - это низкоуровневое представление, поэто
 ## Приоритеты операторов
 
 Все стандартные операторы имеют приоритеты. Компилятор использует таблицу приоритетов для определения
-порядка вычисления операторов. При перегрузки операторов, приоритеты останутся прежними
-(есть некоторые операторы, перегрузка которых запрещена, например: `.`).
-Поэтому, к примеру, в для таких выражений:
+порядка вычисления операторов. В языках c и c++ нет возможности менять приоритет операторов,
+как это можно, например, в Haskell. При перегрузки операторов, приоритеты останутся прежними.
+Поэтому, к примеру, для таких выражений:
 
 ```c++
 a = 3 * 9 + 6;
 b = ++a*3;
 ```
 интерпритация будет в любом случае однозначной.
+
+Есть некоторые операторы, перегрузка которых запрещена, например оператор `.`. Также запрещено
+определять свои собственные операторы, например, такой код не является корректным:
+
+```c++
+#include <iostream>
+
+struct Integer {
+	int value;
+
+	Integer() : value(0) {}
+	Integer(int value_) : value(value_) {}
+};
+
+const Integer operator+++(const Integer& left, const Integer& right) {
+	return Integer(left.value + right.value);
+}
+
+void print(Integer x) {
+	std::cout << x.value;
+}
+
+int main() {
+	Integer a(3), b(9);
+	print(a +++ b);
+}
+```
+
+В данном случае для типа `Integer` можно было бы переопределить оператор `+`, такая реализация
+является допустимой.
 
 В свою очередь связывание составных операторов определено не через таблицу, а через грамматику языка.
 Из-за этого могут возникать двусмысленные интерпритации. Хорошим примером служит только что рассмотренная 
@@ -392,14 +481,56 @@ e = a < d ? a++ : a = d
 в разных языках будет интерпритированно по-разному. В c выражение синтаксически некорректно, (результат условного
 оператора не может быть lvalue). В c++ выражение будет корректным.
 
-Также хочется заметить, что в языках c и c++ нет возможности менять приоритет операторов,
-как это можно, например, в Haskell
+# Время компиляции (говорят, что gcc проводит чуть ли не 40% времени за синтаксическим анализом)
 
-# Сколько gcc тратит времени на разные этапы (говорят, что gcc проводит чуть ли не 40% времени за синтаксическим анализом)
+Если интересно, можно попробовать [самому засечь время](https://stackoverflow.com/questions/3025443/how-to-calculate-gcc-compilation-time)
+компиляции программы. Время компиляции разных программ:
+
+[Программа](TODO), которая принимает на вход два числа и выводит их сумму:
+
+Программа, которая находит максимальный поток в графе:
+
+Программа, которая реализует иерархию полиморфных классов и некоторую тривиальную базу данных, хранящую упорядоченный список:
+
+Программа, реализущая потокобезопасные классы, представляющие собой игрушечный банк, к которому 
+могут подключаться пользователи, и совершать простые действия, такие как транзакции и запрос баланса:
+
+[Игра dawn](https://fawentus.itch.io/dawn), написанная с использованием библиотеки 
+[SFML](https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1RenderTarget.php) (её исходный код можно посмотреть
+[здесь](https://github.com/rmzs0711/gaijin_jam)):
+
+*В некоторых примерах нет ссылок на сам код, так как он был написан в рамках обучения. Мне кажется не совсем корректным
+по отношению к младшим курсам выкладывать его в общий доступ. Но, думаю, по описанию примерно ясна его сложность, что
+в данном случае нам и нужно.*
+
+При анализе этих данных, было замечено, что во всех случаях около 7% времени тратит name lookup, около 
+10% - preprocessing, а около 40% - parser. Остальные этапы в основном около 1-5%. TODO
 
 # Может ли парсер выдать отвратительную производительность? (пример)
 
 # Источники
+
+## Ссылки, которые были указаны в тексте
+
+1) [Страница в wikipedia об AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
+2) [ответа](https://stackoverflow.com/questions/17388771/get-human-readable-ast-from-c-code/17393852#17393852)
+3) [Статья об ускорении времени загрузки GTA Online](https://nee.lv/2021/02/28/How-I-cut-GTA-Online-loading-times-by-70/)
+4) [Peephole-оптимизации](https://habr.com/ru/post/458150/)
+5) [Подробности о GENERIC](https://gcc.gnu.org/onlinedocs/gccint/GENERIC.html)
+6) [пример](http://clang.llvm.org/features.html#expressivediags)
+7) [здесь](https://stackoverflow.com/questions/6319086/are-gcc-and-clang-parsers-really-handwritten)
+8) [здесь](https://gcc.gnu.org/wiki/New_C_Parser)
+9) [соответствующей странице](https://gcc.gnu.org/onlinedocs/gccint/GIMPLE.html#GIMPLE)
+10) [это](https://gcc.gnu.org/onlinedocs/gccint/Parsing-pass.html)
+11) [распределение регистров](https://en.wikipedia.org/wiki/Register_allocation), 
+12) [delay slot](https://en.wikipedia.org/wiki/Delay_slot) 
+13) [тут можно узнать некоторые подробности, для чего она нужна](https://stackoverflow.com/questions/15375084/what-is-the-point-of-delay-slots)
+14) [peephole-оптимизаций](https://en.wikipedia.org/wiki/Peephole_optimization)
+15) [странице об RTL](https://gcc.gnu.org/onlinedocs/gccint/RTL.html)
+16) [optimization.h](https://acm.math.spbu.ru/~sk1/algo/lib/optimization.h.html)
+
+## Материалы, использованные при написании
+
 1) [Статья Diego Novillo](https://web.archive.org/web/20090401215553/http://www.redhat.com/magazine/002dec04/features/gcc/), 
 одного из главных архитекторов Tree SSA, платформы оптимизации для GCC.
 2) [Вопрос про значения merge, phi, effectphi and dead](https://stackoverflow.com/questions/57463700/meaning-of-merge-phi-effectphi-and-dead-in-v8-terminology)
@@ -408,8 +539,8 @@ e = a < d ? a++ : a = d
 4) [Страница в wikipedia об SSA](https://en.wikipedia.org/wiki/Static_single_assignment_form)
 5) [Страница в wikipedia об IR](https://en.wikipedia.org/wiki/Intermediate_representation)
 6) ["A Simple Graph-Based Intermediate Representation" by Cliff Click and Michael Paleczny](https://www.oracle.com/technetwork/java/javase/tech/c2-ir95-150110.pdf) - 
-здесь можно найти более содержательные примеры AST
-7) [Страница в wikipedia об AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree#:~:text=In%20computer%20science%2C%20an%20abstract,the%20structural%20or%20content-related%20details)
+здесь можно найти больше примеров
+7) Перегрузка операторов: [статья](https://habr.com/ru/post/489666/) и [статья](https://habr.com/ru/post/132014/)
 8) [Процесс компиляции программ на C++](https://habr.com/ru/post/478124/)
 9) [Немного о статических и динамических библиотеках](https://ravesli.com/staticheskie-i-dinamicheskie-biblioteki/#toc-0)
 10) [Официальный сайт GNU Compiler Collection](https://gcc.gnu.org)
@@ -418,4 +549,8 @@ e = a < d ? a++ : a = d
 12) [Dangling else](https://www.gnu.org/software/bison/manual/html_node/Shift_002fReduce.html#Shift_002fReduce)
 13) [Lexer hack](https://eli.thegreenplace.net/2007/11/24/the-context-sensitivity-of-cs-grammar/)
 14) [Операторы на cppreference](https://en.cppreference.com/w/cpp/language/operators)
-15) [Перегрузка операторов](https://habr.com/ru/post/489666/)
+15) [Исходники gcc для чтения](https://gcc.gnu.org/git.html), также можно посмотреть 
+[здесь](https://github.com/gcc-mirror/gcc), [это](https://stackoverflow.com/questions/26179500/how-do-i-download-gcc-source)
+может помочь при скачивании исходников
+16) [Разница в AST и CST](https://stackoverflow.com/questions/1888854/what-is-the-difference-between-an-abstract-syntax-tree-and-a-concrete-syntax-tre/1916687#1916687)
+17) [Почему компиляция такая долгая?](https://www.quora.com/Why-does-C++-take-so-long-to-compile)
