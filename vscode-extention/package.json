@@ -1,0 +1,25 @@
+{
+    "name": "ebnf",
+    "displayName": "ebnf",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ebnf",
+            "aliases": ["ebnf", ""],
+            "extensions": [".txt"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ebnf",
+            "scopeName": "source.ebnf",
+            "path": "./syntaxes/ebnf.tmLanguage.json"
+        }]
+    }
+}

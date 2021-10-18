@@ -59,6 +59,7 @@ def p_expression(p):
                     | expression ALT expression
                     | LBRACE expression RBRACE
                     | LBRACKET expression RBRACKET
+                    | RULENAME
                     | PLAINTEXT'''
     if len(p) == 2:
         p[0] = Node(p[1], [])
@@ -71,6 +72,8 @@ def p_expression(p):
     else:
         assert False
 
+def p_error(p):
+    print("Syntax error")
 
 parser = yacc.yacc()
 

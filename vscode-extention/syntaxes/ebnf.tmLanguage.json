@@ -1,0 +1,21 @@
+{
+	"scopeName": "source.ebnf",
+	"patterns": [{ "include": "#expression" }],
+	"repository": {
+	  "expression": {
+		"patterns": [{"include" : "#operators"},{ "include": "#rulename" }, { "include": "#plaintext" }]
+	  },
+	  "rulename": {
+		"match": "\\b(terminal)\\b",
+		"name": "red"
+	  },
+	  "plaintext": {
+		"match": "\\b(q[0-9]*)\\b",
+		"name": "entity.name.type.scope"
+	  },
+	  "operators": {
+		"match": "\\b(with)\\b",
+		"name": "keyword.control"	  
+	  }
+	}
+  }
