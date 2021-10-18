@@ -1,0 +1,25 @@
+{
+  "scopeName": "source.abc",
+  "patterns": [{ "include": "#expression" }],
+  "repository": {
+    "expression": {
+      "patterns": [{ "include": "#kw" }, { "include": "#constructor" }, { "include": "#commentLine"}, { "include": "#number"}]
+    },
+    "kw": {
+      "match": "\\b(int|binint|string|if|else|return|for|while|true|false)\\b",
+      "name": "keyword.control"
+    },
+    "constructor": {
+      "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
+      "name": "constant.character"
+    },
+    "commentLine": {
+      "match": "(\/\/.*\\n)",
+      "name": "comment.line"
+    },
+    "number": {
+      "match": "\\b([0-9]+)\\b",
+      "name": "constant.numeric"
+    }
+  }
+}
