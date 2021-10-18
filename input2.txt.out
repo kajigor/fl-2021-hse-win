@@ -1,0 +1,10 @@
+The list of words: 23, 74, 6
+The list of vertexes: 
+q0: start
+q1: terminal
+s0: non_terminal
+The list of edges: 
+Start vertex: q0. End vertex: s0. Transition words: 6
+Start vertex: s0. End vertex: s0. Transition words: 74, 6
+Start vertex: q0. End vertex: q1. Transition words: 23
+Start vertex: q1. End vertex: q1. Transition words: 74

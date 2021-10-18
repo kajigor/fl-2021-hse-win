@@ -1,0 +1,10 @@
+The list of words: 00, 11, 22, 33, 44, 55, 66, 77, 88, 99
+The list of vertexes: 
+q0: start
+q1: terminal
+s0: non_terminal
+The list of edges: 
+Start vertex: q0. End vertex: s0. Transition words: 00
+Start vertex: s0. End vertex: s0. Transition words: 00, 11, 22, 33, 44, 55, 66, 77, 88, 99
+Start vertex: q0. End vertex: q1. Transition words: 11, 22, 33, 44, 55, 66, 77, 88, 99
+Start vertex: q1. End vertex: q1. Transition words: 00, 11, 22, 33, 44, 55, 66, 77, 88, 99
