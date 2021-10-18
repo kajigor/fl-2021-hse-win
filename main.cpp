@@ -12,6 +12,8 @@ enum State {
     non_terminal,
 };
 
+char next;
+
 struct Edge {
     Edge(std::string &from_,
          std::string &to_) : from(from_), to(to_) {
@@ -111,8 +113,9 @@ struct Automation {
     }
 };
 
+Automation automation;
+
 std::string read_word(std::ifstream &in, char &end) {
-    char next;
     int symb;
     std::string answer;
     do {
@@ -143,13 +146,7 @@ std::string get_vertex_name(std::ifstream &in) {
     return input;
 }
 
-
-int main(int argc, char *argv[]) {
-
-    std::ifstream in(argv[1]); // окрываем файл для чтения
-    std::ofstream out(std::string(argv[1]) + ".out");
-    Automation automation;
-
+void read_words_sequence(std::ifstream &in) {
     char next;
     do {
         in >> next;
@@ -161,59 +158,111 @@ int main(int argc, char *argv[]) {
         }
         automation.add_word(word);
     } while (true);
+}
+
+void read_start_vertex(std::ifstream &in) {
+    std::string start_name = get_vertex_name(in);
+    automation.add_start_vertex(start_name);
+}
+
+void read_terminal_vertex(std::ifstream &in) {
+    std::string terminal_name = get_vertex_name(in);
+    automation.add_terminal_vertex(terminal_name);
+}
+
+int read_transition_vertex(std::ifstream &in) {
+    in >> next;
+    if (next != '(') {
+        std::cerr << "Incorrect transition" << std::endl;
+        return 0;
+    }
+    std::string v_name_1 = get_vertex_name(in);
+    automation.add_non_terminal_vertex(v_name_1);
+    std::string arrow;
+    in >> arrow;
+    if (arrow != "->") {
+        std::cerr << "Incorrect transition (arrow)" << std::endl;
+        return 0;
+    }
+    std::string v_name_2 = get_vertex_name(in);
+    automation.add_non_terminal_vertex(v_name_2);
+    in >> next;
+    if (next != ',') {
+        std::cerr << "Incorrect transition (comma)" << std::endl;
+        return 0;
+    }
+    in >> next;
+    if (next != '{') {
+        std::cerr << "Incorrect transition (figure bracket)" << std::endl;
+        return 0;
+    }
+    Edge e(v_name_1, v_name_2);
+    char end;
+    do {
+        std::string word = read_word(in, end);
+        e.add_word(word);
+    } while (end == ',');
+    if (end != '}') {
+        std::cerr << "Incorrect transition (figure bracket)" << std::endl;
+        return 0;
+    }
+    in >> next;
+    if (next != ')') {
+        std::cerr << "Incorrect transition (round bracket)" << std::endl;
+        return 0;
+    }
+    automation.add_edge(e);
+    return 1;
+}
+
+void print_words_list(std::ofstream &out) {
+    out << "The list of words: ";
+    for (int i = 0; i < automation.words.size() - 1; i++) {
+        out << automation.words[i].word << ", ";
+    }
+    out << automation.words[automation.words.size() - 1].word << std::endl;
+}
+
+void print_vertexes_list(std::ofstream &out) {
+    out << "The list of vertexes: \n";
+    for (auto vertex: automation.vertexes) {
+        out << vertex.second.get_vertex_name() << ": " << vertex.second.get_vertex_state() << std::endl;
+    }
+}
+
+void print_edges_list(std::ofstream &out) {
+    out << "The list of edges: \n";
+    for (auto e: automation.edges) {
+        out << "Start vertex: " << e.get_start_vertex() << ". End vertex: " << e.get_dest_vertex()
+            << ". Transition words: ";
+        for (int i = 0; i < e.words_num() - 1; i++) {
+            out << e.get_word(i) << ", ";
+        }
+        out << e.get_word(e.words_num() - 1) << std::endl;
+    }
+}
+
+
+int main(int argc, char *argv[]) {
+
+    std::ifstream in(argv[1]); // окрываем файл для чтения
+    std::ofstream out(std::string(argv[1]) + ".out");
+    automation = Automation();
+
+    read_words_sequence(in);
 
     while (!in.eof()) {
         std::string key_word;
         in >> key_word;
         if (next != ' ') key_word = next + key_word;
         if (key_word == "start") {
-            std::string start_name = get_vertex_name(in);
-            automation.add_start_vertex(start_name);
+            read_start_vertex(in);
         } else if (key_word == "terminal") {
-            std::string terminal_name = get_vertex_name(in);
-            automation.add_terminal_vertex(terminal_name);
+            read_terminal_vertex(in);
         } else if (key_word == "transition") {
-            in >> next;
-            if (next != '(') {
-                std::cerr << "Incorrect transition" << std::endl;
+            if (read_transition_vertex(in) == 0) {
                 break;
             }
-            std::string v_name_1 = get_vertex_name(in);
-            automation.add_non_terminal_vertex(v_name_1);
-            std::string arrow;
-            in >> arrow;
-            if (arrow != "->") {
-                std::cerr << "Incorrect transition (arrow)" << std::endl;
-                break;
-            }
-            std::string v_name_2 = get_vertex_name(in);
-            automation.add_non_terminal_vertex(v_name_2);
-            in >> next;
-            if (next != ',') {
-                std::cerr << "Incorrect transition (comma)" << std::endl;
-                break;
-            }
-            in >> next;
-            if (next != '{') {
-                std::cerr << "Incorrect transition (figure bracket)" << std::endl;
-                break;
-            }
-            Edge e(v_name_1, v_name_2);
-            char end;
-            do {
-                std::string word = read_word(in, end);
-                e.add_word(word);
-            } while (end == ',');
-            if (end != '}') {
-                std::cerr << "Incorrect transition (figure bracket)" << std::endl;
-                break;
-            }
-            in >> next;
-            if (next != ')') {
-                std::cerr << "Incorrect transition (round bracket)" << std::endl;
-                break;
-            }
-            automation.add_edge(e);
         } else {
             if (key_word.empty()) break;
             std::cerr << "Incorrect key word" << std::endl;
@@ -221,24 +270,9 @@ int main(int argc, char *argv[]) {
         next = ' ';
     }
 
-    out << "The list of words: ";
-    for (int i = 0; i < automation.words.size() - 1; i++) {
-        out << automation.words[i].word << ", ";
-    }
-    out << automation.words[automation.words.size() - 1].word << std::endl;
-    out << "The list of vertexes: \n";
-    for (auto vertex: automation.vertexes) {
-        out << vertex.second.get_vertex_name() << ": " << vertex.second.get_vertex_state() << std::endl;
-    }
-    out << "The list of edges: \n";
-    for (auto e: automation.edges) {
-        out << "Start vertex: " << e.get_start_vertex() << ". End vertex: " << e.get_dest_vertex()
-                  << ". Transition words: ";
-        for (int i = 0; i < e.words_num() - 1; i++) {
-            out << e.get_word(i) << ", ";
-        }
-        out << e.get_word(e.words_num() - 1) << std::endl;
-    }
+    print_words_list(out);
+    print_vertexes_list(out);
+    print_edges_list(out);
     in.close();
     out.close();
     return 0;
