@@ -1,0 +1,5 @@
+After 0-th step:
+R [0] [0] : a|c|b|d
+After 1-th step:
+R [0] [0] : (a|c|b|d|eps)(a|c|b|d|eps)*(a|c|b|d|eps)|(a|c|b|d|eps)
+FINAL ANSWER: (a|c|b|d|eps)(a|c|b|d|eps)*(a|c|b|d|eps)|(a|c|b|d|eps)

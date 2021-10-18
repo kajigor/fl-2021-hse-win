@@ -1,4 +1,4 @@
-//package com.company;
+package com.company;
 
 import java.io.*;
 import java.util.*;
@@ -6,23 +6,23 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-            myRegBuilder v;
-            try {
-                v = new myRegBuilder();
-                v.input();
-                if (v.error) return;
-                v.checkPart();
-                if (v.error) return;
-                v.DFS(0);
-                if (v.error) return;
-                v.afterDFS();
-                if (v.error) return;
-                v.toRegExpr();
-                if (v.error) return;
-            }catch (Exception e)
-            {
-                return;
-            }
+        myRegBuilder v;
+        try {
+            v = new myRegBuilder(args[0], args[1]);
+            v.input();
+            if (v.error) return;
+            v.checkPart();
+            if (v.error) return;
+            v.DFS(0);
+            if (v.error) return;
+            v.afterDFS();
+            if (v.error) return;
+            v.toRegExpr();
+            if (v.error) return;
+        }catch (Exception e)
+        {
+            return;
+        }
     }
 }
 
@@ -37,9 +37,9 @@ class myRegBuilder
     boolean[] used;
     boolean error = false;
 
-    myRegBuilder() throws IOException {
-        in = new BufferedReader(new FileReader("input.txt"));
-        out = new BufferedWriter(new FileWriter("output.txt"));
+    myRegBuilder(String s1, String s2) throws IOException {
+        in = new BufferedReader(new FileReader(s1));
+        out = new BufferedWriter(new FileWriter(s2));
     }
 
     void input() throws IOException {
@@ -246,15 +246,12 @@ class myRegBuilder
             }
     }
 
-    void toRegExpr()
-    {
+    void toRegExpr() {
         int n = _states.length;
-        ArrayList <ArrayList <String> > RegExpr = new ArrayList<>();
-        for(int i = 0; i < n; ++i)
-        {
+        ArrayList<ArrayList<String>> RegExpr = new ArrayList<>();
+        for (int i = 0; i < n; ++i) {
             RegExpr.add(new ArrayList<>());
-            for(int j = 0; j < n; ++j)
-            {
+            for (int j = 0; j < n; ++j) {
                 if (i == j)
                     RegExpr.get(i).add("eps");
                 else
@@ -263,12 +260,9 @@ class myRegBuilder
             }
         }
 
-        for(int i = 0; i < n; ++i)
-        {
-            for(int j = 0; j < n; ++j)
-            {
-                if (FSA.get(i).get(j) == null)
-                {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (FSA.get(i).get(j) == null) {
                     if (i == j)
                         FSA.get(i).set(j, "eps");
                     else
@@ -277,10 +271,8 @@ class myRegBuilder
             }
         }
 
-        for(int i = 0; i < n; ++i)
-        {
-            for(int j = 0; j < n; ++j)
-            {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
                 String letter = FSA.get(i).get(j);
                 if (letter.compareTo("{}") == 0) continue;
                 if (i == j) {
@@ -291,47 +283,67 @@ class myRegBuilder
             }
         }
 
-
-        for(int k = 0; k < n; ++k)
+        try {
+            out.write("After " + 0 + "-th step:\n");
+            for (int i = 0; i < n; ++i) {
+                for (int j = 0; j < n; ++j) {
+                    out.write("R " + "[" + i + "] " + "[" + j + "] : ");
+                    out.write(FSA.get(i).get(j));
+                    out.write('\n');
+                }
+            }
+        } catch (Exception e)
         {
-            for(int i = 0; i < n; ++i)
-            {
-                for(int j = 0; j < n; ++j)
-                {
+        }
+
+        for (int k = 0; k < n; ++k) {
+            for (int i = 0; i < n; ++i) {
+                for (int j = 0; j < n; ++j) {
                     String _letter_ik = RegExpr.get(i).get(k);
                     String _letter_kk = RegExpr.get(k).get(k);
                     String _letter_kj = RegExpr.get(k).get(j);
                     String _letter_ij = RegExpr.get(i).get(j);
                     String _to_replace = "(" + _letter_ik + ")" +
-                                         "(" + _letter_kk + ")*" +
-                                         "(" + _letter_kj + ")|" +
-                                         "(" + _letter_ij + ")";
+                            "(" + _letter_kk + ")*" +
+                            "(" + _letter_kj + ")|" +
+                            "(" + _letter_ij + ")";
                     FSA.get(i).set(j, _to_replace);
                 }
             }
 
-            for(int i = 0; i<n; ++i)
-                for(int j = 0; j<n; ++j)
+            try {
+                out.write("After " + (k+1) + "-th step:\n");
+                for (int i = 0; i < n; ++i) {
+                    for (int j = 0; j < n; ++j) {
+                        out.write("R " + "[" + i + "] " + "[" + j + "] : ");
+                        out.write(FSA.get(i).get(j));
+                        out.write('\n');
+                    }
+                }
+            } catch (Exception e)
+            {
+            }
+            for (int i = 0; i < n; ++i)
+                for (int j = 0; j < n; ++j)
                     RegExpr.get(i).set(j, FSA.get(i).get(j));
         }
 
         int ind1 = 0;
-        for(int i = 0; i<n; ++i)
+        for (int i = 0; i < n; ++i)
             if (_states[i].compareTo(start) == 0) {
                 ind1 = i;
                 break;
             }
 
         StringBuilder ans = new StringBuilder();
-        for(int i = 0; i<_isFinal.length; ++i) {
+        for (int i = 0; i < _isFinal.length; ++i) {
             int ind2 = -1;
             for (int j = 0; j < n; ++j)
-                if (_states[j].compareTo(_isFinal[i]) == 0)
-                {
+                if (_states[j].compareTo(_isFinal[i]) == 0) {
                     ind2 = j;
                     break;
                 }
-            if(ind2 == -1) continue;
+            if (ind2 == -1) continue;
             if (ans.toString().compareTo("") == 0)
                 ans.append(RegExpr.get(ind1).get(ind2));
             else
@@ -342,12 +354,13 @@ class myRegBuilder
             if (ans.toString().compareTo("") == 0)
                 out.write("{}");
             else
+            {
+                out.write("FINAL ANSWER: ");
                 out.write(String.valueOf(ans) + '\n');
+            }
             out.close();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
         }
 
-        seqA n = if n == 2 then ( (3,2), 1) else ( ( (fst (fst seqA(n - 1))) + (-2) * (snd (fst seqA(n - 1))) + 3 * (snd seqA), fst (fst seqA(n - 1)) ), (snd (fst seqA(n - 1))) )
     }
 }
