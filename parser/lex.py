@@ -1,7 +1,7 @@
 import ply.lex as lex
 import sys
 
-spec_symbols = {'=', '\'', '(', ')', '[', ']', '{', '}', '|', 'n', '#'}
+spec_symbols = {'=', '\'', '(', ')', '[', ']', '{', '}', '|', 'n', '#', ','}
 tokens = [
     'COMMA',
     'ALT',
@@ -31,7 +31,6 @@ def t_PLAINTEXT(t):
         elif t.value[i] != '\\':
             s += t.value[i]
     t.value = s
-    print(t.value)
     return t
 
 
@@ -44,7 +43,7 @@ t_RBRACE = r'\}'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_EQ = r'\='
-t_RULENAME = r'([^\[\]\(\)\{\}\=\|\\\'\#]|\\\#|\\\[|\\\]|\\\(|\\\)|\\\{|\\\}|\\\=|\\\||\\\\|\\\')+'
+t_RULENAME = r'([^,\[\]\(\)\{\}\=\|\\\'\#]|\\,|\\\#|\\\[|\\\]|\\\(|\\\)|\\\{|\\\}|\\\=|\\\||\\\\|\\\')+'
 t_COMMENT = r'\#.*$'
 t_ignore = ' \t'
 
@@ -62,11 +61,12 @@ lexer = lex.lex()
 fin = open(sys.argv[1], 'r')
 lexer.input(fin.read())
 fin.close()
-fout = open(sys.argv[1] + '.out', 'w')
+# fout = open(sys.argv[1] + '.out', 'w')
 while True:
     tok = lexer.token()
     if not tok:
         break
-    fout.write(str(tok))
-    fout.write('\n')
-fout.close()
+    print(str(tok))
+#     fout.write(str(tok))
+#     fout.write('\n')
+# fout.close()
