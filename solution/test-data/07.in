@@ -1,0 +1,5 @@
+states=[q1,q2,q3]
+alpha=[a,b]
+initial=[q1]
+accepting=[q1]
+trans=[q1>b>q2,q1>b>q3,q1>a>q1,q1>b>q1]
