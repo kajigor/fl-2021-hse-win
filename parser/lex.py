@@ -43,6 +43,7 @@ def t_MULTILINE_COMMENT(t):
     if (t_MULTILINE_COMMENT.first_token is None):
         t_MULTILINE_COMMENT.first_token = t
     t_MULTILINE_COMMENT.value += t.value
+    t.lexer.lineno += len(t.value.split('\n')) - 1
     if (t.value[0] == '/'):
         t_MULTILINE_COMMENT.counter += 1
     if (t.value[-1] == '/'):
@@ -51,8 +52,7 @@ def t_MULTILINE_COMMENT(t):
         global ERROR
         t_MULTILINE_COMMENT.counter = 0
         ERROR = True
-        print(colored("missing pairing /* for */ in line {}".format(t_MULTILINE_COMMENT.first_token.lineno), "red"))
-    t.lexer.lineno += len(t.value.split('\n')) - 1
+        print(colored("missing pairing /* for */ in line {}".format(t.lexer.lineno), "red"))
     if t_MULTILINE_COMMENT.counter == 0:
         t.value = t_MULTILINE_COMMENT.value
         t_MULTILINE_COMMENT.value = ""
