@@ -37,8 +37,12 @@ A = 'a'*
 
 ```
 Program : Rule
+        | Start_nonterm
+        | COMMENT
+Start_nonterm : START = ID
 Rule : ID = EXPR
 EXPR : SYMB
+	 | EPSYLON
      | ID
      | LBRACKET EXPR RBRACKET
      | EXPR MULT
