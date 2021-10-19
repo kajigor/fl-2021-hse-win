@@ -1,38 +1,26 @@
 grammar DKA;
-    start : statesInit NEWLINE alphaInit NEWLINE initialInit NEWLINE terminalInit NEWLINE transInit ;
+    start : statesInit NEWLINE alphaInit NEWLINE initialInit NEWLINE terminalInit NEWLINE transInit '\n'* EOF ;
 
-    statesInit : STATE_KEYWORD states CLOSE ;
-    states : STATE COMMA states #statesContinue
-           | STATE            #statesStop
+    statesInit : 'states=[' states ']' ;
+    states : SYMB ',' states #statesContinue
+           | SYMB            #statesStop
            ;
 
-    alphaInit : 'alpha=[' alphabet ',' ;
-    alphabet : ALPHA ',' alphabet
-             | ALPHA
-             ;
+    alphaInit : 'alpha=[' states ']' ;
 
-    initialInit : INITIAL_KEYWORD initial CLOSE ;
-    initial : STATE ;
+    initialInit : 'initial=[' initial ']' ;
+    initial : SYMB ;
 
-    terminalInit : TERMINAL_KEYWORD states CLOSE ;
+    terminalInit : 'accepting=[' states ']' ;
 
-    transInit : TRANS_KEYWORD edges CLOSE ;
-    edges : edge COMMA edges #edgesContinue
+    transInit : 'trans=[' edges ']' ;
+    edges : edge ',' edges #edgesContinue
           | edge           #edgesStop
           ;
-    edge : STATE ARROW ALPHA ARROW STATE ;
+    edge : SYMB '>' SYMB '>' SYMB ;
 
-    STATE_KEYWORD : 'states=[' ;
-    ALPHA_KEYWORD : 'alpha=[' ;
-    INITIAL_KEYWORD : 'initial=[' ;
-    TERMINAL_KEYWORD : 'terminal=[' ;
-    TRANS_KEYWORD : 'trans=[' ;
-    CLOSE : ']' ;
-    COMMA : ',' ;
-    ARROW : '>' ;
 
-    STATE : (('a'..'z')|('A'..'Z')|('0'..'9')|'_')+ ;
-    ALPHA : (('a'..'z')|('A'..'Z')|('0'..'9')|'_')+ ;
+    SYMB : (('a'..'z')|('A'..'Z')|('0'..'9')|'_')+ ;
     NEWLINE : '\n' ;
 
     WS    : [ \t\r]+ -> skip ;
