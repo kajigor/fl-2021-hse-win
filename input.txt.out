@@ -1,15 +1,25 @@
-Analyzing:
+PARSING...
 
 Alphabet:
-"0" "1" "," Edges: 
-(a,b){0}
-(b,b){0,1}
-(c,b){0}
-(d,c){0}
-(c,d){1}
-(a,d){1}
-(d,d){1}
-Testing...
+	"0"
+	"1"
+	
+States:
+	a -- Start vertex -- Terminal vertex -- Common vertex
+	b -- Terminal vertex -- Common vertex
+	
+Transitions: 
+	transition between state "a" and "b"  by symbols: ['0', '1']
+	transition between state "b" and "a"  by symbols: ['0', '1']
+	
+==================================
+
+TESTING...
 
 Passed: starting vertex exists
-All states are unique
+Passed: all states are unique
+Passed: all symbols are unique
+Passed: automaton is deterministic
+Passed: automaton is complete
+
+All checks passed(5/5)!
