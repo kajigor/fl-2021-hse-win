@@ -1,21 +1,22 @@
 {
 	"scopeName": "source.ebnf",
-	"patterns": [{ "include": "#expression" }],
-	"repository": {
-	  "expression": {
-		"patterns": [{"include" : "#operators"},{ "include": "#rulename" }, { "include": "#plaintext" }]
+	"patterns": [{"include" : "#operators"},{ "include": "#rulename" }, { "include": "#plaintext" }],
+	"repository": {	
+	  
+	  "plaintext": {	
+		"match": "\\'[^\\']*\\'",
+		"name": "string.double.quoted.ebnf"
 	  },
-	  "rulename": {
-		"match": "\\b(terminal)\\b",
-		"name": "red"
-	  },
-	  "plaintext": {
-		"match": "\\b(q[0-9]*)\\b",
-		"name": "entity.name.type.scope"
-	  },
-	  "operators": {
-		"match": "\\b(with)\\b",
-		"name": "keyword.control"	  
+	  "rulename":{
+		  "name": "keyword.control.ebnf",
+		  "match": "([^\\,(/\\*)(\\*/)\\[\\]\\(\\)\\{\\}\\=\\|\\'\\#]|\\\\,|\\\\#|\\\\[|\\\\]|\\\\(|\\\\)|\\\\{|\\\\}|(\\\\=)|(\\|)|\\\\')+"
 	  }
+	,
+	  "operators": {
+		"match": "\\||,|\\[|\\]|\\(|\\)|\\{|\\}|\\=",
+		"name": "constant.character.ebnf"	  
+	  }
+				
+
 	}
   }
