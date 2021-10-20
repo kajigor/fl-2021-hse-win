@@ -82,10 +82,16 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-# try:
-s = ''.join(open(sys.argv[1]).readlines())
-res_grammar = parser.parse(s)
-# except:
-#     print("Unable to open file")
-#     exit(1)
+try:
+    s = ''.join(open(sys.argv[1]).readlines())
+except:
+    print("Unable to open file")
+    exit(1)
+
+try:
+    res_grammar = parser.parse(s)
+except:
+    print("Syntax error")
+    exit(1)
+
 bfs(res_grammar)
