@@ -122,6 +122,7 @@ def do_lex():
     fin.close()
     while True:
         tok = lexer.token()
+        print(tok)
         if not tok:
             break
     if (t_MULTILINE_COMMENT.value != ""):

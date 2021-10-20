@@ -55,8 +55,10 @@ def p_rule(p):
 def p_expression(p):
     '''expression :
                     | expression COMMA expression
-                    | LPAREN expression RPAREN
                     | expression ALT expression
+                    | expression COMMA INDENT expression
+                    | expression ALT INDENT expression
+                    | LPAREN expression RPAREN
                     | LBRACE expression RBRACE
                     | LBRACKET expression RBRACKET
                     | RULENAME
@@ -65,6 +67,9 @@ def p_expression(p):
         p[0] = Node(p[1], [])
     elif p[1] == '(' or p[1] == '[' or p[1] == '{':
         p[0] = Node('', [Node(p[1], []), p[2], Node(p[3], [])])
+        p[0].value = p[0].get_val()
+    elif len(p) == 5:
+        p[0] = Node('', [p[1], Node(p[2], []), p[4]])
         p[0].value = p[0].get_val()
     elif p[2] == ',' or p[2] == '|':
         p[0] = Node('', [p[1], Node(p[2], []), p[3]])
@@ -84,6 +89,3 @@ res_grammar = parser.parse(s)
 #     print("Unable to open file")
 #     exit(1)
 bfs(res_grammar)
-
-
-
