@@ -34,6 +34,11 @@ class Result:
         for all_used in self.used_nodes:
             if all_used not in self.node_names:
                 raise Exception("It is undefined ID - " + all_used)
+precedence = (
+    ('right', 'ALT'),
+    ('right', 'PLUS'),
+    ('left', 'MULT')
+)
 
 def p_lang(p):
     '''Language : Rule
