@@ -1,7 +1,5 @@
 grammar plang;
-    start         : relationships '?' chain    ;
-
-    relationships : relationship* ;
+    start         : relationship* '?' target    ;
 
     relationship  : string*                     ;
 
