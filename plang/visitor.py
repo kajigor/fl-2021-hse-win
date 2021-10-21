@@ -1,9 +1,7 @@
 from antlr4 import *
-from plangLexer import plangLexer
-from plangVisitor import plangVisitor
-from plangParser import plangParser
-import sys
-from pprint import pprint
+from vendor.plangLexer import plangLexer
+from vendor.plangVisitor import plangVisitor
+from vendor.plangParser import plangParser
 
 
 def main():

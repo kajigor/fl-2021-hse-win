@@ -4,6 +4,7 @@
 import sys
 import io
 
+
 def programFromFile(filename):
 	try:
 		file = open(filename, 'r')

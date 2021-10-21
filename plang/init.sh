@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-cd ./vendor/
-antlr4 -Dlanguage=Python3 -visitor plang.g4
+antlr4 -Dlanguage=Python3 -visitor plang.g4 -o vendor
