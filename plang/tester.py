@@ -1,3 +1,5 @@
+from testGenerator import TestGenerator
+
 def main():
 	pass
 

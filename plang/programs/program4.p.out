@@ -1,1 +1,4 @@
-line 1:35 mismatched input '<EOF>' expecting {' :-', '.'}
+line 6:22 mismatched input '\n' expecting {' :-', '.'}
+line 8:0 token recognition error at: '\'
+line 7:40 missing '.' at '\n'
+line 8:1 extraneous input '\n' expecting {'?', IDENTIFICATOR}
