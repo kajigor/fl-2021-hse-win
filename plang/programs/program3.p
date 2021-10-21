@@ -1,1 +1,2 @@
-? true.
+elem X :- true.
+? elem.

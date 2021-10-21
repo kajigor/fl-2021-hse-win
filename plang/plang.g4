@@ -5,27 +5,28 @@ grammar plang;
 
     relationship  : string+                     ;
 
-    string        : atom ' :-' goal NEWLINES
-                  | atom '.' NEWLINES
-                  ;
+    string       : atom (' :-' goal | '.') NEWLINES ;
 
-    ANY : (('a'..'z')|('A'..'Z')|('0'..'9')) ;
-    IDENTIFICATOR : ('a'..'z')ANY* ;
-    VARIABLE      : ('A'..'Z')ANY* ;
-    NEWLINES      : [\n]+          ;
+    //IDENTIFICATOR : ('a'..'z')(ANY*) ;
+    //VARIABLE      : ('A'..'Z')(ANY*) ;
+    IDENTIFICATOR   : [a-z][a-zA-Z0-9]* ;
+    VARIABLE        : [A-Z][a-zA-Z0-9]* ;
+    NEWLINES         : [\n]+            ;
 
-    argument : ' (' atom ')'
-             | ' ' VARIABLE
+    argument : ' ' VARIABLE
+             | ' (' VARIABLE ')'
+             | ' (' atom ')'
+             | ' ' IDENTIFICATOR
              ;
 
     atom        : IDENTIFICATOR  argument*  ;
 
     goal : ' ' arithmetic '.' ;
 
-    arithmetic  : left=arithmetic op=',' right=arithmetic #opExpr
-                | left=arithmetic op=';' right=arithmetic #opExpr
-                | '(' arithmetic ')'                      #parentExpr
-                | single=atom                             #atomExpr
+    arithmetic  : arithmetic ', ' arithmetic
+                | arithmetic '; ' arithmetic
+                | '(' arithmetic ')'
+                | atom
                 ;
 
     //WS    : [\t]+ -> skip ;

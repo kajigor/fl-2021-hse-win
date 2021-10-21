@@ -5,45 +5,6 @@ from plangParser import plangParser
 import sys
 from pprint import pprint
 
-import codecs
-import sys
-
-
-'''class EvalVisitor(plangVisitor):
-	def visitStart(self, context):
-		# print("visitStart", context.getText())
-		return self.visit(context.program())
-
-	def visitString(self, context):
-		print("visitString", context.getText())
-
-
-	def visitOpExpr(self, context):
-		left = self.visit(context.left)
-		right = self.visit(context.right)
-		print(left, right)
-		print('Test:', context.op.text)
-
-		op = context.op.text[0]
-		operator = op[0]
-		if operator == ',':
-			out = left & right
-		elif operator == ';':
-			out = left | right
-		else:
-			raise ValueError("Unknown operator " + op)
-		print("visitOpExpr", operator, left, right, out)
-		return out
-
-	def visitAtomExpr(self, context):
-		print("visitAtomExpr", int(context.getText()))
-		return int(context.getText())
-
-	def visitParenExpr(self, context):
-		print("visitParenExpr", context.getText())
-		return self.visit(context.expr())'''
-
-
 
 def main():
 	sample = 1
