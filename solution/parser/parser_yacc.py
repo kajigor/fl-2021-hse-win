@@ -8,12 +8,12 @@ index_of_object = 0
 index_of_vertex = 1
 last_if = ""
 tokens = (
-    'PLUS', 'MINUS', 'MULT', 'DIV', 'LPAREN', 'RPAREN', 'NUMBER', 'SEMICOLON', 'NEWLINE', 'VARIABLE', 'STRING', 'NOT',
+    'PLUS', 'MINUS', 'MULT', 'DIV', 'LPAREN', 'RPAREN', 'NUMBER', 'SEMICOLON', 'VARIABLE', 'STRING', 'NOT',
     'IF', 'FOR', 'ELSE', 'FOR_BEGIN', 'FOR_END', 'FOR_NEXT', 'BEGIN', 'END', 'TYPE', 'EQUAL', 'DEGREE', 'EQUAL2',
     'NOTEQUAL', 'LESSEQUAL', 'MOREEQUAL', 'LESS', 'MORE', 'AND', 'OR', 'COMA', 'RETURN', 'METHODTYPE', 'OPERATOR', 'OP')
 
-t_ignore = ' \t'
-t_NEWLINE = r'\n'
+t_ignore = ' \t\n'
+# t_NEWLINE = r'\n'
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_MULT = r'\*'
@@ -144,10 +144,10 @@ def create_body_vertex():
 
 
 def p_if(p):
-    """expr : IF LPAREN expr RPAREN BEGIN expr END
-            | IF LPAREN expr RPAREN BEGIN NEWLINE expr END
-            | IF LPAREN expr RPAREN BEGIN expr NEWLINE END
-            | IF LPAREN expr RPAREN BEGIN NEWLINE expr NEWLINE END"""
+    """expr : IF LPAREN expr RPAREN BEGIN expr END"""
+    # | IF LPAREN expr RPAREN BEGIN NEWLINE expr END
+    # | IF LPAREN expr RPAREN BEGIN expr NEWLINE END
+    # | IF LPAREN expr RPAREN BEGIN NEWLINE expr NEWLINE END"""
     global last_if, index_of_object
     print(index_of_vertex, "if")
     new_if_vertex = create_name("If statement")
@@ -161,10 +161,10 @@ def p_if(p):
 
 
 def p_else(p):
-    """expr : ELSE BEGIN expr END
-            | ELSE BEGIN NEWLINE expr END
-            | ELSE BEGIN expr NEWLINE END
-            | ELSE BEGIN NEWLINE expr NEWLINE END"""
+    """expr : ELSE BEGIN expr END"""
+    # | ELSE BEGIN NEWLINE expr END
+    # | ELSE BEGIN expr NEWLINE END
+    # | ELSE BEGIN NEWLINE expr NEWLINE END"""
     global last_if, index_of_object
     print(index_of_vertex, "else")
     new_vertex = create_name("Else statement")
@@ -174,10 +174,10 @@ def p_else(p):
 
 
 def p_for(p):
-    """expr : FOR expr FOR_END BEGIN expr END
-            | FOR expr FOR_END BEGIN NEWLINE expr END
-            | FOR expr FOR_END BEGIN expr NEWLINE END
-            | FOR expr FOR_END BEGIN NEWLINE expr NEWLINE END"""
+    """expr : FOR expr FOR_END BEGIN expr END"""
+    # | FOR expr FOR_END BEGIN NEWLINE expr END
+    # | FOR expr FOR_END BEGIN expr NEWLINE END
+    # | FOR expr FOR_END BEGIN NEWLINE expr NEWLINE END"""
     print(index_of_vertex, "for")
     global index_of_object
     new_for_vertex = create_name("For statement")
@@ -194,10 +194,10 @@ def p_for(p):
 
 
 def p_expr_end(p):
-    """expr : expr SEMICOLON NEWLINE expr
-            | expr SEMICOLON expr
-            | expr SEMICOLON NEWLINE
+    """expr : expr SEMICOLON expr
             | expr SEMICOLON"""
+    # | expr SEMICOLON NEWLINE expr
+    # | expr SEMICOLON NEWLINE
     global index_of_object
     print(index_of_vertex, "expr end")
     index_of_object += 1
@@ -273,13 +273,13 @@ def p_return(p):
 
 def p_method_init(p):
     """expr : TYPE VARIABLE LPAREN expr RPAREN BEGIN expr END
-            | TYPE VARIABLE LPAREN expr RPAREN BEGIN NEWLINE expr END
-            | TYPE VARIABLE LPAREN expr RPAREN BEGIN expr NEWLINE END
-            | TYPE VARIABLE LPAREN expr RPAREN BEGIN NEWLINE expr NEWLINE END
-            | TYPE VARIABLE LPAREN RPAREN BEGIN expr END
-            | TYPE VARIABLE LPAREN RPAREN BEGIN NEWLINE expr END
-            | TYPE VARIABLE LPAREN RPAREN BEGIN expr NEWLINE END
-            | TYPE VARIABLE LPAREN RPAREN BEGIN NEWLINE expr NEWLINE END"""
+                | TYPE VARIABLE LPAREN RPAREN BEGIN expr END"""
+    # | TYPE VARIABLE LPAREN expr RPAREN BEGIN NEWLINE expr END
+    # | TYPE VARIABLE LPAREN expr RPAREN BEGIN expr NEWLINE END
+    # | TYPE VARIABLE LPAREN expr RPAREN BEGIN NEWLINE expr NEWLINE END
+    # | TYPE VARIABLE LPAREN RPAREN BEGIN NEWLINE expr END
+    # | TYPE VARIABLE LPAREN RPAREN BEGIN expr NEWLINE END
+    # | TYPE VARIABLE LPAREN RPAREN BEGIN NEWLINE expr NEWLINE END"""
     global index_of_object
     print(index_of_vertex, "method init")
     new_vertex = create_name("Method")
@@ -294,13 +294,13 @@ def p_method_init(p):
 
 def p_operator_init(p):
     """expr : TYPE OP OPERATOR LPAREN expr RPAREN BEGIN expr END
-            | TYPE OP OPERATOR LPAREN expr RPAREN BEGIN NEWLINE expr END
-            | TYPE OP OPERATOR LPAREN expr RPAREN BEGIN expr NEWLINE END
-            | TYPE OP OPERATOR LPAREN expr RPAREN BEGIN NEWLINE expr NEWLINE END
-            | TYPE OP OPERATOR LPAREN RPAREN BEGIN expr END
-            | TYPE OP OPERATOR LPAREN RPAREN BEGIN NEWLINE expr END
-            | TYPE OP OPERATOR LPAREN RPAREN BEGIN expr NEWLINE END
-            | TYPE OP OPERATOR LPAREN RPAREN BEGIN NEWLINE expr NEWLINE END"""
+            | TYPE OP OPERATOR LPAREN RPAREN BEGIN expr END"""
+    # | TYPE OP OPERATOR LPAREN expr RPAREN BEGIN NEWLINE expr END
+    # | TYPE OP OPERATOR LPAREN expr RPAREN BEGIN expr NEWLINE END
+    # | TYPE OP OPERATOR LPAREN expr RPAREN BEGIN NEWLINE expr NEWLINE END
+    # | TYPE OP OPERATOR LPAREN RPAREN BEGIN NEWLINE expr END
+    # | TYPE OP OPERATOR LPAREN RPAREN BEGIN expr NEWLINE END
+    # | TYPE OP OPERATOR LPAREN RPAREN BEGIN NEWLINE expr NEWLINE END"""
     global index_of_object
     print(index_of_vertex, "method init")
     new_vertex = create_name("Operator")
