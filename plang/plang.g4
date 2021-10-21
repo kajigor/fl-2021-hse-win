@@ -1,20 +1,31 @@
 grammar plang;
-    start         : relationship* '?' target    ;
+    start         : program ;
 
-    relationship  : string*                     ;
+    program : relationship* '?' goal;
 
-    string        : atom ':-' arithmetic '.'       ;
+    relationship  : string+                     ;
 
-    identificator : ('a'..'z')(('a'..'z')|('A'..'Z')|('0'..'9'))* ;
+    string        : atom ' :-' goal
+                  | atom '.' NEWLINES
+                  ;
 
-    argument : variable
-             | atom
+    ANY : (('a'..'z')|('A'..'Z')|('0'..'9')) ;
+    IDENTIFICATOR : ('a'..'z')ANY* ;
+    VARIABLE      : ('A'..'Z')ANY* ;
+    NEWLINES      : [\n]+          ;
+
+    argument : ' ' VARIABLE
+             | ' (' atom ')'
              ;
 
-    variable : ('A'..'Z')(('a'..'z')|('A'..'Z')|('0'..'9'))*;
+    atom        : IDENTIFICATOR  argument*  ;
 
-    atom          : identificator  argument*  ;
+    goal : ' ' arithmetic '.' NEWLINES ;
 
-    arithmetic :  ;
+    arithmetic  : left=arithmetic op=',' right=arithmetic #opExpr
+                | left=arithmetic op=';' right=arithmetic #opExpr
+                | '(' arithmetic ')'                      #parentExpr
+                | single=atom                             #atomExpr
+                ;
 
-    WS    : [ \t\r\n]+ -> skip ;
+    //WS    : [ \t\r\n]+ -> skip ;
