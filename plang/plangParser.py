@@ -149,6 +149,8 @@ class plangParser ( Parser ):
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
+            self.relationships = None # RelationshipContext
+            self.final = None # GoalContext
 
         def goal(self):
             return self.getTypedRuleContext(plangParser.GoalContext,0)
@@ -193,7 +195,7 @@ class plangParser ( Parser ):
             _la = self._input.LA(1)
             while _la==plangParser.IDENTIFICATOR:
                 self.state = 18
-                self.relationship()
+                localctx.relationships = self.relationship()
                 self.state = 23
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -201,7 +203,7 @@ class plangParser ( Parser ):
             self.state = 24
             self.match(plangParser.T__0)
             self.state = 25
-            self.goal()
+            localctx.final = self.goal()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

@@ -1,7 +1,7 @@
 grammar plang;
     start         : program ;
 
-    program : relationship* '?' goal;
+    program : relationships=relationship* '?' final=goal;
 
     relationship  : string+                     ;
 
@@ -28,4 +28,4 @@ grammar plang;
                 | single=atom                             #atomExpr
                 ;
 
-    //WS    : [ \t\r\n]+ -> skip ;
+    //WS    : [\t]+ -> skip ;

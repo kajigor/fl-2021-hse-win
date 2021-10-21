@@ -10,38 +10,43 @@ import sys
 
 
 class EvalVisitor(plangVisitor):
+	def visitStart(self, context):
+		# print("visitStart", context.getText())
+		return self.visit(context.program())
+
 	def visitOpExpr(self, context):
 		left = self.visit(context.left)
 		right = self.visit(context.right)
+		print(left, right)
+		print('Test:', context.op.text)
 
-		print('lr:', left, right)
-
-		print('op:', context.op.text)
-		operator = context.op.text[0]
+		op = context.op.text[0]
+		operator = op[0]
 		if operator == ',':
-			val = left & right
+			out = left & right
 		elif operator == ';':
-			val = left | right
+			out = left | right
 		else:
-			raise ValueError("Unknown operatorL " + operator)
+			raise ValueError("Unknown operator " + op)
 		print("visitOpExpr", operator, left, right, val)
-		return val
+		return out
 
-	def visitStart(self, context):
-		print("visitStart", context.getText())
-		return self.visit(context.start())
+	def visitStart(self, ctx):
+		print("visitStart", ctx.getText())
+		return self.visit(ctx.expr())
 
-	def visitAtomExpr(self, context):
-		print("visitAtomExpr", int(context.getText()))
-		return int(context.getText())
+	def visitAtomExpr(self, ctx):
+		print("visitAtomExpr", int(ctx.getText()))
+		return int(ctx.getText())
 
-	def visitParentExpr(self, context):
-		print("visitParenExpr", context.getText())
-		return self.visit(context.expr())
+	def visitParenExpr(self, ctx):
+		print("visitParenExpr", ctx.getText())
+		return self.visit(ctx.expr())
+
 
 
 def main():
-	sample = 1
+	sample = 3
 	file = open('./programs/program%s.p' % sample, 'r')
 	program = file.read().strip()
 	file.close()
@@ -52,10 +57,11 @@ def main():
 	parser = plangParser(stream)
 	tree = parser.start()
 	out = EvalVisitor().visit(tree)
-	file = open('./outputs/output%s.result', 'w')
-	file.write(out)
+
+	file = open('./outputs/output%s.result' % sample, 'w')
+	file.write('' if out is None else out)
 	file.close()
-	# print(answer)
+	# print(out)
 
 
 if __name__ == '__main__':
