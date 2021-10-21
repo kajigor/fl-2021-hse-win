@@ -17,13 +17,6 @@ def main():
 	stream = CommonTokenStream(lexer)
 	parser = plangParser(stream)
 	tree = parser.start()
-	#tree = parser.start()
-	#out = EvalVisitor().visit(tree)
-
-	#file = open('./outputs/output%s.result' % sample, 'w')
-	#file.write('' if parser is None else parser)
-	#file.close()
-	# print(out)
 
 
 if __name__ == '__main__':

@@ -1,17 +1,11 @@
 grammar plang;
-    start         : program ;
+    start : program ;
 
     program : relationship* '?' goal NEWLINES? ;
 
-    relationship  : string+                     ;
+    relationship : string+ ;
 
-    string       : atom (' :-' goal | '.') NEWLINES ;
-
-    //IDENTIFICATOR : ('a'..'z')(ANY*) ;
-    //VARIABLE      : ('A'..'Z')(ANY*) ;
-    IDENTIFICATOR   : [a-z][a-zA-Z0-9]* ;
-    VARIABLE        : [A-Z][a-zA-Z0-9]* ;
-    NEWLINES         : [\n]+            ;
+    string : atom (' :-' goal | '.') NEWLINES ;
 
     argument : ' ' VARIABLE
              | ' (' VARIABLE ')'
@@ -19,14 +13,18 @@ grammar plang;
              | ' ' IDENTIFICATOR
              ;
 
-    atom        : IDENTIFICATOR  argument*  ;
+    atom : IDENTIFICATOR  argument* ;
 
     goal : ' ' arithmetic '.' ;
 
-    arithmetic  : arithmetic ', ' arithmetic
-                | arithmetic '; ' arithmetic
-                | '(' arithmetic ')'
-                | atom
-                ;
+    arithmetic    : arithmetic ', ' arithmetic
+                  | arithmetic '; ' arithmetic
+                  | '(' arithmetic ')'
+                  | atom
+                  ;
 
-    //WS    : [\t]+ -> skip ;
+    IDENTIFICATOR : [a-z][a-zA-Z0-9]* ;
+    VARIABLE      : [A-Z][a-zA-Z0-9]* ;
+    NEWLINES      : [\n]+             ;
+
+    WS    : [ \t]+ -> skip ;
