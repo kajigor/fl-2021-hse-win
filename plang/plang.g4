@@ -1,11 +1,11 @@
 grammar plang;
     start         : program ;
 
-    program : relationships=relationship* '?' final=goal;
+    program : relationship* '?' goal NEWLINES? ;
 
     relationship  : string+                     ;
 
-    string        : atom ' :-' goal
+    string        : atom ' :-' goal NEWLINES
                   | atom '.' NEWLINES
                   ;
 
@@ -14,13 +14,13 @@ grammar plang;
     VARIABLE      : ('A'..'Z')ANY* ;
     NEWLINES      : [\n]+          ;
 
-    argument : ' ' VARIABLE
-             | ' (' atom ')'
+    argument : ' (' atom ')'
+             | ' ' VARIABLE
              ;
 
     atom        : IDENTIFICATOR  argument*  ;
 
-    goal : ' ' arithmetic '.' NEWLINES ;
+    goal : ' ' arithmetic '.' ;
 
     arithmetic  : left=arithmetic op=',' right=arithmetic #opExpr
                 | left=arithmetic op=';' right=arithmetic #opExpr

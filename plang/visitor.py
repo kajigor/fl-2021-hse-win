@@ -9,10 +9,14 @@ import codecs
 import sys
 
 
-class EvalVisitor(plangVisitor):
+'''class EvalVisitor(plangVisitor):
 	def visitStart(self, context):
 		# print("visitStart", context.getText())
 		return self.visit(context.program())
+
+	def visitString(self, context):
+		print("visitString", context.getText())
+
 
 	def visitOpExpr(self, context):
 		left = self.visit(context.left)
@@ -28,25 +32,21 @@ class EvalVisitor(plangVisitor):
 			out = left | right
 		else:
 			raise ValueError("Unknown operator " + op)
-		print("visitOpExpr", operator, left, right, val)
+		print("visitOpExpr", operator, left, right, out)
 		return out
 
-	def visitStart(self, ctx):
-		print("visitStart", ctx.getText())
-		return self.visit(ctx.expr())
+	def visitAtomExpr(self, context):
+		print("visitAtomExpr", int(context.getText()))
+		return int(context.getText())
 
-	def visitAtomExpr(self, ctx):
-		print("visitAtomExpr", int(ctx.getText()))
-		return int(ctx.getText())
-
-	def visitParenExpr(self, ctx):
-		print("visitParenExpr", ctx.getText())
-		return self.visit(ctx.expr())
+	def visitParenExpr(self, context):
+		print("visitParenExpr", context.getText())
+		return self.visit(context.expr())'''
 
 
 
 def main():
-	sample = 3
+	sample = 1
 	file = open('./programs/program%s.p' % sample, 'r')
 	program = file.read().strip()
 	file.close()
@@ -56,11 +56,12 @@ def main():
 	stream = CommonTokenStream(lexer)
 	parser = plangParser(stream)
 	tree = parser.start()
-	out = EvalVisitor().visit(tree)
+	#tree = parser.start()
+	#out = EvalVisitor().visit(tree)
 
-	file = open('./outputs/output%s.result' % sample, 'w')
-	file.write('' if out is None else out)
-	file.close()
+	#file = open('./outputs/output%s.result' % sample, 'w')
+	#file.write('' if parser is None else parser)
+	#file.close()
 	# print(out)
 
 
