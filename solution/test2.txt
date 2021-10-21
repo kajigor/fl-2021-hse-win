@@ -1,0 +1,16 @@
+void Foo(x)
+begin
+x := x + 2;
+return skip;
+end
+
+void Baz()
+begin
+return 1 + 2;
+end
+
+void main()
+begin
+x := 1+2*3;
+return skip;
+end
