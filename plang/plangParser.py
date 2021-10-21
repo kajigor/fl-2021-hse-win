@@ -53,7 +53,7 @@ class plangParser ( Parser ):
     sharedContextCache = PredictionContextCache()
 
     literalNames = [ "<INVALID>", "'?'", "' :-'", "'.'", "' '", "' ('", 
-                     "')'", "','", "';'", "'('" ]
+                     "')'", "', '", "'; '", "'('" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
@@ -573,24 +573,6 @@ class plangParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-
-        def getRuleIndex(self):
-            return plangParser.RULE_arithmetic
-
-     
-        def copyFrom(self, ctx:ParserRuleContext):
-            super().copyFrom(ctx)
-
-
-    class OpExprContext(ArithmeticContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a plangParser.ArithmeticContext
-            super().__init__(parser)
-            self.left = None # ArithmeticContext
-            self.op = None # Token
-            self.right = None # ArithmeticContext
-            self.copyFrom(ctx)
-
         def arithmetic(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(plangParser.ArithmeticContext)
@@ -598,68 +580,24 @@ class plangParser ( Parser ):
                 return self.getTypedRuleContext(plangParser.ArithmeticContext,i)
 
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterOpExpr" ):
-                listener.enterOpExpr(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitOpExpr" ):
-                listener.exitOpExpr(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitOpExpr" ):
-                return visitor.visitOpExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AtomExprContext(ArithmeticContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a plangParser.ArithmeticContext
-            super().__init__(parser)
-            self.single = None # AtomContext
-            self.copyFrom(ctx)
-
         def atom(self):
             return self.getTypedRuleContext(plangParser.AtomContext,0)
 
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAtomExpr" ):
-                listener.enterAtomExpr(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAtomExpr" ):
-                listener.exitAtomExpr(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAtomExpr" ):
-                return visitor.visitAtomExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ParentExprContext(ArithmeticContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a plangParser.ArithmeticContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def arithmetic(self):
-            return self.getTypedRuleContext(plangParser.ArithmeticContext,0)
-
+        def getRuleIndex(self):
+            return plangParser.RULE_arithmetic
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterParentExpr" ):
-                listener.enterParentExpr(self)
+            if hasattr( listener, "enterArithmetic" ):
+                listener.enterArithmetic(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitParentExpr" ):
-                listener.exitParentExpr(self)
+            if hasattr( listener, "exitArithmetic" ):
+                listener.exitArithmetic(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitParentExpr" ):
-                return visitor.visitParentExpr(self)
+            if hasattr( visitor, "visitArithmetic" ):
+                return visitor.visitArithmetic(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -678,10 +616,6 @@ class plangParser ( Parser ):
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [plangParser.T__8]:
-                localctx = plangParser.ParentExprContext(self, localctx)
-                self._ctx = localctx
-                _prevctx = localctx
-
                 self.state = 67
                 self.match(plangParser.T__8)
                 self.state = 68
@@ -690,11 +624,8 @@ class plangParser ( Parser ):
                 self.match(plangParser.T__5)
                 pass
             elif token in [plangParser.IDENTIFICATOR]:
-                localctx = plangParser.AtomExprContext(self, localctx)
-                self._ctx = localctx
-                _prevctx = localctx
                 self.state = 71
-                localctx.single = self.atom()
+                self.atom()
                 pass
             else:
                 raise NoViableAltException(self)
@@ -712,31 +643,29 @@ class plangParser ( Parser ):
                     self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
                     if la_ == 1:
-                        localctx = plangParser.OpExprContext(self, plangParser.ArithmeticContext(self, _parentctx, _parentState))
-                        localctx.left = _prevctx
+                        localctx = plangParser.ArithmeticContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_arithmetic)
                         self.state = 74
                         if not self.precpred(self._ctx, 4):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
                         self.state = 75
-                        localctx.op = self.match(plangParser.T__6)
+                        self.match(plangParser.T__6)
                         self.state = 76
-                        localctx.right = self.arithmetic(5)
+                        self.arithmetic(5)
                         pass
 
                     elif la_ == 2:
-                        localctx = plangParser.OpExprContext(self, plangParser.ArithmeticContext(self, _parentctx, _parentState))
-                        localctx.left = _prevctx
+                        localctx = plangParser.ArithmeticContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_arithmetic)
                         self.state = 77
                         if not self.precpred(self._ctx, 3):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
                         self.state = 78
-                        localctx.op = self.match(plangParser.T__7)
+                        self.match(plangParser.T__7)
                         self.state = 79
-                        localctx.right = self.arithmetic(4)
+                        self.arithmetic(4)
                         pass
 
              

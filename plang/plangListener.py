@@ -71,30 +71,12 @@ class plangListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by plangParser#opExpr.
-    def enterOpExpr(self, ctx:plangParser.OpExprContext):
+    # Enter a parse tree produced by plangParser#arithmetic.
+    def enterArithmetic(self, ctx:plangParser.ArithmeticContext):
         pass
 
-    # Exit a parse tree produced by plangParser#opExpr.
-    def exitOpExpr(self, ctx:plangParser.OpExprContext):
-        pass
-
-
-    # Enter a parse tree produced by plangParser#atomExpr.
-    def enterAtomExpr(self, ctx:plangParser.AtomExprContext):
-        pass
-
-    # Exit a parse tree produced by plangParser#atomExpr.
-    def exitAtomExpr(self, ctx:plangParser.AtomExprContext):
-        pass
-
-
-    # Enter a parse tree produced by plangParser#parentExpr.
-    def enterParentExpr(self, ctx:plangParser.ParentExprContext):
-        pass
-
-    # Exit a parse tree produced by plangParser#parentExpr.
-    def exitParentExpr(self, ctx:plangParser.ParentExprContext):
+    # Exit a parse tree produced by plangParser#arithmetic.
+    def exitArithmetic(self, ctx:plangParser.ArithmeticContext):
         pass
 
 

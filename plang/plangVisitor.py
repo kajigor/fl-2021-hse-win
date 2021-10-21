@@ -44,18 +44,8 @@ class plangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by plangParser#opExpr.
-    def visitOpExpr(self, ctx:plangParser.OpExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by plangParser#atomExpr.
-    def visitAtomExpr(self, ctx:plangParser.AtomExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by plangParser#parentExpr.
-    def visitParentExpr(self, ctx:plangParser.ParentExprContext):
+    # Visit a parse tree produced by plangParser#arithmetic.
+    def visitArithmetic(self, ctx:plangParser.ArithmeticContext):
         return self.visitChildren(ctx)
 
 
