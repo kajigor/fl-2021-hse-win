@@ -9,7 +9,7 @@ from pprint import pprint
 def main():
 	sample = 1
 	file = open('./programs/program%s.p' % sample, 'r')
-	program = file.read().strip()
+	program = file.read()
 	file.close()
 
 	# lexer = plangLexer(StdinStream())
