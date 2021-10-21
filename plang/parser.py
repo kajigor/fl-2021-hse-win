@@ -13,7 +13,6 @@ def main():
 		file = open(filename, 'r')
 		program = file.read()
 		file.close()
-		sys.stderr = open(filename + '.out', 'w')
 	except:
 		print('Bad file argument', file=sys.stderr)
 		exit(1)
@@ -22,7 +21,6 @@ def main():
 	stream = CommonTokenStream(lexer)
 	parser = plangParser(stream)
 	tree = parser.start()
-	sys.stderr.close()
 
 if __name__ == '__main__':
 	main()
