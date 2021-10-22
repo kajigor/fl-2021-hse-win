@@ -17,9 +17,9 @@ class Tester:
 		directory = './logs/' + dirname + '/' + str(Counter.value()) + '/'
 		os.mkdir(directory)
 		path = directory + 'program' + str(Counter.value()) + '.p'
-		with open(path + '.p', 'w') as file:
+		with open(path, 'w') as file:
 			file.write(program)
-		with open(path + '.p.out', 'w') as file:
+		with open(path + '.out', 'w') as file:
 			file.write(out)
 
 	def getTestResultName(self, correctness, result):

@@ -1,8 +1,0 @@
-aDug (GdSWw) (ml2OO (BvjI) (gl uD) (HgX) Xyvj) :- g (fN (sr (yKxJ (L08B9)) (Z) (K8is)) (qwUbP GObNm gsk) (v OS eUA AmM)) (J) uQW, lu (lKq cHMo OFsQM) Alhg, wn; (gMYvT U7UN D6yS (Jm)); pcXj4 ZZixm (W) fu; tFs (pf1q WOH) Y0 (yPWZ4 Siy iD) (i Sb iX W5YRV); e jR06z (l) Y (VF); ((uS; y p (t) iWSA P)).
-a I8BDV H (kccU) (bDI zURcv B3s (DIh)) :- rl P0QuV (QQ) (P), fUCj, u (XrOE2), e, dVZFR (fpu cYg (vBh4 (gs) gE) (xqiN7 cJPP lI9 (J0Mw) (etc (n5twW) C0N)) qub) pE s4 HyY; (e2n (PwsLQ) (cbXJM (Qnm8) (VDqaz) (Ut) XPAO) V5u); r, lvYbH h (NjQY6); cL, x rCpN Yhm k, z8cYG (Gl6f) (XbdV).
-
-r e1xO (xNjo) T (P).
-
-x3 (Kg) :- ((((ypf (s2gMF yR0 I3Hc (wP (HNzU) WBhqo l)) (GySzQ))))), (mfQ U51 xBx (Xq6) jrV9t; fv), v n S Xzcl (iLC XQGgF (Q) vLlZ); vS (MgQ) pHh (L) Vyk, j6Vi (Mw) EK (f1) TSCCS, cil (LFXso) (CVZP), oQP0X WdNb2 UC.
-
-? rCeU (QM) Nnnv; y5a0g; fRJF n BRZ (sX8 FFo7t (FC)) n, j7J8e uY8U, p4G; fYo1 (f5U0 (nq (cguS (Be) d (Yx15D) (LfV2)) (lAE jPQ0g (oea (Wys) Lm (UTvd7) p) nBj s4vtP)) FWk (oHrxr (ocag (a2x (yi6M) (kJ (ZOG) (s iKX4 UkilT Hjk (GW)) b0wMt) (Xe) YK)) YCO (ipabU (axEI (bKsy (Cho) (zTjfs v (e) (y KFx7T N1X))) (kx (Gd) t1 ATgcv)) (Hjs) (hyQF (SW) oztwe Kz) (R)))) (tiexP lFKL (LXj1) k62) uc, (hmv vfzfk (zYkQR (T0) aKrwB (QjSVr)) (Vx) PU; g7fVa, oJ7d), (qWE; dEA (yzT E (p N yP7 (YAk) cLc) (NLR) (RTT5Q)) (mbC) uV Rz; tG2 (hw7 uL12Z (gB dHBn4 LYfq) Qb) (cdbKt sK QBrDn) (nzeD os3e (YDH) (ZF) (hS4m (iT (XhU6o) (egj (okZn) (ulFWQ (N) qb (K70))) Q SBMnD) (pg7 (TuFzs) L) (BtZ) VwE))), csMmY (zWM0 (oQffa kRRD Q8 (tRGU (qs7e aEn (v MCwG (zjoY VO zce0 (LGOpR)) Rquc (gyx6N (lUJS R5SQ) (EQ))) b (P)) (Rjge) vy7PT) q)) (ds (QK) (uM9i) QK (iI (w (A) hGoB gvf5h) Cvn r)) (CSEfY); (d (t (F1)) WXG; gR9oE R m5gz).
