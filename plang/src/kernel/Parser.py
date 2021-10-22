@@ -29,8 +29,9 @@ class Parser:
 		errors = errors_raw.strip().splitlines()
 		for i, error_raw in enumerate(errors):
 			line, column, error_content = map(lambda x: int(x) - 1 if x.isdecimal() else x, re.findall('^line (\d+):(\d+) (.+)', error_raw)[0])
-			error_message = ('At line:column=%i:%i an error was detected: ' % (line + 1, column + 1)) + explainer(error_content) + \
-							'\n' + issuePointer(program_lines[line], line, column) + '\n'
+			delim = '=' * 24
+			error_message = delim + '\n' + ('At line:column=%i:%i an error was detected: ' % (line + 1, column + 1)) + explainer(error_content) + \
+							'\n' + issuePointer(program_lines[line], line, column) + '\n' + delim + '\n'
 			yield error_message
 			if not error_stream is None:
 				print(error_message, file=error_stream)
