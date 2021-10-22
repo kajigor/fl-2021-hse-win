@@ -45,6 +45,7 @@ class Parser:
 		self.stream = CommonTokenStream(self.lexer)
 		self.parser = plangParser(self.stream)
 
+		# TODO: мож потом сделаем сразу program : ... ;, а не start : program ;
 		self.tree, errors_raw = iocontrol.grabOutstreams(self.parser.start, err=True)
 
 		if len(errors_raw) == 0:
