@@ -10,9 +10,9 @@ from Counter import Counter
 
 class Tester:
 	def __init__(self, seed=1337):
-		self.generator = TestGenerator(seed)
+		self.generator = TestGenerator.setSeed(seed)
 
-	def saveLog(self, dirname, program, out):
+	def saveTestLog(self, dirname, program, out):
 		Counter.inc()
 		directory = './logs/' + dirname + '/' + str(Counter.value()) + '/'
 		os.mkdir(directory)
@@ -22,13 +22,18 @@ class Tester:
 		with open(path + '.p.out', 'w') as file:
 			file.write(out)
 
-	def saveTestResult(self, program, correctness, result, out):
+	def getTestResultName(self, correctness, result):
 		if correctness and result:
-			self.saveLog('correct', program, out)
+			return 'correct'
+		elif correctness and not result:
+			return 'false-incorrect'
+		elif not correctness and result:
+			return 'false-correct'
+		return 'incorrect'
 
 	def doTest(self, program, correctness):
 		parser = Parser(program)
-		self.saveTestResult(program, correctness, parser.parse(stderr=False, saveErrors=True), parser.getResult())
+		self.saveTestLog(self.getTestResultName(correctness, parser.parse(stderr=False, saveErrors=True)), program, parser.getResult())
 
 	def doTests(self, repeats):
 		pass

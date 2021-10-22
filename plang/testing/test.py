@@ -2,13 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from plang.kernel.args_handle import argsHandle
-from TestGenerator import TestGenerator
+from Tester import Tester
 
 
 def main():
 	_, n_tests = argsHandle(1)
 
-	generator = TestGenerator()
+	tester = Tester()
+
+	tester.doTests(n_tests)
 
 
 if __name__ == '__main__':
