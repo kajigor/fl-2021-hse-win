@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from plang.kernel.args_handle import argsHandle
-from plang.testing.Tester import Tester
-from plang.testing.Generator import Generator
+from plang.src.kernel.args_handle import argsHandle
+from plang.src.testing.Tester import Tester
+from plang.src.testing.Generator import Generator
 
 
 def main():

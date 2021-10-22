@@ -5,8 +5,8 @@ import sys
 import re
 
 from antlr4 import *
-from plang.vendor.plangLexer import plangLexer
-from plang.vendor.plangParser import plangParser
+from plang.src.vendor.plangLexer import plangLexer
+from plang.src.vendor.plangParser import plangParser
 
 from . import iocontrol
 

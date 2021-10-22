@@ -4,8 +4,8 @@
 import os
 import time
 
-from plang.kernel.Parser import Parser
-from Generator import Generator
+from plang.src.kernel.Parser import Parser
+from plang.src.testing.Generator import Generator
 
 
 class Tester:
@@ -13,7 +13,7 @@ class Tester:
 		self.generator = Generator.setSeed(seed)
 
 	def saveTestLog(self, test_id, dirname, program, out):
-		directory = './logs/' + dirname + '/' + str(test_id) + '/'
+		directory = './src/testing/logs/' + dirname + '/' + str(test_id) + '/'
 		os.mkdir(directory)
 		path = directory + 'program' + str(test_id) + '.p'
 		with open(path, 'w') as file:

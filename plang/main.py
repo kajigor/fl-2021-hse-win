@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from kernel.args_handle import argsHandle
-from kernel import iocontrol
-from kernel.Parser import Parser
+from plang.src.kernel.args_handle import argsHandle
+from plang.src.kernel import iocontrol
+from plang.src.kernel.Parser import Parser
 
 
 def main():
 	_, filename, key_args = argsHandle(1, ('silent-errors', 'silent-result', 'nofile'))
 
 	parser = Parser(iocontrol.programFromFile(filename))
-	parser.parse()
+	result = parser.parse(not 'silent-errors' in key_args)
 	out = parser.getResult()
 
 	if not 'nofile' in key_args:
@@ -23,7 +23,7 @@ def main():
 		finally:
 			output.close()
 
-	if not 'silent-result' in key_args:
+	if not 'silent-result' in key_args and result:
 		print(out)
 
 

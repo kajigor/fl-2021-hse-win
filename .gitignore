@@ -11,11 +11,11 @@ __pycache__/**
 plang/programs/
 !plang/programs/.gitkeep
 
-plang/testing/logs/correct/
-plang/testing/logs/false-correct/
-plang/testing/logs/false-incorrect/
-plang/testing/logs/incorrect/
-!plang/testing/logs/correct/.gitkeep
-!plang/testing/logs/false-correct/.gitkeep
-!plang/testing/logs/false-incorrect/.gitkeep
-!plang/testing/logs/incorrect/.gitkeep
+plang/src/testing/logs/correct/
+plang/src/testing/logs/false-correct/
+plang/src/testing/logs/false-incorrect/
+plang/src/testing/logs/incorrect/
+!plang/src/testing/logs/correct/.gitkeep
+!plang/src/testing/logs/false-correct/.gitkeep
+!plang/src/testing/logs/false-incorrect/.gitkeep
+!plang/src/testing/logs/incorrect/.gitkeep
