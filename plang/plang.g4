@@ -7,10 +7,9 @@ grammar plang;
 
     string : atom (' :-' goal | '.') NEWLINES ;
 
-    argument : ' ' VARIABLE
-             | ' (' VARIABLE ')'
-             | ' (' atom ')'
-             | ' ' IDENTIFICATOR
+    argument : ' ' IDENTIFICATOR
+             | ' (' IDENTIFICATOR  argument+ ')'
+             | ' ' VARIABLE
              ;
 
     atom : IDENTIFICATOR  argument* ;

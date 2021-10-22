@@ -54,16 +54,17 @@ class Generator:
 		return Generator.randomUpper() + Generator.word(n - 1)
 
 	@staticmethod
-	def argument():
-		r = rand(1, 4)
-		if r == 1:
-			return ' ' + Generator.variable(rand(1, 5))
-		elif r == 2:
-			return ' (' + Generator.variable(rand(1, 5)) + ')'
-		elif r == 3:
-			return ' (' + Generator.atom() + ')'
+	def argument(depth=0):
+		if depth == 4:
+			r = rand(1, 2)
 		else:
+			r = rand(1, 3)
+		if r == 1:
+			return Generator.variable(rand(1, 5))
+		elif r == 2:
 			return ' ' + Generator.identificator(rand(1, 5))
+		elif r == 3:
+			return ' (' + Generator.identificator(rand(1, 5)) + Generator.repeat(lambda: Generator.argument(depth + 1), rand(1, 4)) + ')'
 
 	@staticmethod
 	def atom():
