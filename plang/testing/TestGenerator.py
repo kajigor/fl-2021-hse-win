@@ -3,6 +3,7 @@
 
 import random
 
+
 class TestGenerator:
 	def __init__(self, seed=1337):
 		self.seed = seed
