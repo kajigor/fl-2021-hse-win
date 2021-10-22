@@ -12,11 +12,9 @@ from plang.kernel import iocontrol
 
 
 class Parser:
-	class ErrorsWereNotSaved(Exception):
-		pass
-
 	def __init__(self, program):
 		self.program = program
+		self.correct = None
 
 	def analyzeErrors(self, errors_raw, error_stream=sys.stderr):
 		def explainer(issue):
@@ -39,7 +37,7 @@ class Parser:
 	def errorsReport(self):
 		if hasattr(self, 'errors'):
 			return '\n'.join(self.errors)
-		raise Parser.ErrorsWereNotSaved
+		raise Exception('Errors were not saving.')
 
 	def parse(self, stderr=True, saveErrors=True):
 		self.lexer = plangLexer(InputStream(self.program))
@@ -49,6 +47,7 @@ class Parser:
 		self.tree, errors_raw = iocontrol.grabOutstreams(self.parser.start, err=True)
 
 		if len(errors_raw) == 0:
+			self.correct = True
 			return True
 
 		analyze = lambda: self.analyzeErrors(errors_raw, sys.stderr if stderr else None)
@@ -56,6 +55,7 @@ class Parser:
 			self.errors = list(analyze())
 		else:
 			analyze()
+		self.correct = False
 		return False
 
 	def getStringTree(self, storeTree=True):
@@ -65,3 +65,8 @@ class Parser:
 			else:
 				return self.stringTree
 		return self.stringTree
+
+	def getResult(self):
+		if self.correct is None:
+			raise Exception("Parsing has not been done yet.")
+		return self.getStringTree() if self.correct == True else self.errorsReport()

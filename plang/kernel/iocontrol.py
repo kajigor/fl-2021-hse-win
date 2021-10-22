@@ -10,11 +10,16 @@ def programFromFile(filename):
 		file = open(filename, 'r')
 		try:
 			return file.read().strip()
+		except:
+			print('Unable to read the given file.')
+			exit(1)
 		finally:
 			file.close()
 	except:
-		print('Bad file argument')
+		print('Unable to open the given file.')
 		exit(1)
+	finally:
+		file.close()
 
 
 def grabOutstreams(function, out=False, err=False):
