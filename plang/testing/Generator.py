@@ -42,36 +42,36 @@ class Generator:
 	#########
 
 	@staticmethod
-	def newlines(l=1, r=3):
-		return '\n' * rand(l, r)
+	def newlines(n):
+		return '\n' * n
 
 	@staticmethod
-	def identificator(l=1, r=5):
-		return Generator.randomLower() + Generator.word(rand(l - 1, r - 1))
+	def identificator(n):
+		return Generator.randomLower() + Generator.word(n - 1)
 
 	@staticmethod
-	def variable(l=1, r=5):
-		return Generator.randomUpper() + Generator.word(rand(l - 1, r - 1))
+	def variable(n):
+		return Generator.randomUpper() + Generator.word(n - 1)
 
 	@staticmethod
 	def argument():
 		r = rand(1, 4)
 		if r == 1:
-			return ' ' + Generator.variable()
+			return ' ' + Generator.variable(rand(1, 5))
 		elif r == 2:
-			return ' (' + Generator.variable() + ')'
+			return ' (' + Generator.variable(rand(1, 5)) + ')'
 		elif r == 3:
 			return ' (' + Generator.atom() + ')'
 		else:
-			return ' ' + Generator.identificator()
+			return ' ' + Generator.identificator(rand(1, 5))
 
 	@staticmethod
 	def atom():
-		return Generator.identificator() + Generator.repeat(Generator.argument, rand(0, 4))
+		return Generator.identificator(rand(1, 5)) + Generator.repeat(Generator.argument, rand(0, 4))
 
 	@staticmethod
 	def string():
-		return Generator.atom() + (' :-' + Generator.goal() if rand(0, 1) == 1 else '.') + Generator.newlines()
+		return Generator.atom() + (' :-' + Generator.goal() if rand(0, 1) == 1 else '.') + Generator.newlines(rand(1, 3))
 
 	# Очень глубоко в рекурсию уходить, конечно, не хочется. Это нужно как-то ограничивать.
 	@staticmethod
@@ -98,7 +98,7 @@ class Generator:
 
 	@staticmethod
 	def program():
-		return Generator.repeat(Generator.relationship, rand(0, 5)) + '?' + Generator.goal() + Generator.newlines(0, 4)
+		return Generator.repeat(Generator.relationship, rand(0, 5)) + '?' + Generator.goal() + Generator.newlines(rand(0, 4))
 
 	@staticmethod
 	def incorrectProgram():
