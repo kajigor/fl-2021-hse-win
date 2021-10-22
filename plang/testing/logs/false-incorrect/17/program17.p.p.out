@@ -1,0 +1,6 @@
+Error at x0Ex (ShQ) :- (a2ILM).:2:13 error: 
+x0Ex (ShQ) :- (a2ILM).
+            ^
+Error at x0Ex (ShQ) :- (a2ILM).:2:20 error: 
+x0Ex (ShQ) :- (a2ILM).
+                   ^

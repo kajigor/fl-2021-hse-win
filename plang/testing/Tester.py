@@ -33,7 +33,10 @@ class Tester:
 
 	def doTest(self, program, correctness):
 		parser = Parser(program)
-		self.saveTestLog(self.getTestResultName(correctness, parser.parse(stderr=False, saveErrors=True)), program, parser.getResult())
+		situation = self.getTestResultName(correctness, parser.parse(stderr=False, saveErrors=True))
+		self.saveTestLog(situation, program, parser.getResult())
+		return situation
 
-	def doTests(self, repeats):
-		pass
+	def doTests(self, tests):
+		for program, correctness in tests:
+			self.doTest(program, correctness)

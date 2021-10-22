@@ -5,8 +5,8 @@ import sys
 import re
 
 from antlr4 import *
-from vendor.plangLexer import plangLexer
-from vendor.plangParser import plangParser
+from plang.vendor.plangLexer import plangLexer
+from plang.vendor.plangParser import plangParser
 
 from . import iocontrol
 
@@ -26,8 +26,8 @@ class Parser:
 
 		program_lines = self.program.strip().splitlines()
 		errors = errors_raw.strip().splitlines()
-		for i, error_raw in zip(errors):
-			line, column, error_content = map(lambda i, x: x if i == 2 else int(x) - 1, re.findall('^line (\d+):(\d+) (.+)', error_raw)[0])
+		for i, error_raw in enumerate(errors):
+			line, column, error_content = map(lambda x: int(x) - 1 if x.isdecimal() else x, re.findall('^line (\d+):(\d+) (.+)', error_raw)[0])
 			error_message = 'Error at %s:%i:%i error: ' % (program_lines[line], line + 1, column + 1) + explainer(error_content) + \
 							'\n' + issuePointer(program_lines[line], column)
 			yield error_message

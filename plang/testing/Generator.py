@@ -75,15 +75,18 @@ class Generator:
 
 	# Очень глубоко в рекурсию уходить, конечно, не хочется. Это нужно как-то ограничивать.
 	@staticmethod
-	def arithmetic():
-		r = rand(1, 4)
+	def arithmetic(depth=0):
+		if depth == 5:
+			r = 1
+		else:
+			r = rand(1, 4)
 		if r == 1:
 			return Generator.atom()
 		elif r == 2:
-			return '(' + Generator.arithmetic() + ')'
+			return '(' + Generator.arithmetic(depth + 1) + ')'
 		elif r == 3:
-			return Generator.arithmetic() + '; ' + Generator.arithmetic()
-		return Generator.arithmetic() + ', ' + Generator.arithmetic()
+			return Generator.arithmetic(depth + 1) + '; ' + Generator.arithmetic(depth + 1)
+		return Generator.arithmetic(depth + 1) + ', ' + Generator.arithmetic(depth + 1)
 
 	@staticmethod
 	def goal():
