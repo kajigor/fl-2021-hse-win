@@ -1,2 +1,0 @@
-elem X :- true.
-? elem.
