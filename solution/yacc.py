@@ -28,12 +28,12 @@ def p_code(p):
 def p_function_declaration_with_args(p):
     '''func_decl : FUNCTION_DEFINITION FUNCTION OPEN_CIRC_BR decl_args_list CLOSE_CIRC_BR body'''
     p[0] = p[1] + p[2] + p[3] + p[4] + p[5] + "{" + p[6] + "}"
-    print("Function: " + p[2] + ", arity: " + str(p[4].count(',') + 1))
+    print("Function: " + p[2] + ", arity: " + str(p[4].count(',') + 1) +  ", params: " + p[4] + " body: " + p[6])
 
 
 def p_function_declaration_without_args(p):
     '''func_decl : FUNCTION_DEFINITION FUNCTION OPEN_CIRC_BR CLOSE_CIRC_BR body'''
-    print("Function: " + p[2] + ", arity: 0")
+    print("Function: " + p[2] + ", arity: 0, body:" + p[6])
 
 
 def p_read_decl_args(p):
@@ -46,9 +46,9 @@ def p_read_decl_args(p):
                    | TYPE_STRING VARIABLE
                    | TYPE_BOOLEAN VARIABLE'''
     if len(p) == 4:
-        p[0] = p[1] + p[2] + p[3]
+        p[0] = p[1] + p[2] + p[3] + p[4]
     else:
-        p[0] = p[1] + p[2]
+        p[0] = p[1] + " " + p[2]
 
 
 def p_read_decl(p):
@@ -64,9 +64,9 @@ def p_conditional(p):
     '''expression : fst_part
                   | fst_part snd_part'''
     if len(p) == 3:
-        p[0] = p[1] + p[2]
+        p[0] = "(conditional: " + p[1] + p[2] +")"
     else:
-        p[0] = p[1]
+        p[0] = "(conditional: " + p[1] +")"
 
 
 def p_conditional_snd_part(p):
@@ -81,7 +81,7 @@ def p_conditional_first_part(p):
 
 def p_cycle(p):
     '''expression : CYCLE_OPERATOR OPEN_CIRC_BR expression CLOSE_CIRC_BR body'''
-    p[0] = p[1] + p[2] + p[3] + p[4] + p[5]
+    p[0] = "(cycle : " + p[1] + p[2] + p[3] + p[4] + p[5] +")"
 
 
 def p_body(p):
@@ -93,15 +93,15 @@ def p_expression_link(p):
     '''expression : expression LINKING_OPERATOR expression
                   | expression LINKING_OPERATOR'''
     if len(p) == 3:
-        p[0] = str(p[1]) + str(p[2])
+        p[0] = "(" + str(p[1]) + str(p[2]) +")"
     else:
-        p[0] = str(p[1]) + p[2] + str(p[3])
+        p[0] = "(" +str(p[1]) + p[2] + str(p[3]) + ")"
 
 
 def p_declaration(p):
     '''expression : VARIABLE ASSIGNMENT_OPERATOR expression
                   | var_def ASSIGNMENT_OPERATOR expression'''
-    p[0] = p[1] + p[2] + str(p[3])
+    p[0] = "(assignment: " + p[1] + p[2] + str(p[3]) +")"
 
 
 def p_bool_expression(p):
@@ -115,30 +115,30 @@ def p_bool_expression(p):
                   | expression AND expression
                   | expression OR expression '''
     if len(p) == 3:
-        p[0] = p[1] + str(p[2])
+        p[0] = "(not "+ str(p[2]) +")"
     else:
-        p[0] = str(p[1]) + p[2] + str(p[3])
+        p[0] = "(bool_expr: [" + str(p[1]) + p[2] + str(p[3]) + "])"
 
 
 def p_expression_pow(p):
     'expression : expression POW factor'
-    p[0] = str(p[1]) + p[2] + str(p[3])
+    p[0] = "(pow: [" + str(p[1]) + "," + str(p[3]) +"])"
 
 
 def p_expression_plus(p):
     '''expression : expression PLUS term
                   | expression INCREMENT term'''
-    p[0] = str(p[1]) + str(p[3])
+    p[0] = "(plus: [" + str(p[1]) + "," + str(p[3]) +"])"
 
 
 def p_expression_minus(p):
     'expression : expression MINUS expression'
-    p[0] = str(p[1]) + p[2] + str(p[3])
+    p[0] = "(minus: [" + str(p[1]) + "," + str(p[3]) + "])"
 
 
 def p_return_expression(p):
     'expression : END_OF_FUNCTION expression'
-    p[0] = str(p[1]) + p[2]
+    p[0] = "(" + str(p[1]) + p[2] +")"
 
 
 def p_expression_term(p):
@@ -148,12 +148,12 @@ def p_expression_term(p):
 
 def p_term_times(p):
     'term : term TIMES factor'
-    p[0] = str(p[1]) + p[2] + str(p[3])
+    p[0] = "(times: [" + str(p[1]) + "," + str(p[3]) + "])"
 
 
 def p_term_div(p):
     'term : term DIVIDE factor'
-    p[0] = str(p[1]) + p[2] + str(p[3])
+    p[0] = "(divide: [" + str(p[1]) + "," + str(p[3]) + "])"
 
 
 def p_term_factor(p):
@@ -163,12 +163,12 @@ def p_term_factor(p):
 
 def p_function_call_without_args(p):
     'factor : FUNCTION OPEN_CIRC_BR  CLOSE_CIRC_BR'
-    p[0] = p[1] + p[2] + p[3]
+    p[0] = "(call function: " +  p[1] + p[2] + p[3] + ")"
 
 
 def p_function_call_with_args(p):
     'factor : FUNCTION OPEN_CIRC_BR args_list CLOSE_CIRC_BR'
-    p[0] = p[1] + p[2] + p[3] + p[4]
+    p[0] = "(call function: " + p[1] + p[2] + p[3] + p[4] + ")"
 
 
 def p_factor_char_or_string(p):
@@ -181,27 +181,27 @@ def p_var_definition(p):
             | TYPE_CHAR VARIABLE
             | TYPE_STRING VARIABLE
             | TYPE_BOOLEAN VARIABLE'''
-    p[0] = p[1] + p[2]
+    p[0] = "(" + p[1] + " " + p[2] + ")"
 
 
 def p_factor_variable(p):
     '''factor : VARIABLE'''
-    p[0] = p[1]
+    p[0] = "variable " + p[1]
 
 
 def p_factor_num(p):
     'factor : NUMBER'
-    p[0] = p[1]
+    p[0] = str(p[1])
 
 
 def p_factor_expr(p):
     'factor : OPEN_CIRC_BR expression CLOSE_CIRC_BR'
-    p[0] = p[2]
+    p[0] = "(" + p[2] + ")"
 
 
 def p_expr_uminus(p):
     'expression : MINUS expression %prec UMINUS'
-    p[0] = "-" + str(p[2])
+    p[0] = "(-" + str(p[2]) +")"
 
 
 def p_error(p):
@@ -217,5 +217,6 @@ def solve_yacc(file_name: str):
     f = open(file_name, 'r')
     s = f.read()
     f.close()
-    sys.stdout = open(file_name + '.out', 'a')
+    sys.stdout = open(file_name + '.out', 'w')
+    print("Yacc parser output:")
     result = parser.parse(s)

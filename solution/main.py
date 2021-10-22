@@ -26,6 +26,6 @@ def run_tests(generate_new_data: bool = False):
     plt.show()
 
 file_name = sys.argv[1]
-solve(file_name, False)
+#solve(file_name, False)
 solve_yacc(file_name)
 # run_tests()
