@@ -9,8 +9,8 @@ from plang.src.testing.Generator import Generator
 def main():
 	_, n_tests = argsHandle(1)
 
-	tester = Tester()
-	tester.doTests([(Generator.program(), True) for _ in range(int(n_tests))])
+	# TODO: отчёт о текущем состоянии в консольку
+	Tester.doTests([(Generator.program(), True) for _ in range(int(n_tests))])
 
 
 if __name__ == '__main__':

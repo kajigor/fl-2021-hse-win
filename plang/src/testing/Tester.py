@@ -5,23 +5,28 @@ import os
 import time
 
 from plang.src.kernel.Parser import Parser
-from plang.src.testing.Generator import Generator
 
 
 class Tester:
-	def __init__(self, seed=1337):
-		self.generator = Generator.setSeed(seed)
-
-	def saveTestLog(self, test_id, dirname, program, out):
-		directory = './src/testing/logs/' + dirname + '/' + str(test_id) + '/'
+	@staticmethod
+	def saveTestLog(test_id, dirname, program, out):
+		parent = './src/testing/logs/' + dirname + '/'
+		try:
+			os.mkdir(parent)
+		except:
+			pass
+		directory = parent + str(test_id) + '/'
 		os.mkdir(directory)
 		path = directory + 'program' + str(test_id) + '.p'
+
 		with open(path, 'w') as file:
 			file.write(program)
+
 		with open(path + '.out', 'w') as file:
 			file.write(out)
 
-	def getTestResultName(self, correctness, result):
+	@staticmethod
+	def getTestResultName(correctness, result):
 		if correctness and result:
 			return 'correct'
 		elif correctness and not result:
@@ -30,13 +35,15 @@ class Tester:
 			return 'false-correct'
 		return 'incorrect'
 
-	def doTest(self, program, correctness):
+	@staticmethod
+	def doTest(program, correctness):
 		test_id = hex(int(str(time.time()).replace('.', '')))[2:]
 		parser = Parser(program)
-		situation = self.getTestResultName(correctness, parser.parse(stderr=False, saveErrors=True))
-		self.saveTestLog(test_id, situation, program, parser.getResult())
+		situation = Tester.getTestResultName(correctness, parser.parse(stderr=False, saveErrors=True))
+		Tester.saveTestLog(test_id, situation, program, parser.getResult())
 		return situation
 
-	def doTests(self, tests):
+	@staticmethod
+	def doTests(tests):
 		for program, correctness in tests:
-			self.doTest(program, correctness)
+			Tester.doTest(program, correctness)
