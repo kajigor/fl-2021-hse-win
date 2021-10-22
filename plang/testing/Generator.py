@@ -90,10 +90,12 @@ class Generator:
 		return ' ' + Generator.arithmetic() + '.'
 
 	@staticmethod
+	def relationship():
+		return Generator.repeat(Generator.string, rand(1, 5))
+
+	@staticmethod
 	def program():
-		out = []
-		out = '?'
-		return ''
+		return Generator.repeat(Generator.relationship, rand(0, 5)) + '?' + Generator.goal() + Generator.newlines(0, 4)
 
 	@staticmethod
 	def incorrectProgram():
