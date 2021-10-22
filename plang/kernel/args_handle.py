@@ -13,6 +13,9 @@ def argsHandle(positionals=1, keys=None):
 		exit(1)
 	for i in range(positionals + 1):
 		yield args[i]
-	if len(args) == positionals + 1 or keys is None:
+	if keys is None:
 		return
-	yield set(keys) & set(map(lambda key: key[len(key) - str(reversed(key)).find('-') + 1:], args[positionals:]))
+	if len(args) == positionals + 1:
+		yield set()
+	else:
+		yield set(keys) & set(map(lambda key: key[len(key) - str(reversed(key)).find('-') + 1:], args[positionals:]))

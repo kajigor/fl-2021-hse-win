@@ -9,9 +9,9 @@ from kernel.Parser import Parser
 def main():
 	_, filename, key_args = argsHandle(1, ('silent-errors', 'silent-result', 'nofile'))
 
-	with Parser(iocontrol.programFromFile(filename)) as parser:
-		parser.parse()
-		out = parser.getResult()
+	parser = Parser(iocontrol.programFromFile(filename))
+	parser.parse()
+	out = parser.getResult()
 
 	if not 'nofile' in key_args:
 		try:
