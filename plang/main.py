@@ -3,7 +3,7 @@
 
 from kernel.args_handle import argsHandle
 from kernel import iocontrol
-from kernel import Parser
+from kernel.Parser import Parser
 
 
 def main():

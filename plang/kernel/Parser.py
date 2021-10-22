@@ -5,10 +5,10 @@ import sys
 import re
 
 from antlr4 import *
-from plang.vendor.plangLexer import plangLexer
-from plang.vendor.plangParser import plangParser
+from vendor.plangLexer import plangLexer
+from vendor.plangParser import plangParser
 
-from plang.kernel import iocontrol
+from . import iocontrol
 
 
 class Parser:
