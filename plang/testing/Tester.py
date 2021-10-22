@@ -4,13 +4,13 @@
 import os
 
 from plang.kernel.Parser import Parser
-from TestGenerator import TestGenerator
+from Generator import Generator
 from Counter import Counter
 
 
 class Tester:
 	def __init__(self, seed=1337):
-		self.generator = TestGenerator.setSeed(seed)
+		self.generator = Generator.setSeed(seed)
 
 	def saveTestLog(self, dirname, program, out):
 		Counter.inc()
