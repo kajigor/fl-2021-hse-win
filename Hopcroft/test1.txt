@@ -1,0 +1,4 @@
+Alf: {a, b}
+Start: q0(S)
+Vertices: q0(), q1(T)
+Edges: (q0,q1){a, b}; (q1,q1){a, b};
