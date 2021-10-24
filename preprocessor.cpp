@@ -24,9 +24,24 @@ int main(int argc, char *argv[]) {
     std::string code = readFile(std::string(argv[1]));
     std::ofstream out(std::string(argv[1]) + ".out");
     std::string code_without_comments;
+    bool is_open_lit = false;
 
     for(int i=0; i<code.length(); ++i) {
         char s = code[i];
+
+        // Проверяем, что мы не внутри литерала в кавычках
+        if(CS==comment_status::CLOSED) {
+            if (i == 0 && s == '^') is_open_lit = true; // открылись на первом символе
+            else if (s == '^' && is_open_lit && code[i - 1] != '\\') is_open_lit = false; // ложная тревога, он экранирован
+            else if (s == '^' && !is_open_lit) is_open_lit = true; // закрылись
+        }
+
+        if(is_open_lit) { // Если открыт, скипаем
+            code_without_comments+=s;
+            continue;
+        }
+        // Закончили возню с литералом
+
         if(s=='@' and i==code.length()-1){ // собака последним символом
             break;
         }
@@ -44,17 +59,19 @@ int main(int argc, char *argv[]) {
         else if(s=='@' and CS==comment_status::OPEN_MULTI) { // Открыт многострочный коммент, подозрение, что закрывается, ибо собаку встретили
             if(i!=0 and code[i-1]=='*'){
                 CS = comment_status::CLOSED;
-                code_without_comments+='\n';
+                //code_without_comments+='\n';
             }
         }
         else { // не @
             if(CS==comment_status::CLOSED) { // Если не комментарий
                 code_without_comments+=s;
+                continue;
             }
+            if(s=='\n') code_without_comments+=s;
         }
     }
     //std::cout<<code_without_comments;
-
+/*
     // Удаляем лишний переводы строки, двойные пробелы, табуляцию
     std::string nice_code;
     std::string without_enters;
@@ -95,6 +112,6 @@ int main(int argc, char *argv[]) {
         if(s!='\t'){
             nice_code += s;
         }
-    }
-    out<<nice_code;
+    }*/
+    out<<code_without_comments;
 }

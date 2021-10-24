@@ -1,0 +1,17 @@
+graph graphname {
+b [label="head:b"]
+b -- b_3
+b_3 [label="|"]
+b_1 [label="nm"]
+b_2 [label="k"]
+b_3 -- b_1
+b_3 -- b_2
+a [label="head:a"]
+a -- a_1
+a_1 [label="b"]
+c [label="head:c"]
+c -- c_1
+c_1 [label="a"]
+MAIN__ [label="MAIN" color=red]
+MAIN__ -- c
+}

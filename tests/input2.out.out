@@ -1,0 +1,28 @@
+graph graphname {
+b [label="head:b"]
+b -- b_5
+b_5 [label="+"]
+b_3 [label="?"]
+b_2 [label="*"]
+b_1 [label="j\^"]
+b_2 -- b_1
+b_3 -- b_2
+b_4 [label="abf"]
+b_5 -- b_3
+b_5 -- b_4
+c [label="head:c"]
+c -- c_1
+c_1 [label="udjf"]
+a [label="head:a"]
+a -- a_1
+a_1 [label="c"]
+d [label="head:d"]
+d -- d_3
+d_3 [label="|"]
+d_1 [label="a"]
+d_2 [label="b"]
+d_3 -- d_1
+d_3 -- d_2
+MAIN__ [label="MAIN" color=red]
+MAIN__ -- d
+}

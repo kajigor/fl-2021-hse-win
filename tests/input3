@@ -1,0 +1,5 @@
+hello := ^world^
+i := ^am^
+x10 := ^5^+^5^
+r := x10? + i                +  ^afdds^ ? + hello
+return r

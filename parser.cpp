@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <regex>
 std::ofstream out;
 struct VarSyntaxTree {
     std::string name;
@@ -12,21 +13,39 @@ std::string random_color() {
 }
 */
 
+int line = 0;
+
 std::string RED(const std::string& str){
-    return "\033[1;31m" + str + "\033[0;30m";
+    return "\033[1;31m" + str + "\033[0;33m";
 }
 
 std::string BLUE(const std::string& str){
-    return "\033[0;34m" + str + "\033[0;30m";
+    return "\033[0;34m" + str + "\033[0;33m";
 }
+
+std::string BLUEB(const std::string& str){
+    return "\033[1;34m" + str + "\033[0;33m";
+}
+
 
 std::string CIAN(const std::string& str){
-    return "\033[5;36m" + str + "\033[0;30m";
+    return "\033[5;36m" + str + "\033[0;33m";
 }
 
-std::string error_str(int pos){
-    return RED("Syntax Error: ")+CIAN(std::to_string(pos+1) + " symbol") + " is ";
+std::string WHEREL(){
+    return BLUEB("line: "+std::to_string(line)+' ');
 }
+
+
+std::string error_str(int pos){
+    return RED("Syntax Error: ")+WHEREL()+CIAN(std::to_string(pos+1) + " symbol") + " is ";
+}
+
+std::string WHERE(int pos){
+    return BLUEB("( line" + std::to_string(line)+":"+std::to_string(pos)+") ");
+}
+
+
 
 bool is_correct_var(const std::string& s) {
     for(int i=0; i<s.length(); ++i) {
@@ -135,24 +154,25 @@ public:
         std::string so;
         so += c;
         if(op.get_arity()==2){
-            //std::cout<<"K"<<std::endl;
-            assert(atoms.size()>=2);
+            if(atoms.size()<2){
+                std::cerr<<RED("Parse Error: ") + WHEREL() + " operator " + BLUE(so) + " expected 2 parameters!" <<std::endl;
+                return;
+            }
             Atom* r = atoms.top();  atoms.pop();
             Atom* l = atoms.top();  atoms.pop();
             Atom *new_atom = new Atom(TYPE::OPER, so, id++);
             new_atom->add_child(l);
             new_atom->add_child(r);
-            //std::cout<<"LOL-T"<<std::endl;
             atoms.push(new_atom);
         } else {
-            assert(atoms.size()>=1);
-            //std::cout<<"L"<<std::endl;
+            if(atoms.size()<1){
+                std::cerr<<RED("Parse Error: ") + WHEREL() + " operator " + BLUE(so) + " expected 1 parameter!" <<std::endl;
+                return;
+            }
             Atom *s = atoms.top();  atoms.pop();
             Atom *new_atom = new Atom(TYPE::OPER, so, id++);
             new_atom->add_child(s);
-            //std::cout<<"LOL-K"<<std::endl;
             atoms.push(new_atom);
-            //std::cout<<"K_LOL"<<std::endl;
         }
 
     }
@@ -160,44 +180,60 @@ public:
     void prepare () {
         std::size_t i = 0;
         while(i<str_expression.length()) {
-            //std::cout<<i;
+            if(str_expression[i]==' '){
+                ++i;
+                continue;
+            }
             if (str_expression[i]=='('){
                 op.push(get_operation('('));
                 ++i;
             } else if (str_expression[i] == ')') {
-                assert(!op.empty());
-                while (op.top().get_operation() != '(') {
-                    assert(!op.empty());
-                    process_op(op.top()), op.pop();
-                }
                 ++i;
-                assert(!op.empty());
+                if(op.empty()){
+                    std::cerr<<RED("Parse Error: ") + WHEREL() + " expected " + BLUE("'('") << std::endl;
+                    continue;
+                }
+
+                //assert(!op.empty());
+                while (op.top().get_operation() != '(') {
+                   // assert(!op.empty());
+                    process_op(op.top());
+                    op.pop();
+                    if(op.empty()){
+                        std::cerr<<RED("Parse Error: ") + WHEREL() + " expected " + BLUE("'('") << std::endl;
+                        break;
+                    }
+                }
+                if(op.empty()){
+                    std::cerr<<RED("Parse Error: ") + WHEREL() + " expected " + BLUE("'('") << std::endl;
+                    break;
+                }
                 op.pop();
+
             } else if (is_operation(str_expression[i])) {
-               // std::cout<<"LOL"<<str_expression[i]<<std::endl;
                 Operation oper(get_operation(str_expression[i]));
                 while (!op.empty() && op.top().get_priority() >= oper.get_priority()) {
-                    process_op(op.top()), op.pop();
+                    process_op(op.top());
+                    op.pop();
                 }
                 op.push(oper);
                 ++i;
-              //  std::cout<<oper.get_priority()<<std::endl;
             } else if(str_expression[i] == '^') { // Слово какое-то
                 std::string result;
-               // std::cout<<"LOL"<<std::endl;
                 ++i;
-                assert(i<str_expression.length());
                 while(str_expression[i]!='^' || str_expression[i-1]=='\\') { // тут типо просто "\"
-                    assert(i<str_expression.length());
                     result += str_expression[i];
                     ++i;
                     if(i>=str_expression.length()){
-                        exit(1); // TODO: ОШИБКА!
+                        break;
                     }
+                }
+                if(i>=str_expression.length()) {
+                    std::cerr<<RED("Parse Error: ") + WHEREL() + " expected " + BLUE("'^'") << std::endl;
+                    continue;
                 }
                 ++i;
                 Atom* nA = new Atom(TYPE::WORD, result, id++);
-                //std::cout<<"LOL-R"<<std::endl;
                 atoms.push(nA);
             } else if (std::isalpha(str_expression[i])) { // Символ => переменная
                 std::string result;
@@ -206,14 +242,12 @@ public:
                     result += str_expression[i];
                     ++i;
                 }
-               // if(i!=str_expression.length()) --i;
-                //std::cout<<"LOL-P"<<std::endl;
                 atoms.push(new Atom(TYPE::VAR, result, id++));
                 if(!vars.count(result)) {
-                    std::cerr << RED("Parse error: ") << "Variable " << BLUE(result) << " is used but has not been previously declared" << std::endl;
+                    std::cerr << RED("Parse error: ") + WHEREL() << "Variable " << BLUE(result) << " is used but has not been previously declared" << std::endl;
                 }
             } else {
-                std::cerr<<RED("Parse Error: ")+" incorrect symbol ";
+                std::cerr<<RED("Parse Error: ")+ WHERE(i+1)+" incorrect symbol ";
                 for(int j=0; j<str_expression.length(); ++j){
                     std::string s;
                     s+=str_expression[j];
@@ -233,6 +267,10 @@ public:
             process_op(op.top()), op.pop();
         }
         //std::cout<<"ok"<<std::endl;
+        if(atoms.size()!=1){
+            std::cerr << RED("Parse error: ") + WHEREL() + "parsing error:( Most likely you forgot to use the operator!" << std::endl;
+            return;
+        }
         head = atoms.top();
         labels.push_back(var + " [label=\"head:"+var+"\"]");
         out<<labels.back()<<std::endl;
@@ -273,36 +311,55 @@ int main(int argc, char *argv[]) {
 
     std::ifstream in(argv[1]); // окрываем файл для чтения
     out = std::ofstream(std::string(argv[1]) + ".out");
-
+    out << "graph graphname {" << std::endl;
     std::string x;
-    while(in>>x) {
-        if(x=="return"){
-            std::string y;
-            in>>y;
+
+    std::cmatch narrowMatch;
+    std::regex rx("^return .+$");
+
+    while(std::getline(in, x)) {
+        ++line;
+        if(x.empty() or x=="\n") continue;
+        const char *t = x.c_str();
+        if(std::regex_match(t, t+strlen(t), narrowMatch, rx)){
+            std::string y(t+7, t+strlen(t));
             out<<"MAIN__ [label=\"MAIN\" color=red]"<<std::endl;
             out<<"MAIN__ -- "<<y<<std::endl;
         } else {
             std::string id;
             std::string value;
-            int first;
+            int first=-1;
             for(int i=0; i<x.length()-1; ++i) {
                 if (x[i] != ':') {
                     id += x[i];
                 } else {
                     if (x[i + 1] != '=') {
-                        std::cout << ":=?";
-                        exit(1);
+                        std::cerr << RED("Parse Error: ") + WHEREL() << " where is "+ CIAN(":=")+" or return ?\n";
+                        break;
+                       // exit(1);
                     }
                     first = i + 2;
                     break;
                 }
             }
+            if(first==-1){
+                std::cerr << RED("Parse Error: ") + WHEREL() << " where is "+ CIAN(":=")+" or return ?\n";
+                continue;
+            }
             for(int i=first; i<x.length(); ++i) value+=x[i];
+            while(id.back()==' ' && id.size()){
+                //std::cerr<<"lol"<<value.back()<<"k"<<std::endl;
+                id.pop_back();
+            }
             if(!is_correct_var(id)) continue;
             Parser t(value, id);
+            //std::cerr<<value<<std::endl;
             t.prepare();
+            //std::cerr<<"lol"<<std::endl;
             t.dfs();
+            //std::cerr<<"lol"<<std::endl;
             vars.insert(id);
         }
     }
+    out << "}" << std::endl;
 }

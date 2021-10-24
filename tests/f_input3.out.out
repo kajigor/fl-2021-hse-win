@@ -1,0 +1,10 @@
+graph graphname {
+b [label="head:b"]
+b -- b_1
+b_1 [label="t"]
+b [label="head:b"]
+b -- b_1
+b_1 [label="abc"]
+MAIN__ [label="MAIN" color=red]
+MAIN__ -- b
+}

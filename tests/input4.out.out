@@ -1,0 +1,7 @@
+graph graphname {
+hi [label="head:hi"]
+hi -- hi_1
+hi_1 [label="1234235"]
+MAIN__ [label="MAIN" color=red]
+MAIN__ -- hi
+}

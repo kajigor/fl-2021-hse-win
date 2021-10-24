@@ -6,15 +6,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="336b8fcd-d481-4098-a8ec-7a446182e7c6" name="Changes" comment="Мнение о языках upd">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TASK.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/preprocessor.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run-debug.sh" afterDir="false" />
+    <list default="true" id="336b8fcd-d481-4098-a8ec-7a446182e7c6" name="Changes" comment="Done (почти)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser" beforeDir="false" afterPath="$PROJECT_DIR$/parser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/parser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preprocessor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/preprocessor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prp" beforeDir="false" afterPath="$PROJECT_DIR$/prp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run-debug.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run-debug.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,16 +37,15 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -61,7 +59,8 @@
       <updated>1633460762944</updated>
       <workItem from="1633460766651" duration="2211000" />
       <workItem from="1633462992357" duration="1678000" />
-      <workItem from="1634872671885" duration="4000" />
+      <workItem from="1634872671885" duration="741000" />
+      <workItem from="1635092466706" duration="12314000" />
     </task>
     <task id="LOCAL-00001" summary="Мнение о языках">
       <created>1633462878203</created>
@@ -77,7 +76,21 @@
       <option name="project" value="LOCAL" />
       <updated>1633464181590</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Done (почти)">
+      <created>1634872707542</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1634872707542</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Done (почти)">
+      <created>1634872796190</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1634872796190</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -98,7 +111,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Мнение о языках" />
     <MESSAGE value="Мнение о языках upd" />
-    <option name="LAST_COMMIT_MESSAGE" value="Мнение о языках upd" />
+    <MESSAGE value="Done (почти)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Done (почти)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

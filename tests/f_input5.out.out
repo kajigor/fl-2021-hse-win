@@ -1,0 +1,29 @@
+graph graphname {
+a [label="head:a"]
+a -- a_3
+a_3 [label="|"]
+a_1 [label="abv"]
+a_2 [label="bnbn"]
+a_3 -- a_1
+a_3 -- a_2
+b [label="head:b"]
+b -- b_5
+b_5 [label="+"]
+b_3 [label="+"]
+b_1 [label="fnnd"]
+b_2 [label="aa"]
+b_3 -- b_1
+b_3 -- b_2
+b_4 [label="fjdf"]
+b_5 -- b_3
+b_5 -- b_4
+c_5 [label="+"]
+c_3 [label="+"]
+c_1 [label="fnnd"]
+c_2 [label="aa"]
+c_3 -- c_1
+c_3 -- c_2
+c_4 [label="fjdf"]
+c_5 -- c_3
+c_5 -- c_4
+}

@@ -1,0 +1,4 @@
+b:=^nm^|^k^
+a:=b
+c:=a
+return c
