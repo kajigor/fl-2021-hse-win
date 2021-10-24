@@ -4,7 +4,7 @@
 import os
 import time
 
-from plang.src.kernel.Parser import Parser
+from ..kernel.Parser import Parser
 
 
 class Tester:

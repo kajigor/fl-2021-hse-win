@@ -21,7 +21,6 @@ grammar plang;
                   | atom
                   ;
 
-    // OPERATOR      : [,;]( )             ;
     IDENTIFICATOR : [a-z][a-zA-Z0-9]* ;
     VARIABLE      : [A-Z][a-zA-Z0-9]* ;
     NEWLINES      : [\n]+             ;

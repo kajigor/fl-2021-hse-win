@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from plang.src.kernel.args_handle import argsHandle
-from plang.src.kernel import iocontrol
-from plang.src.kernel.Parser import Parser
+from src.kernel.args_handle import argsHandle
+from src.kernel import iocontrol
+from src.kernel.Parser import Parser
 
 
 def main():
