@@ -7,13 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="336b8fcd-d481-4098-a8ec-7a446182e7c6" name="Changes" comment="Done (почти)">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser" beforeDir="false" afterPath="$PROJECT_DIR$/parser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/preprocessor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/preprocessor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prp" beforeDir="false" afterPath="$PROJECT_DIR$/prp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run-debug.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run-debug.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +54,7 @@
       <workItem from="1633460766651" duration="2211000" />
       <workItem from="1633462992357" duration="1678000" />
       <workItem from="1634872671885" duration="741000" />
-      <workItem from="1635092466706" duration="12314000" />
+      <workItem from="1635092466706" duration="12653000" />
     </task>
     <task id="LOCAL-00001" summary="Мнение о языках">
       <created>1633462878203</created>
