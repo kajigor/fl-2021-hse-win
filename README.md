@@ -67,5 +67,5 @@ C++, если написать `^abc//0dkdk^` или `^ad/*fdfg */^`, то за 
 + правило не устроено по типу `A := B` или `return A`
   + *Syntax error: where is := ? or return ?*
 + неопознанный символ
-  + *Parse error: The symbol x on line N сannot be used.
+  + *Parse error: The symbol x on line N сannot be used.*
 + Ну и много других мелких и частных. В примерах в (tests) есть. Иногда что-то подсвечивается (например, некорректный символ)
