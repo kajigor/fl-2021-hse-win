@@ -9,6 +9,7 @@ reserved = {
    'while' : 'WHILE',
    'begin' : 'BEGIN',
    'end' : 'END',
+   'null' : 'NULL',
    'main' : 'MAIN'
 
 }

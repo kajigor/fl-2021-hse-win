@@ -1,7 +1,7 @@
-Nodes: ['x', 'list args', 'x', 2, '+', 'x', None, 'Sequence', 'skip', 'return operator', 'function body', 'declaration function Foo', 'function declaration block', 1, 2, '+', 'return operator', 'function body', 'declaration function Baz', 'function declaration block', 1, 2, 3, '*', '+', 'x', None, 'Sequence', 'skip', 'return operator', 'function body', 'Initial node', 'main']
-Adjacency list: {0: [], 1: [0], 2: [], 3: [], 4: [2, 3], 5: [], 6: [5, 4], 7: [6], 8: [], 9: [8], 10: [7, 9], 11: [1, 10], 12: [11, 18], 13: [], 14: [], 15: [13, 14], 16: [15], 17: [16], 18: [17], 19: [11, 18], 20: [], 21: [], 22: [], 23: [21, 22], 24: [20, 23], 25: [], 26: [25, 24], 27: [26], 28: [], 29: [28], 30: [27, 29], 31: [19, 32], 32: [30]}
-Node 31 : Initial node
-Edges to nodes [19, 32]
+Nodes: ['x', 'list args', 'x', 2, '+', 'x', None, 'Sequence', 'null', 'return operator', 'function body', 'declaration function Foo', 'function declaration block', 1, 2, '+', 'return operator', 'function body', 'declaration function Baz', 'function declaration block', 1, 2, 3, '*', '+', 'x', None, 'skip', 'Sequence', 'Sequence', 'null', 'return operator', 'function body', 'Initial node', 'main']
+Adjacency list: {0: [], 1: [0], 2: [], 3: [], 4: [2, 3], 5: [], 6: [5, 4], 7: [6], 8: [], 9: [8], 10: [7, 9], 11: [1, 10], 12: [11, 18], 13: [], 14: [], 15: [13, 14], 16: [15], 17: [16], 18: [17], 19: [11, 18], 20: [], 21: [], 22: [], 23: [21, 22], 24: [20, 23], 25: [], 26: [25, 24], 27: [], 28: [27], 29: [26, 28], 30: [], 31: [30], 32: [29, 31], 33: [19, 34], 34: [32]}
+Node 33 : Initial node
+Edges to nodes [19, 34]
 
 Node 19 : function declaration block
 Edges to nodes [11, 18]
@@ -35,7 +35,7 @@ Node 3 : 2
 Node 9 : return operator
 Edges to nodes [8]
 
-Node 8 : skip
+Node 8 : null
 
 Node 18 : declaration function Baz
 Edges to nodes [17]
@@ -53,14 +53,14 @@ Node 13 : 1
 
 Node 14 : 2
 
-Node 32 : main
-Edges to nodes [30]
+Node 34 : main
+Edges to nodes [32]
 
-Node 30 : function body
-Edges to nodes [27, 29]
+Node 32 : function body
+Edges to nodes [29, 31]
 
-Node 27 : Sequence
-Edges to nodes [26]
+Node 29 : Sequence
+Edges to nodes [26, 28]
 
 Node 26 : None
 Edges to nodes [25, 24]
@@ -79,8 +79,13 @@ Node 21 : 2
 
 Node 22 : 3
 
-Node 29 : return operator
-Edges to nodes [28]
+Node 28 : Sequence
+Edges to nodes [27]
 
-Node 28 : skip
+Node 27 : skip
+
+Node 31 : return operator
+Edges to nodes [30]
+
+Node 30 : null
 

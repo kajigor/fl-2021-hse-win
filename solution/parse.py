@@ -85,8 +85,14 @@ def p_return_operator(p):
   p[0] = len(Tree.nodes) - 1
   Tree.adj[p[0]] = [p[2]]
 
+def p_null(p):
+  '''expr : NULL'''
+  Tree.nodes.append("null")
+  p[0] = len(Tree.nodes) - 1
+  Tree.adj[p[0]] = []  
+
 def p_skip(p):
-  '''expr : SKIP'''
+  '''operator : SKIP'''
   Tree.nodes.append("skip")
   p[0] = len(Tree.nodes) - 1
   Tree.adj[p[0]] = []  

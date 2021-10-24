@@ -1,7 +1,7 @@
 void Foo(x)
 begin
 x := x + 2;
-return skip;
+return null;
 end
 
 void Baz()
@@ -12,5 +12,6 @@ end
 void main()
 begin
 x := 1+2*3;
-return skip;
+skip;
+return null;
 end
