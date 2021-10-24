@@ -1,21 +1,22 @@
 #!/usr/bin/env bash
 
 mkdir "$HOME/.vim/syntax/" 2> /dev/null
-cp highlighting.vim "$HOME/.vim/syntax/dka.vim"
+cp dka.vim "$HOME/.vim/syntax/dka.vim"
 cp code-formatter.py "$HOME/.vim/syntax/code-formatter.py"
 
-mkdir "$HOME/.vim/ftdetect/" 2> /dev/null
-cp newfiletype.vim "$HOME/.vim/ftdetect/dka.vim"
-
 {
-  printf "inoremap [      []<Left>\n";
-  printf "inoremap [[     [\n";
-  printf "inoremap []     []\n";
-  printf "inoremap (      ()<Left>\n";
-  printf "inoremap ((     (\n";
-  printf "inoremap ()     ()\n";
-  printf "inoremap {      {}<Left>\n";
-  printf "inoremap {{     {\n";
-  printf "inoremap {}     {}\n";
-  printf "\ninoremap <C-M-l> :!python3 \$HOME/.vim/syntax/code-formatter.py %%<CR><l><CR>\n";
+  printf "noremap [      []<Left>\n";
+  printf "noremap [[     [\n";
+  printf "noremap []     []\n";
+  printf "noremap (      ()<Left>\n";
+  printf "noremap ((     (\n";
+  printf "noremap ()     ()\n";
+  printf "noremap {      {}<Left>\n";
+  printf "noremap {{     {\n";
+  printf "noremap {}     {}\n";
+  printf "\n";
+  printf "noremap <C-l> :silent execute \"!(python3 \$HOME/.vim/syntax/code-formatter.py %% 2> /dev/null)\"<CR>\n";
+  printf "\n";
+  printf "au BufRead,BufNewFile *.dka set filetype=dka\n";
+  printf "\n";
 } >> "$HOME/.vimrc"

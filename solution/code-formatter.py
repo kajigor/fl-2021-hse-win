@@ -5,13 +5,19 @@ def main():
     if len(sys.argv) != 2:
         print("Need 1 argument: name of input file")
         sys.exit(1)
-    lines = open(sys.argv[1], 'r').readlines()
-    line = lines[4]
-    ind1 = line.find('[')
-    ind2 = line.find(']')
-    trans = line[ind1 + 1: ind2].split(',')
-    lines[-1] = "trans=[" + ','.join(set(trans)) + "]\n"
-    open(sys.argv[1], 'w').writelines(lines)
+    with open(sys.argv[1], 'r') as f:
+        lines = f.readlines()
+    for i, line in enumerate(lines):
+        line = line.replace(" ", "")
+        if line.startswith("trans"):
+            trans = line[line.find('[') + 1: line.find(']')].split(',')
+            line = "trans=[" + ','.join(set(trans)) + "]\n"
+        line = line.replace(",", ", ")
+        line = line.replace("=", " = ")
+        lines[i] = line
+    lines = [line for line in lines if not line == '\n']
+    with open(sys.argv[1], 'w') as f:
+        f.writelines(lines)
 
 
 if __name__ == '__main__':
