@@ -1,133 +1,50 @@
-package com.company;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.io.IOException;
+import java.util.Arrays;
 
 public class Main {
 
-    public static void main(String[] args) {
-        myRegBuilder v;
+    public static void main(String[] args) throws Exception {
+
+        DKALexer lexer = new DKALexer(CharStreams.fromFileName(args[0]));
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        DKAParser parser = new DKAParser(tokens);
+        ParseTree tree = parser.start();
+        myRegBuilder visitor = new myRegBuilder(args[1]);
         try {
-            v = new myRegBuilder(args[0], args[1]);
-            v.input();
-            if (v.error) return;
-            v.checkPart();
-            if (v.error) return;
-            v.DFS(0);
-            if (v.error) return;
-            v.afterDFS();
-            if (v.error) return;
-            v.toRegExpr();
-            if (v.error) return;
-        }catch (Exception e)
-        {
+            visitor.visit(tree);
+        } catch (Exception e) {
+            System.out.println("Parsing error");
             return;
         }
+        try {
+            visitor.checkPart();
+            if (visitor.error) return;
+            visitor.DFS(0);
+            if (visitor.error) return;
+            visitor.afterDFS();
+            if (visitor.error) return;
+            visitor.toRegExpr();
+            if (visitor.error) return;
+        }catch (Exception ignored) {}
     }
 }
 
-class myRegBuilder
-{
+class myRegBuilder extends Visitor {
     ArrayList <ArrayList <String> > _symbolsForState = new ArrayList<>();
     ArrayList<ArrayList<String>> FSA = new ArrayList<>();
-    String[] _isFinal, _alphabet, _states, _transitions;
-    String start = "", _input;
-    BufferedReader in;
     BufferedWriter out;
     boolean[] used;
     boolean error = false;
 
-    myRegBuilder(String s1, String s2) throws IOException {
-        in = new BufferedReader(new FileReader(s1));
+    myRegBuilder(String s2) throws IOException {
         out = new BufferedWriter(new FileWriter(s2));
-    }
-
-    void input() throws IOException {
-        try {
-            //States
-            _input = in.readLine();
-            int index1 = _input.indexOf("[");
-            int index2 = _input.indexOf("]");
-            String auxiliary = _input.substring(index1 + 1, index2);
-            _states = auxiliary.split(",");
-
-            if (!_input.contains("states=[") || index2 == -1)
-            {
-                error = true;
-                out.write("Error:\n");
-                out.write("E0: Input file is malformed");
-                out.close();
-                return;
-            }
-
-            //Alphabet
-            _input = in.readLine();
-            index1 = _input.indexOf('[');
-            index2 = _input.indexOf(']');
-            auxiliary = _input.substring(index1 + 1, index2);
-            _alphabet = auxiliary.split(",");
-
-            if (!_input.contains("alpha=[") || index2 == -1)
-            {
-                error = true;
-                out.write("Error:\n");
-                out.write("E0: Input file is malformed");
-                out.close();
-                return;
-            }
-
-            //Start
-            _input = in.readLine();
-            index1 = _input.indexOf('[');
-            index2 = _input.indexOf(']');
-            auxiliary = _input.substring(index1 + 1, index2);
-            start = auxiliary;
-
-            if (!_input.contains("initial=[") || index2 == -1)
-            {
-                error = true;
-                out.write("Error:\n");
-                out.write("E0: Input file is malformed");
-                out.close();
-                return;
-            }
-
-            //End
-            _input = in.readLine();
-            index1 = _input.indexOf('[');
-            index2 = _input.indexOf(']');
-            auxiliary = _input.substring(index1 + 1, index2);
-            _isFinal = auxiliary.split(",");
-
-            if (!_input.contains("accepting=[") || index2 == -1)
-            {
-                error = true;
-                out.write("Error:\n");
-                out.write("E0: Input file is malformed");
-                out.close();
-                return;
-            }
-
-            //Edges
-            _input = in.readLine();
-            index1 = _input.indexOf('[');
-            index2 = _input.indexOf(']');
-            auxiliary = _input.substring(index1 + 1, index2);
-            _transitions = auxiliary.split(",");
-            if (!_input.contains("trans=[") || index2 == -1)
-            {
-                error = true;
-                out.write("Error:\n");
-                out.write("E0: Input file is malformed");
-                out.close();
-            }
-
-        } catch (Exception e) {
-            error = true;
-            out.write("Error:\n");
-            out.write("E0: Input file is malformed");
-            out.close();
-        }
     }
 
     void DFS(int v)
@@ -150,8 +67,8 @@ class myRegBuilder
 
         for(int i = 0; i<_states.length; ++i)
         {
-            FSA.add(new ArrayList<>());
-            _symbolsForState.add(new ArrayList<>());
+            FSA.add(new ArrayList<String>());
+            _symbolsForState.add(new ArrayList<String>());
             for(int j = 0; j<_states.length; ++j)
                 FSA.get(i).add(null);
         }
@@ -248,9 +165,10 @@ class myRegBuilder
 
     void toRegExpr() {
         int n = _states.length;
+        System.out.println(_states[0]);
         ArrayList<ArrayList<String>> RegExpr = new ArrayList<>();
         for (int i = 0; i < n; ++i) {
-            RegExpr.add(new ArrayList<>());
+            RegExpr.add(new ArrayList<String>());
             for (int j = 0; j < n; ++j) {
                 if (i == j)
                     RegExpr.get(i).add("eps");
