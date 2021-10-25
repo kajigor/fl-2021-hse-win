@@ -122,6 +122,11 @@ do #f for x (make %point from (make %point from a) y)
 ```
 [Входной файл](test1.txt)
 
+[Вывод с описанием графа](test1.txt.graph)
+
+#### Синтаксическое дерево
+![](test1.png)
+
 #### Программа
 ```
 define #func1 do (a ?= b) * (b ?= a) for x y
