@@ -20,3 +20,5 @@
 # Запуск
 
    * Тесты находятся в папке [parser/tests/](parser/tests/). Сам парсер собран в бинарник parser/parser. Он принимает на вход один параметр --- путь до файла где находится тест. Скрипт [parser/run.sh](parser/run.sh) запускает все тесты. Для добавления тестов достаточно написать тест в файл и добавить его в папку tests/ с расширением .in.
+
+# [Презентация](https://docs.google.com/presentation/d/1_xMy53HWEKPJ2RjHdZdF30-LSLk0g5KG1ioNPfFz7lk/edit?usp=sharing)
