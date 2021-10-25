@@ -47,8 +47,6 @@ int main(int argc, char *argv[]) {
             std::shared_ptr<Function> functionn;
             std::shared_ptr<std::pair<std::string, Expression>> variable_change;
 
-//            std::string op;  // TODO: just string?
-
             [[nodiscard]] std::string to_str() const {
                 return operator_type;
             }
@@ -76,34 +74,22 @@ int main(int argc, char *argv[]) {
         struct Only_if {
             Expression condition;
             Body body;
-
-            /*[[nodiscard]] std::string to_str() const {
-                return "only_if " + condition.to_str() + " body";
-            }*/
         };
 
         struct If {
             Expression condition;
             Body if_body, else_body;
-
-            /*[[nodiscard]] std::string to_str() const {
-                return "if " + condition + " body else body";
-            }*/
         };
 
         struct While {
             Expression condition;
             Body body;
-
-            /*[[nodiscard]] std::string to_str() const {
-                return "while " + condition + " body";
-            }*/
         };
 
         struct Function {
             std::string name;
             int argc{};
-            std::vector<Variable> argv;  // {type, value}
+            std::vector<Variable> argv;
             Body body;
 
             [[nodiscard]] std::string signature_to_str() const {
@@ -334,15 +320,15 @@ int main(int argc, char *argv[]) {
             std::string starts_with;
             while (true) {
                 starts_with = read_string();
-                if (starts_with == "end") {  // ok
+                if (starts_with == "end") {
                     break;
-                } else if (starts_with == "var") {  // ok, but need to add in operator
+                } else if (starts_with == "var") {
                     Variable v;
                     read_variable(v);
                     check_var(v, body.variables);
                     body.variables.push_back(v);
                     body.operators.push_back(get_operator_var_bound(v));
-                } else if (starts_with == "begin") {  //
+                } else if (starts_with == "begin") {
                     body.operators.push_back(read_begin_smth());
                 } else if (starts_with == "call") {
                     Function cur;
@@ -352,11 +338,6 @@ int main(int argc, char *argv[]) {
                     body.operators.push_back({"skip"});
                 } else if (starts_with == "change") {
                     std::string name_l = read_string();
-                    /*if (!is_contains_var(name_l, body.variables)) {
-                        throw My_exception(
-                                "Unknown variable name in change equation"
-                        );  // TODO: new test
-                    }*/  // too hard to check
                     std::string bounding = read_string();
                     if (bounding != "=") {
                         throw My_exception(
