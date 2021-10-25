@@ -1,2 +1,2 @@
 Error in program.
-Expect syntax: 'change <name> = ...', but found: 'change y := ...'
+Expect syntax: 'change <name> = ...', but found: 'change x := ...'

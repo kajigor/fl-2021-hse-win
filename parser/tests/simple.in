@@ -4,7 +4,7 @@ begin body
     var int10 y = 015
     var string s = "lolkek"
     begin only_if
-    x == 0
+    x == 00
     begin body
         skip
         change y =
@@ -12,7 +12,7 @@ begin body
     end body
     end only_if
     begin while
-    y < 20
+    y < 020
     begin body
         change y =
         y + 02
@@ -22,7 +22,7 @@ begin body
     end while
     call inc 01 int10 y
     begin if
-    y == 21
+    y == 021
     begin body
         skip
     end body

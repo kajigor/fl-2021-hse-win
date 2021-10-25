@@ -31,7 +31,7 @@ skip -> "skip"
 only_if -> "begin only_if\n" expression "\n" body "end only_if\n"
 if -> "begin if\n" expression "\n" body "else\n" body "end if\n"
 while -> "begin while\n" expression "\n" body "end while\n"
-связывание -> "var " (int2 name = "\n" expression "\n" | int10 name = "\n" expression "\n" | string name = "\n" expression "\n")
+связывание -> "var " (int2 name = "\n" 2-чное "\n" | int10 name = "\n" 10-чное "\n" | string name = "\n" строка "\n")
 присвоение -> "change " name =  "\n" expression "\n" 
 вызов функции -> "call " name n arg_1 arg_2 \dotso arg_n
 

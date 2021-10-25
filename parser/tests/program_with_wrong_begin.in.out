@@ -1,2 +1,2 @@
 Error in program.
-Expect begin body with words: 'begin body', buf found: 'begin var'
+Expect begin body with words: 'begin body', buf found: 'begin skip'

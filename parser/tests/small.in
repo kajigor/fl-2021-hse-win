@@ -1,11 +1,13 @@
 begin function main 00
 begin body
     var int2 x = 10
-    begin only if
+    begin only_if
     x == 00
     begin body
-        skip
+        change x =
+        01
     end body
     end only_if
 end body
 end function
+

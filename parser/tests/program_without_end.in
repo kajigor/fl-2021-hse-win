@@ -1,41 +1,5 @@
 begin function main 00
 begin body
-    var int2 x = 10
-    var int10 y = 015
-    var string s = "lolkek"
-    begin only_if
-    x == 0
-    begin body
-        skip
-        change y =
-        10
-    end body
-    end only_if
-    begin while
-    y < 20
-    begin body
-        change y =
-        y + 02
-        change x =
-        x + 11
-    end body
-    end while
-    call inc 01 int10 y
-    begin if
-    y == 21
-    begin body
-        skip
-    end body
-    else
-    begin body
-        skip
-    end body
-    end if
+    skip
 end body
 function
-begin function inc 01 int10 x
-begin body
-    change x =
-    x + 01
-end body
-end function

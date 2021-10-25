@@ -12,7 +12,7 @@
                 string s = lolkek
             }
             only_if: {
-                condition: x == 0
+                condition: x == 00
                 body: {
                     skip: {
                     }
@@ -23,7 +23,7 @@
                 }
             }
             while: {
-                condition: y < 20
+                condition: y < 020
                 body: {
                     change: {
                         y = 
@@ -39,7 +39,7 @@
                 inc 1 int10 y
             }
             if: {
-                condition: y == 21
+                condition: y == 021
                 if_body: {
                     skip: {
                     }

@@ -1,0 +1,20 @@
+{
+    function: {
+        signature: main 0
+        body: {
+            bound: {
+                int2 x = 0
+            }
+            only_if: {
+                condition: x == 00
+                body: {
+                    change: {
+                        x = 
+                        01
+                    }
+                }
+            }
+        }
+    }
+}
+
