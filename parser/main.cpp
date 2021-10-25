@@ -17,75 +17,87 @@ int main(int argc, char *argv[]) {
         }
     };
     work_with_files();
+    static const std::string TAB(4, ' ');
     struct Program {
         struct My_exception : std::runtime_error {
             explicit My_exception(const std::string &s) : std::runtime_error(s) {}
         };
 
-        struct Operator {
-            std::string op;
+        struct Only_if;
+        struct If;
+        struct While;
+        struct Variable;
+        struct Function;
+
+        struct Expression {
+            std::string expr;
 
             [[nodiscard]] std::string to_str() const {
-                return op;
+                return expr;
+            }
+        };
+
+        struct Operator {
+            std::string operator_type;
+
+            std::shared_ptr<Only_if> only_iff;
+            std::shared_ptr<If> iff;
+            std::shared_ptr<While> whilee;
+            std::shared_ptr<Variable> variable_bounding;
+            std::shared_ptr<Function> functionn;
+            std::shared_ptr<std::pair<std::string, Expression>> variable_change;
+
+//            std::string op;  // TODO: just string?
+
+            [[nodiscard]] std::string to_str() const {
+                return operator_type;
             }
         };
 
         struct Variable {
             std::string type;
             std::string name;
-            std::string value;
+            bool is_has_value = false;
+            Expression value;
 
             [[nodiscard]] std::string to_str() const {
+                if (is_has_value) {
+                    return type + " " + name + " = " + value.to_str();
+                }
                 return type + " " + name;
             }
         };
 
         struct Body {
-            const std::string TAB = std::string(4, ' ');
             std::vector<Operator> operators;
-            std::vector<Variable> variables;
-
-            [[nodiscard]] std::string to_str() const {
-                std::string res;
-                if (!variables.empty()) {
-                    res += "variables:\n";
-                    for (const auto &var: variables) {
-                        res += TAB + var.to_str() + "\n";
-                    }
-                }
-                res += "operators:\n";
-                for (const auto &op: operators) {
-                    res += TAB + op.to_str() + "\n";
-                }
-                return res;
-            }
+            std::vector<Variable> variables;  // useful when need to check name new variable
         };
 
         struct Only_if {
-            std::string condition;
+            Expression condition;
             Body body;
 
-            [[nodiscard]] std::string to_str() const {
-                return "only_if " + condition + " body";
-            }
+            /*[[nodiscard]] std::string to_str() const {
+                return "only_if " + condition.to_str() + " body";
+            }*/
         };
 
         struct If {
-            std::string condition;
+            Expression condition;
             Body if_body, else_body;
 
-            [[nodiscard]] std::string to_str() const {
+            /*[[nodiscard]] std::string to_str() const {
                 return "if " + condition + " body else body";
-            }
+            }*/
         };
 
         struct While {
-            std::string condition;
+            Expression condition;
             Body body;
 
-            [[nodiscard]] std::string to_str() const {
+            /*[[nodiscard]] std::string to_str() const {
                 return "while " + condition + " body";
-            }
+            }*/
         };
 
         struct Function {
@@ -114,8 +126,8 @@ int main(int argc, char *argv[]) {
 
         static std::string read_whole_string() {
             std::string s;
-            std::getline(std::cin, s);
-            std::getline(std::cin, s);
+            std::getline(std::cin, s);  // read end of previous string
+            std::getline(std::cin, s);  // read next whole string
             int pos = static_cast<int>(s.find_first_not_of(' '));
             return s.substr(pos, s.size() - pos);
         }
@@ -126,14 +138,14 @@ int main(int argc, char *argv[]) {
             }
             if (num[0] == '0') {
                 // all digits in [0-9]
-                for (const auto &c : num) {
+                for (const auto &c: num) {
                     if (c < '0' || c > '9') {
                         return false;
                     }
                 }
             } else if (num[0] == '1') {
                 // all digits in [0-1]
-                for (const auto &c : num) {
+                for (const auto &c: num) {
                     if (c < '0' || c > '1') {
                         return false;
                     }
@@ -167,11 +179,15 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        static bool is_contains_var(const std::string name, const std::vector<Variable> &vars) {
+            return std::any_of(vars.begin(), vars.end(), [&](const auto &a) {
+                return a.name == name;
+            });
+        }
+
         static void check_var(const Variable &var, const std::vector<Variable> &vars) {
-            for (const auto &v : vars) {
-                if (v.name == var.name) {
-                    throw My_exception("Variable has name same as other variable: '" + var.name + "'");
-                }
+            if (is_contains_var(var.name, vars)) {
+                throw My_exception("Variable has name same as other variable: '" + var.name + "'");
             }
         }
 
@@ -219,7 +235,7 @@ int main(int argc, char *argv[]) {
                         bounding + " ...'");
             }
             if (v.type == "int2" || v.type == "int10") {
-                v.value = std::to_string(read_int());
+                v.value = {std::to_string(read_int())};
             } else {
                 std::string str = read_string();
                 if (str.size() < 2 || str[0] != '"' || str.back() != '"') {
@@ -227,34 +243,35 @@ int main(int argc, char *argv[]) {
                             "Expect syntax: 'var string <name> = \"data\"', but found: 'var string <name> = " + str +
                             "'");
                 }
-                v.value = str.substr(1, str.size() - 2);
+                v.value = {str.substr(1, str.size() - 2)};
             }
+            v.is_has_value = true;
         }
 
-        void read_signature(Function &func) {
+        static void read_signature(Function &func) {
             func.name = read_string();
             func.argc = read_int();
             for (int i = 0; i < func.argc; ++i) {
                 std::string type = read_string();
                 check_type(type);
                 std::string name_var = read_string();
-                Variable var = {type, name_var, ""};
+                Variable var = {type, name_var, false, ""};
                 check_var(var, func.argv);
                 func.argv.push_back(var);
             }
         }
 
-        std::string read_only_if() {
+        Only_if read_only_if() {
             Only_if only_if;
-            only_if.condition = read_whole_string();
+            only_if.condition = {read_whole_string()};
             read_body(only_if.body);
             read_end("only_if");
-            return only_if.to_str();
+            return only_if;
         }
 
-        std::string read_if() {
+        If read_if() {
             If iff;
-            iff.condition = read_whole_string();
+            iff.condition = {read_whole_string()};
             read_body(iff.if_body);
             std::string els = read_string();
             if (els != "else") {
@@ -264,28 +281,52 @@ int main(int argc, char *argv[]) {
             }
             read_body(iff.else_body);
             read_end("if");
-            return iff.to_str();
+            return iff;
         }
 
-        std::string read_while() {
+        While read_while() {
             While whil;
-            whil.condition = read_whole_string();
+            whil.condition = {read_whole_string()};
             read_body(whil.body);
             read_end("while");
-            return whil.to_str();
+            return whil;
         }
 
-        std::string read_begin_smth() {
+        Operator read_begin_smth() {
             std::string smth = read_string();
             if (smth == "only_if") {
-                return read_only_if();
+                return get_operator_only_if(read_only_if());
             } else if (smth == "if") {
-                return read_if();
+                return get_operator_if(read_if());
             } else if (smth == "while") {
-                return read_while();
+                return get_operator_while(read_while());
             } else {
                 throw My_exception("Expect begin one of those (only_if, if, while), buf found: 'begin " + smth + "'");
             }
+        }
+
+        static Operator get_operator_var_bound(const Variable &v) {
+            return {"bound", .variable_bounding = std::make_shared<Variable>(v)};
+        }
+
+        static Operator get_operator_var_change(const std::string &name, const Expression &expr) {
+            return {"change", .variable_change = std::make_shared<std::pair<std::string, Expression>>(name, expr)};
+        }
+
+        static Operator get_operator_only_if(const Only_if &only_iff) {
+            return {"only_if", .only_iff = std::make_shared<Only_if>(only_iff)};
+        }
+
+        static Operator get_operator_if(const If &iff) {
+            return {"if", .iff = std::make_shared<If>(iff)};
+        }
+
+        static Operator get_operator_while(const While &whilee) {
+            return {"while", .whilee = std::make_shared<While>(whilee)};
+        }
+
+        static Operator get_operator_call_function(const Function &function) {
+            return {"call", .functionn = std::make_shared<Function>(function)};
         }
 
         void read_body(Body &body) {
@@ -293,31 +334,37 @@ int main(int argc, char *argv[]) {
             std::string starts_with;
             while (true) {
                 starts_with = read_string();
-                if (starts_with == "end") {
+                if (starts_with == "end") {  // ok
                     break;
-                } else if (starts_with == "var") {
+                } else if (starts_with == "var") {  // ok, but need to add in operator
                     Variable v;
                     read_variable(v);
                     check_var(v, body.variables);
                     body.variables.push_back(v);
-                } else if (starts_with == "begin") {
-                    body.operators.push_back({read_begin_smth()});
+                    body.operators.push_back(get_operator_var_bound(v));
+                } else if (starts_with == "begin") {  //
+                    body.operators.push_back(read_begin_smth());
                 } else if (starts_with == "call") {
                     Function cur;
                     read_signature(cur);
-                    body.operators.push_back({starts_with + " " + cur.signature_to_str()});
+                    body.operators.push_back(get_operator_call_function(cur));
                 } else if (starts_with == "skip") {
-                    continue;
+                    body.operators.push_back({"skip"});
                 } else if (starts_with == "change") {
                     std::string name_l = read_string();
+                    /*if (!is_contains_var(name_l, body.variables)) {
+                        throw My_exception(
+                                "Unknown variable name in change equation"
+                        );  // TODO: new test
+                    }*/  // too hard to check
                     std::string bounding = read_string();
                     if (bounding != "=") {
                         throw My_exception(
                                 "Expect syntax: 'change <name> = ...', but found: 'change " + name_l + " " + bounding +
                                 " ...'");
                     }
-                    std::string equation = read_whole_string();
-                    body.operators.push_back({starts_with + " " + name_l + " = " + equation});
+                    Expression expr = {read_whole_string()};
+                    body.operators.push_back(get_operator_var_change(name_l, expr));
                 } else {
                     throw My_exception("Unexpected operator start: '" + starts_with + "'");
                 }
@@ -346,13 +393,81 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        void write_result() {
-            std::cout << "Functions in program:\n";
-            int counter = 0;
-            for (const auto &func: functions) {
-                std::cout << ++counter << ": " << func.signature_to_str() << "\n\n";
-                std::cout << func.body.to_str() << "\n";
+        void write_only_if(const std::shared_ptr<Only_if> &only_if, const std::string &cur_tab) {
+            std::cout << cur_tab << "condition: " << only_if->condition.to_str() << "\n";
+            std::cout << cur_tab << "body: {\n";
+            write_body(only_if->body, cur_tab + TAB);
+            std::cout << cur_tab << "}\n";
+        }
+
+        void write_if(const std::shared_ptr<If> &iff, const std::string &cur_tab) {
+            std::cout << cur_tab << "condition: " << iff->condition.to_str() << "\n";
+            std::cout << cur_tab << "if_body: {\n";
+            write_body(iff->if_body, cur_tab + TAB);
+            std::cout << cur_tab << "}\n";
+            std::cout << cur_tab << "else_body: {\n";
+            write_body(iff->else_body, cur_tab + TAB);
+            std::cout << cur_tab << "}\n";
+        }
+
+        void write_while(const std::shared_ptr<While> &whilee, const std::string &cur_tab) {
+            std::cout << cur_tab << "condition: " << whilee->condition.to_str() << "\n";
+            std::cout << cur_tab << "body: {\n";
+            write_body(whilee->body, cur_tab + TAB);
+            std::cout << cur_tab << "}\n";
+        }
+
+        static void write_bound(const std::shared_ptr<Variable> &variable_bound, const std::string &cur_tab) {
+            std::cout << cur_tab << variable_bound->to_str() << "\n";
+        }
+
+        static void write_call(const std::shared_ptr<Function> &functionn, const std::string &cur_tab) {
+            std::cout << cur_tab << functionn->signature_to_str() << "\n";
+        }
+
+        static void write_change(const std::shared_ptr<std::pair<std::string, Expression>> &var_change,
+                                 const std::string &cur_tab) {
+            std::cout << cur_tab << var_change->first << " = \n";
+            std::cout << cur_tab << var_change->second.to_str() << "\n";
+        }
+
+        void write_body(const Body &body, const std::string &cur_tab) {
+            for (const auto &op: body.operators) {
+                std::cout << cur_tab << op.operator_type << ": {\n";
+                if (op.operator_type == "only_if") {
+                    write_only_if(op.only_iff, cur_tab + TAB);
+                } else if (op.operator_type == "if") {
+                    write_if(op.iff, cur_tab + TAB);
+                } else if (op.operator_type == "while") {
+                    write_while(op.whilee, cur_tab + TAB);
+                } else if (op.operator_type == "bound") {
+                    write_bound(op.variable_bounding, cur_tab + TAB);
+                } else if (op.operator_type == "call") {
+                    write_call(op.functionn, cur_tab + TAB);
+                } else if (op.operator_type == "change") {
+                    write_change(op.variable_change, cur_tab + TAB);
+                } else {
+                }
+                std::cout << cur_tab << "}\n";
             }
+        }
+
+        static void write_function(const Function &func, const std::string &cur_tab) {
+            std::cout << cur_tab << "signature: " << func.signature_to_str() << "\n";
+        }
+
+        void write_result() {
+            std::cout << "{\n";
+            std::string cur_tab(TAB);
+            for (const auto &func: functions) {
+                std::cout << cur_tab << "function: {\n";
+                write_function(func, cur_tab + TAB);
+                std::cout << cur_tab << "}\n";
+                std::cout << cur_tab << "body: {\n";
+                write_body(func.body, cur_tab + TAB);
+                std::cout << cur_tab << "}\n";
+            }
+            std::cout << "}\n";
         }
 
     };
