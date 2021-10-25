@@ -1,0 +1,35 @@
+graph {
+	0 [label="Var: x"]
+	1 [label="Constructor: point"]
+	2 [label="Call: f"]
+	2 -- 0
+	2 -- 1
+	3 [label="Var: x"]
+	4 [label="Var: c"]
+	5 [label="Operator: ?="]
+	5 -- 3
+	5 -- 4
+	6 [label="Operator: *"]
+	6 -- 2
+	6 -- 5
+	7 [label="Var: a"]
+	8 [label="Var: b"]
+	9 [label="Def: f"]
+	9 -- 6
+	9 -- 7
+	9 -- 8
+	10 [label="Var: x"]
+	11 [label="Var: a"]
+	12 [label="Constructor: point"]
+	12 -- 11
+	13 [label="Var: y"]
+	14 [label="Constructor: point"]
+	14 -- 12
+	14 -- 13
+	15 [label="Call: f"]
+	15 -- 10
+	15 -- 14
+	16 [label=Program]
+	16 -- 15
+	16 -- 9
+}
