@@ -122,7 +122,18 @@ do #f for x (make %point from (make %point from a) y)
 ```
 [Входной файл](test1.txt)
 
-[Вывод с описанием графа](test1.txt.graph)
+#### Программа
+```
+define #func1 do (a ?= b) * (b ?= a) for x y
+|| определение функции со сложным телом
+define #func2 do (a ?= (make %Something from d g)) * ((make %Something) ?= a) for f g
+|| определение функции с вложенными конструкторами и конъюнкцией
+(do #func1 for k (make %pair from a b)) + ((make %Something from (make %pair from g h) x) ?= t)
+|| цель с вызовом функции, конструкторами в качестве аргументов, дизъюнкцией
+```
+[Входной файл](test2.txt)
+
+[Вывод с описанием графа](test2.txt.graph)
 
 #### Синтаксическое дерево
-![](test1.png)
+![](test2.png)
