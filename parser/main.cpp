@@ -462,9 +462,9 @@ int main(int argc, char *argv[]) {
             for (const auto &func: functions) {
                 std::cout << cur_tab << "function: {\n";
                 write_function(func, cur_tab + TAB);
-                std::cout << cur_tab << "}\n";
-                std::cout << cur_tab << "body: {\n";
-                write_body(func.body, cur_tab + TAB);
+                std::cout << cur_tab + TAB << "body: {\n";
+                write_body(func.body, cur_tab + TAB + TAB);
+                std::cout << cur_tab + TAB << "}\n";
                 std::cout << cur_tab << "}\n";
             }
             std::cout << "}\n";

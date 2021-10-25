@@ -1,63 +1,63 @@
 {
     function: {
         signature: main 0
-    }
-    body: {
-        bound: {
-            int2 int10 = 0
-        }
-        bound: {
-            int10 y = 15
-        }
-        bound: {
-            string s = lolkek
-        }
-        only_if: {
-            condition: x == 0
-            body: {
-                skip: {
-                }
-                change: {
-                    y = 
-                    10
+        body: {
+            bound: {
+                int2 int10 = 0
+            }
+            bound: {
+                int10 y = 15
+            }
+            bound: {
+                string s = lolkek
+            }
+            only_if: {
+                condition: x == 0
+                body: {
+                    skip: {
+                    }
+                    change: {
+                        y = 
+                        10
+                    }
                 }
             }
-        }
-        while: {
-            condition: y < 20
-            body: {
-                change: {
-                    y = 
-                    y + 02
-                }
-                change: {
-                    x = 
-                    x + 11
-                }
-            }
-        }
-        call: {
-            inc 1 int10 y
-        }
-        if: {
-            condition: y == 21
-            if_body: {
-                skip: {
+            while: {
+                condition: y < 20
+                body: {
+                    change: {
+                        y = 
+                        y + 02
+                    }
+                    change: {
+                        x = 
+                        x + 11
+                    }
                 }
             }
-            else_body: {
-                skip: {
+            call: {
+                inc 1 int10 y
+            }
+            if: {
+                condition: y == 21
+                if_body: {
+                    skip: {
+                    }
+                }
+                else_body: {
+                    skip: {
+                    }
                 }
             }
         }
     }
     function: {
         signature: inc 1 int10 x
-    }
-    body: {
-        change: {
-            x = 
-            x + 01
+        body: {
+            change: {
+                x = 
+                x + 01
+            }
         }
     }
 }
