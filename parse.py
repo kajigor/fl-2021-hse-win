@@ -25,6 +25,12 @@ def add(node):
 def check_goals():
     return len(programs) == 1
 
+precedence = (
+    ('left', 'OR'),
+    ('left', 'AND'),
+    ('nonassoc', 'EQ')
+)
+
 def p_program_def(p):
     '''program : define
                | COMMENT '''
@@ -42,21 +48,27 @@ def p_define(p):
     add(p[0])
 
 def p_goal_and(p):
-    ''' goal : LBR goal RBR AND LBR goal RBR '''
-    p[0] = Node("Operator: *", [p[2], p[6]])
+    ''' goal : goal AND goal '''
+    p[0] = Node("Operator: *", [p[1], p[3]])
     add(p[0])
-
 
 def p_goal_or(p):
-    ''' goal : LBR goal RBR OR LBR goal RBR '''
-    p[0] = Node("Operator: +", [p[2], p[6]])
+    ''' goal : goal OR goal '''
+    p[0] = Node("Operator: +", [p[1], p[3]])
     add(p[0])
-
 
 def p_goal_eq(p):
     ''' goal : atom EQ atom '''
     p[0] = Node("Operator: ?=", [p[1], p[3]])
     add(p[0])
+
+def p_factor(p):
+    ''' factor : LBR goal RBR '''
+    p[0] = p[2]
+
+def p_goal_br(p):
+    ''' goal : factor '''
+    p[0] = p[1]
 
 def p_goal_call(p):
     ''' goal : DO FUNCTION FOR args
