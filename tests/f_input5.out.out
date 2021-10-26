@@ -1,29 +1,29 @@
 graph graphname {
 a [label="head:a"]
 a -- a_3
-a_3 [label="|"]
-a_1 [label="abv"]
-a_2 [label="bnbn"]
-a_3 -- a_1
-a_3 -- a_2
 b [label="head:b"]
 b -- b_5
-b_5 [label="+"]
-b_3 [label="+"]
-b_1 [label="fnnd"]
-b_2 [label="aa"]
+a_3 [label="OPER: |" color="black"]
+a_1 [label="WORD: abv" color="purple"]
+a_2 [label="WORD: bnbn" color="purple"]
+a_3 -- a_1
+a_3 -- a_2
+b_5 [label="OPER: +" color="black"]
+b_3 [label="OPER: +" color="black"]
+b_1 [label="WORD: fnnd" color="purple"]
+b_2 [label="VAR: aa" color="green"]
 b_3 -- b_1
 b_3 -- b_2
-b_4 [label="fjdf"]
+b_4 [label="WORD: fjdf" color="purple"]
 b_5 -- b_3
 b_5 -- b_4
-c_5 [label="+"]
-c_3 [label="+"]
-c_1 [label="fnnd"]
-c_2 [label="aa"]
+c_5 [label="OPER: +" color="black"]
+c_3 [label="OPER: +" color="black"]
+c_1 [label="WORD: fnnd" color="purple"]
+c_2 [label="VAR: aa" color="green"]
 c_3 -- c_1
 c_3 -- c_2
-c_4 [label="fjdf"]
+c_4 [label="WORD: fjdf" color="purple"]
 c_5 -- c_3
 c_5 -- c_4
 }

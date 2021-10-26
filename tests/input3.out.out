@@ -1,36 +1,36 @@
 graph graphname {
 hello [label="head:hello"]
 hello -- hello_1
-hello_1 [label="world"]
 i [label="head:i"]
 i -- i_1
-i_1 [label="am"]
 x10 [label="head:x10"]
 x10 -- x10_3
-x10_3 [label="+"]
-x10_1 [label="5"]
-x10_2 [label="5"]
-x10_3 -- x10_1
-x10_3 -- x10_2
 r [label="head:r"]
 r -- r_9
-r_9 [label="+"]
-r_7 [label="+"]
-r_4 [label="+"]
-r_2 [label="?"]
-r_1 [label="x10"]
+MAIN__ [label="MAIN" color=red]
+MAIN__ -- r
+hello_1 [label="WORD: world" color="purple"]
+i_1 [label="WORD: am" color="purple"]
+x10_3 [label="OPER: +" color="black"]
+x10_1 [label="WORD: 5" color="purple"]
+x10_2 [label="WORD: 5" color="purple"]
+x10_3 -- x10_1
+x10_3 -- x10_2
+r_9 [label="OPER: +" color="black"]
+r_7 [label="OPER: +" color="black"]
+r_4 [label="OPER: +" color="black"]
+r_2 [label="OPER: ?" color="black"]
+r_1 [label="VAR: x10" color="green"]
 r_2 -- r_1
-r_3 [label="i"]
+r_3 [label="VAR: i" color="green"]
 r_4 -- r_2
 r_4 -- r_3
-r_6 [label="?"]
-r_5 [label="afdds"]
+r_6 [label="OPER: ?" color="black"]
+r_5 [label="WORD: afdds" color="purple"]
 r_6 -- r_5
 r_7 -- r_4
 r_7 -- r_6
-r_8 [label="hello"]
+r_8 [label="VAR: hello" color="green"]
 r_9 -- r_7
 r_9 -- r_8
-MAIN__ [label="MAIN" color=red]
-MAIN__ -- r
 }

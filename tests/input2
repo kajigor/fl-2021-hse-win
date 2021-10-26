@@ -1,5 +1,6 @@
 b := ^j\^^*?+^abf^
 c:=                 ^udjf^
 a       :=c
-d:=a|b
+d:=a|b|g
+g:=^a^|^b^
 return d

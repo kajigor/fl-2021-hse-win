@@ -1,7 +1,7 @@
 graph graphname {
 n [label="head:n"]
 n -- n_1
-n_1 [label="n"]
 MAIN__ [label="MAIN" color=red]
 MAIN__ -- n
+n_1 [label="VAR: na" color="green"]
 }

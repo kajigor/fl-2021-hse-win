@@ -7,7 +7,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="336b8fcd-d481-4098-a8ec-7a446182e7c6" name="Changes" comment="Done (почти)">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser" beforeDir="false" afterPath="$PROJECT_DIR$/parser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/parser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/f_input2" beforeDir="false" afterPath="$PROJECT_DIR$/tests/f_input2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/f_input2.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/f_input2.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/f_input2.out.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/f_input2.out.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/f_input3.out.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/f_input3.out.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/f_input4" beforeDir="false" afterPath="$PROJECT_DIR$/tests/f_input4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/f_input4.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/f_input4.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/f_input4.out.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/f_input4.out.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/f_input5.out.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/f_input5.out.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/input1" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/input1.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input1.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/input1.out.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input1.out.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/input2" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/input2.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input2.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/input2.out.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input2.out.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/input3.out.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input3.out.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/input4.out.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input4.out.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/input5.out.out" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input5.out.out" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +73,7 @@
       <workItem from="1633460766651" duration="2211000" />
       <workItem from="1633462992357" duration="1678000" />
       <workItem from="1634872671885" duration="741000" />
-      <workItem from="1635092466706" duration="12653000" />
+      <workItem from="1635092466706" duration="15242000" />
     </task>
     <task id="LOCAL-00001" summary="Мнение о языках">
       <created>1633462878203</created>

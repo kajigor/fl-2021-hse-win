@@ -1,14 +1,14 @@
 graph graphname {
 ui [label="head:ui"]
 ui -- ui_1
-ui_1 [label="dkk"]
 d [label="head:d"]
 d -- d_3
-d_3 [label="|"]
-d_1 [label="ui"]
-d_2 [label="ui"]
-d_3 -- d_1
-d_3 -- d_2
 MAIN__ [label="MAIN" color=red]
 MAIN__ -- ui
+ui_1 [label="WORD: dkk" color="purple"]
+d_3 [label="OPER: |" color="black"]
+d_1 [label="WORD: ui" color="purple"]
+d_2 [label="VAR: ui" color="green"]
+d_3 -- d_1
+d_3 -- d_2
 }

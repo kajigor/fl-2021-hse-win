@@ -1,28 +1,39 @@
 graph graphname {
 b [label="head:b"]
 b -- b_5
-b_5 [label="+"]
-b_3 [label="?"]
-b_2 [label="*"]
-b_1 [label="j\^"]
-b_2 -- b_1
-b_3 -- b_2
-b_4 [label="abf"]
-b_5 -- b_3
-b_5 -- b_4
 c [label="head:c"]
 c -- c_1
-c_1 [label="udjf"]
 a [label="head:a"]
 a -- a_1
-a_1 [label="c"]
 d [label="head:d"]
-d -- d_3
-d_3 [label="|"]
-d_1 [label="a"]
-d_2 [label="b"]
-d_3 -- d_1
-d_3 -- d_2
+d -- d_5
+g [label="head:g"]
+g -- g_3
 MAIN__ [label="MAIN" color=red]
 MAIN__ -- d
+b_5 [label="OPER: +" color="black"]
+b_3 [label="OPER: ?" color="black"]
+b_2 [label="OPER: *" color="black"]
+b_1 [label="WORD: j\^" color="purple"]
+b_2 -- b_1
+b_3 -- b_2
+b_4 [label="WORD: abf" color="purple"]
+b_5 -- b_3
+b_5 -- b_4
+c_1 [label="WORD: udjf" color="purple"]
+a_1 [label="VAR: c" color="green"]
+d_5 [label="OPER: |" color="black"]
+d_3 [label="OPER: |" color="black"]
+d_1 [label="VAR: a" color="green"]
+d_2 [label="VAR: b" color="green"]
+d_3 -- d_1
+d_3 -- d_2
+d_4 [label="VAR: g" color="green"]
+d_5 -- d_3
+d_5 -- d_4
+g_3 [label="OPER: |" color="black"]
+g_1 [label="WORD: a" color="purple"]
+g_2 [label="WORD: b" color="purple"]
+g_3 -- g_1
+g_3 -- g_2
 }

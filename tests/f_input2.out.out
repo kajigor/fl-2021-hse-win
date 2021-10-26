@@ -1,8 +1,8 @@
 graph graphname {
 a [label="head:a"]
 a -- a_1
-a_1 [label="b"]
 b [label="head:b"]
 b -- b_1
-b_1 [label="a"]
+a_1 [label="VAR: b" color="green"]
+b_1 [label="VAR: c" color="green"]
 }

@@ -14,7 +14,7 @@ std::string random_color() {
 */
 
 int line = 0;
-
+std::unordered_set<std::string> used;
 std::string RED(const std::string& str){
     return "\033[1;31m" + str + "\033[0;33m";
 }
@@ -243,9 +243,9 @@ public:
                     ++i;
                 }
                 atoms.push(new Atom(TYPE::VAR, result, id++));
-                if(!vars.count(result)) {
+                /*if(!vars.count(result)) {
                     std::cerr << RED("Parse error: ") + WHEREL() << "Variable " << BLUE(result) << " is used but has not been previously declared" << std::endl;
-                }
+                }*/
             } else {
                 std::cerr<<RED("Parse Error: ")+ WHERE(i+1)+" incorrect symbol ";
                 for(int j=0; j<str_expression.length(); ++j){
@@ -280,7 +280,30 @@ public:
 
     void dfs(Atom* x) {
        // std::cout<<'"'<<x->get_str_name();
-        labels.push_back(var+"_"+std::to_string(x->num)+" [label=\""+x->get_str_name()+"\"]");
+        if(x->get_type() == TYPE::VAR ) {
+            used.insert(x->get_str_name());
+        }
+        if(x->get_type() == TYPE::VAR && !vars.count(x->get_str_name())) {
+            std::cerr << RED("Parse error: ") + WHEREL() << "Variable " << BLUE(x->get_str_name()) << " is used but has not been declared" << std::endl;
+        }
+        std::string type, color;
+        if(x->get_type()== TYPE::VAR) {
+            type = "VAR";
+            color = "green";
+            if(x->get_str_name()==var){
+                type = "SELF";
+                color = "blue";
+            }
+        }
+        else if(x->get_type() == TYPE::OPER) {
+            type = "OPER";
+            color = "black";
+        }
+        else{
+            type = "WORD";
+            color = "purple";
+        }
+        labels.push_back(var+"_"+std::to_string(x->num)+" [label=\""+type+": "+x->get_str_name()+"\" color=\""+color+"\"]");
         out<<labels.back()<<std::endl;
         for(auto &i : x->children){
             dfs(i);
@@ -316,15 +339,27 @@ int main(int argc, char *argv[]) {
 
     std::cmatch narrowMatch;
     std::regex rx("^return .+$");
-
+    bool return_flag = false;
+    std::vector<Parser> parsers;
     while(std::getline(in, x)) {
         ++line;
         if(x.empty() or x=="\n") continue;
         const char *t = x.c_str();
         if(std::regex_match(t, t+strlen(t), narrowMatch, rx)){
-            std::string y(t+7, t+strlen(t));
+            if(return_flag){
+                std::cerr << RED("Parse Error: ") + WHEREL() << "reuse " << BLUE("return") << "!" << std::endl;
+                continue;
+            }
+            std::string r(t+7, t+strlen(t));
+            std::stringstream ss;
+            ss << r;
+            std::string y;
+            ss >> y;
+            used.insert(y);
+            //while(y.front()==' ')
             out<<"MAIN__ [label=\"MAIN\" color=red]"<<std::endl;
             out<<"MAIN__ -- "<<y<<std::endl;
+            return_flag = true;
         } else {
             std::string id;
             std::string value;
@@ -352,14 +387,27 @@ int main(int argc, char *argv[]) {
                 id.pop_back();
             }
             if(!is_correct_var(id)) continue;
+            vars.insert(id);
             Parser t(value, id);
             //std::cerr<<value<<std::endl;
             t.prepare();
+            parsers.push_back(t);
             //std::cerr<<"lol"<<std::endl;
-            t.dfs();
+            //t.dfs();
             //std::cerr<<"lol"<<std::endl;
-            vars.insert(id);
         }
+    }
+    for(auto &i : parsers){
+        i.dfs();
+    }
+    for(auto &i : vars){
+        if(!used.count(i)){
+            std::cerr << BLUEB("Warning: ") << "var " << i << " is never used!"<<std::endl;
+        }
+    }
+
+    if(!return_flag){
+        std::cerr << RED("Parse Error: ") << "expected " << BLUE("return") << std::endl;
     }
     out << "}" << std::endl;
 }
