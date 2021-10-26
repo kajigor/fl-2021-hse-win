@@ -1,1 +1,42 @@
-Parse error LexToken(SKIP,'skip',4,37)
+Node 14 : Initial node
+Edges to nodes [15]
+
+Node 15 : main
+Edges to nodes [13]
+
+Node 13 : function body
+Edges to nodes [10, 12]
+
+Node 10 : Sequence
+Edges to nodes [9]
+
+Node 9 : assigment
+Edges to nodes [8, 7]
+
+Node 8 : x
+
+Node 7 : -
+Edges to nodes [5, 6]
+
+Node 5 : *
+Edges to nodes [3, 4]
+
+Node 3 : brackets
+Edges to nodes [2]
+
+Node 2 : +
+Edges to nodes [0, 1]
+
+Node 0 : 1
+
+Node 1 : 2
+
+Node 4 : 3
+
+Node 6 : 2
+
+Node 12 : return operator
+Edges to nodes [11]
+
+Node 11 : null
+

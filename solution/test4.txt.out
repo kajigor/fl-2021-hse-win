@@ -1,0 +1,203 @@
+Node 81 : Initial node
+Edges to nodes [30, 82]
+
+Node 30 : function declaration block
+Edges to nodes [29]
+
+Node 29 : declaration function Foo
+Edges to nodes [4, 28]
+
+Node 4 : list args
+Edges to nodes [1, 3, 5]
+
+Node 1 : x
+
+Node 3 : y
+
+Node 5 : z
+
+Node 28 : function body
+Edges to nodes [25, 27]
+
+Node 25 : Sequence
+Edges to nodes [12, 24]
+
+Node 12 : assigment
+Edges to nodes [11, 10]
+
+Node 11 : x
+
+Node 10 : +
+Edges to nodes [8, 9]
+
+Node 8 : *
+Edges to nodes [6, 7]
+
+Node 6 : y
+
+Node 7 : z
+
+Node 9 : x
+
+Node 24 : Sequence
+Edges to nodes [17, 23]
+
+Node 17 : assigment
+Edges to nodes [16, 15]
+
+Node 16 : y
+
+Node 15 : +
+Edges to nodes [13, 14]
+
+Node 13 : y
+
+Node 14 : 1
+
+Node 23 : Sequence
+Edges to nodes [22]
+
+Node 22 : assigment
+Edges to nodes [21, 20]
+
+Node 21 : z
+
+Node 20 : +
+Edges to nodes [18, 19]
+
+Node 18 : z
+
+Node 19 : 1
+
+Node 27 : return operator
+Edges to nodes [26]
+
+Node 26 : null
+
+Node 82 : main
+Edges to nodes [80]
+
+Node 80 : function body
+Edges to nodes [77, 79]
+
+Node 77 : Sequence
+Edges to nodes [33, 76]
+
+Node 33 : assigment
+Edges to nodes [32, 31]
+
+Node 32 : i
+
+Node 31 : 0
+
+Node 76 : Sequence
+Edges to nodes [36, 75]
+
+Node 36 : assigment
+Edges to nodes [35, 34]
+
+Node 35 : j
+
+Node 34 : 0
+
+Node 75 : Sequence
+Edges to nodes [39, 74]
+
+Node 39 : assigment
+Edges to nodes [38, 37]
+
+Node 38 : x
+
+Node 37 : 0
+
+Node 74 : while statement
+Edges to nodes [43, 73]
+
+Node 43 : condition
+Edges to nodes [42]
+
+Node 42 : <
+Edges to nodes [40, 41]
+
+Node 40 : i
+
+Node 41 : 10
+
+Node 73 : body
+Edges to nodes [72]
+
+Node 72 : while statement
+Edges to nodes [47, 71]
+
+Node 47 : condition
+Edges to nodes [46]
+
+Node 46 : <
+Edges to nodes [44, 45]
+
+Node 44 : j
+
+Node 45 : 10
+
+Node 71 : body
+Edges to nodes [70]
+
+Node 70 : if else statement
+Edges to nodes [51, 60, 69]
+
+Node 51 : condition
+Edges to nodes [50]
+
+Node 50 : <
+Edges to nodes [48, 49]
+
+Node 48 : x
+
+Node 49 : 100
+
+Node 60 : body
+Edges to nodes [59]
+
+Node 59 : Sequence
+Edges to nodes [58]
+
+Node 58 : function call
+Edges to nodes [56]
+
+Node 56 : list args
+Edges to nodes [53, 55, 57]
+
+Node 53 : x
+
+Node 55 : i
+
+Node 57 : j
+
+Node 69 : body
+Edges to nodes [68]
+
+Node 68 : Sequence
+Edges to nodes [65, 67]
+
+Node 65 : assigment
+Edges to nodes [64, 63]
+
+Node 64 : i
+
+Node 63 : +
+Edges to nodes [61, 62]
+
+Node 61 : i
+
+Node 62 : 1
+
+Node 67 : Sequence
+Edges to nodes [66]
+
+Node 66 : skip
+
+Node 79 : return operator
+Edges to nodes [78]
+
+Node 78 : null
+

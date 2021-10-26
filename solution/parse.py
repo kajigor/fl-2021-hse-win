@@ -28,17 +28,16 @@ def p_error(p):
   exit()
 
 def p_code(p):
-  '''code : list_declarations VOID MAIN BRACKET_OPEN BRACKET_CLOSE body
-          | VOID MAIN BRACKET_OPEN BRACKET_CLOSE body'''
+  '''code : list_declarations VOID MAIN BRACKET_OPEN BRACKET_CLOSE func_body
+          | VOID MAIN BRACKET_OPEN BRACKET_CLOSE func_body'''
   Tree.nodes.append("Initial node")
   p[0] = len(Tree.nodes) - 1
+  Tree.nodes.append("main")
   if (len(p) == 7):
-    Tree.nodes.append("main")
     p[3] = len(Tree.nodes) - 1
     Tree.adj[p[0]] = [p[1], p[3]]
     Tree.adj[p[3]] = [p[6]]
   else:
-    Tree.nodes.append("main")
     p[2] = len(Tree.nodes) - 1
     Tree.adj[p[0]] = [p[2]]
     Tree.adj[p[2]] = [p[5]]
@@ -46,32 +45,28 @@ def p_code(p):
 def p_list_declarations(p):
   '''list_declarations : list_declarations declaration
                        | declaration'''
+  Tree.nodes.append("function declaration block")
+  p[0] = len(Tree.nodes) - 1  
   if (len(p) == 2):
-    Tree.nodes.append("function declaration block")
-    p[0] = len(Tree.nodes) - 1
     Tree.adj[p[0]] = [p[1]]
   else:
-    Tree.nodes.append("function declaration block")
-    p[0] = len(Tree.nodes) - 1
     Tree.adj[p[0]] = Tree.adj[p[1]]
     Tree.adj[p[0]].append(p[2])
 
 
 def p_function_declaration(p):
-  '''declaration : VOID FUNCTION_NAME BRACKET_OPEN BRACKET_CLOSE body
-                 | VOID FUNCTION_NAME BRACKET_OPEN list_args BRACKET_CLOSE body'''
+  '''declaration : VOID FUNCTION_NAME BRACKET_OPEN BRACKET_CLOSE func_body
+                 | VOID FUNCTION_NAME BRACKET_OPEN list_args BRACKET_CLOSE func_body'''
+  Tree.nodes.append("declaration function " + p[2])
+  p[0] = len(Tree.nodes) - 1  
   if (len(p) == 6):
-    Tree.nodes.append("declaration function " + p[2])
-    p[0] = len(Tree.nodes) - 1
     Tree.adj[p[0]] = [p[5]]
   else:
-    Tree.nodes.append("declaration function " + p[2])
-    p[0] = len(Tree.nodes) - 1
     Tree.adj[p[0]] = [p[4], p[6]]
 
-def p_body(p):
-  '''body : BEGIN return_operator END
-          | BEGIN operator return_operator END'''
+def p_func_body(p):
+  '''func_body : BEGIN return_operator END
+               | BEGIN operator return_operator END'''
   Tree.nodes.append("function body")
   p[0] = len(Tree.nodes) - 1
   if (len(p) == 4):
@@ -102,27 +97,39 @@ def p_assigment(p):
     Tree.nodes.append(p[1])
     p[1] = len(Tree.nodes) - 1
     Tree.adj[p[1]] = []
-    Tree.nodes.append(p[0])
+    Tree.nodes.append("assigment")
     p[0] = len(Tree.nodes) - 1
     Tree.adj[p[0]] = [p[1], p[3]]
 
 def p_if(p):
-  '''operator : IF BRACKET_OPEN expr BRACKET_CLOSE BEGIN expr END'''
+  '''operator : IF condition body'''
   Tree.nodes.append("if statement")
   p[0] = len(Tree.nodes) - 1
-  Tree.adj[p[0]] = [p[3], p[6]]
+  Tree.adj[p[0]] = [p[2], p[3]]
 
 def p_if_else(p):
-  '''operator : IF BRACKET_OPEN expr BRACKET_CLOSE BEGIN expr END ELSE BEGIN expr END'''
+  '''operator : IF condition body ELSE body'''
   Tree.nodes.append("if else statement")
   p[0] = len(Tree.nodes) - 1
-  Tree.adj[p[0]] = [p[3], p[6], p[10]]
+  Tree.adj[p[0]] = [p[2], p[3], p[5]]
 
 def p_while(p):
-  '''operator : WHILE BRACKET_OPEN expr BRACKET_CLOSE BEGIN expr END'''
+  '''operator : WHILE condition body'''
   Tree.nodes.append("while statement")
   p[0] = len(Tree.nodes) - 1 
-  Tree.adj[p[0]] = [p[3], p[6]]
+  Tree.adj[p[0]] = [p[2], p[3]]
+
+def p_condition(p):
+  '''condition : BRACKET_OPEN expr BRACKET_CLOSE'''
+  Tree.nodes.append("condition")
+  p[0] = len(Tree.nodes) - 1
+  Tree.adj[p[0]] = [p[2]]
+
+def p_body(p):
+  '''body : BEGIN operator END'''
+  Tree.nodes.append("body")
+  p[0] = len(Tree.nodes) - 1
+  Tree.adj[p[0]] = [p[2]]  
 
 def p_function_call_expr(p):
   '''expr : FUNCTION_NAME BRACKET_OPEN BRACKET_CLOSE
@@ -155,18 +162,17 @@ def p_list_operators(p):
 def p_list_args(p):
   '''list_args : list_args COMMA VARIABLE
                | VARIABLE'''
+  Tree.nodes.append("list args")
+  p[0] = len(Tree.nodes) - 1
   if (len(p) == 2):
     Tree.nodes.append(p[1])
     p[1] = len(Tree.nodes) - 1
     Tree.adj[p[1]] = []
-    Tree.nodes.append("list args")
-    p[0] = len(Tree.nodes) - 1
     Tree.adj[p[0]] = [p[1]]
   else:
     Tree.nodes.append(p[3])
     p[3] = len(Tree.nodes) - 1
     Tree.adj[p[3]] = []
-    Tree.nodes.append("list args")
     Tree.adj[p[0]] = Tree.adj[p[1]]
     Tree.adj[p[0]].append(p[3])
 
@@ -226,8 +232,7 @@ def main():
   parser = yacc.yacc()
   result = parser.parse(fin.read())
   fin.close()
-  print("Nodes:", Tree.nodes)
-  print("Adjacency list:", Tree.adj)
-
+  # print("Nodes:", Tree.nodes)
+  # print("Adjacency list:", Tree.adj)
   Tree.dfs(result)
 main()

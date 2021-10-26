@@ -1,0 +1,30 @@
+void Foo(x, y, z)
+begin
+x := y*z + x;
+y := y + 1;
+z := z + 1;
+return null;
+end
+
+void main()
+begin
+i := 0;
+j := 0;
+x := 0;
+while (i < 10)
+begin
+while (j < 10)
+begin
+if (x < 100)
+begin
+Foo(x, i, j);
+end
+else
+begin
+i := i + 1;
+skip;
+end
+end
+end
+return null;
+end
