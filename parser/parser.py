@@ -1,7 +1,11 @@
 import ply.yacc as yacc
 from lex import tokens
 from lex import lexer
+from lex import colored
+from lex import ERROR
+from lex import do_lex
 import sys
+
 
 class Node:
     def __init__(self, value: str, children: list):
@@ -10,25 +14,26 @@ class Node:
 
     def get_val(self):
         res = ""
-        for i in range (len(self.children)):
+        for i in range(len(self.children)):
             res = res + " " + self.children[i].value
         return res
 
-def bfs(v :Node):
+
+def bfs(v: Node):
     q = [v]
     i = 0
     while len(q) > i:
         cur = q[i]
         i += 1
-        print(cur.value, end = ": ")
+        print(colored("Node:", "yellow"), colored(cur.value, "green"), end=": ")
+        print(colored("Children", "blue"), end=" ")
         if len(cur.children) == 0:
-            print("EMPTY")
+            print(colored("EMPTY", "cyan"), end=" ")
+
         for j in cur.children:
-            print(j.value, end = " | ")
+            print(colored(j.value, "magenta"), end=" | ")
             q.append(j)
         print()
-
-
 
 
 def p_grammar(p):
@@ -48,9 +53,11 @@ def p_rule_list(p):
 
     p[0].value = p[0].get_val()
 
+
 def p_comment(p):
     '''comment : MULTILINE_COMMENT'''
     p[0] = Node(p[1], [])
+
 
 def p_rule(p):
     'rule : RULENAME EQ expression'
@@ -83,21 +90,34 @@ def p_expression(p):
     else:
         assert False
 
+
 def p_error(p):
     print("Syntax error")
 
+
 parser = yacc.yacc()
 
-try:
-    s = ''.join(open(sys.argv[1]).readlines())
-except:
-    print("Unable to open file")
-    exit(1)
 
-try:
-    res_grammar = parser.parse(s)
-except:
-    print("INCORRECT GRAMMAR")
-    exit(1)
+def input_and_parse():
+    try:
+        with open(input("enter path to file you want to parse"), 'r') as f:
+            s = f.read()
+            filename_out = input("now enter filename to lexer result or leave empty to default")
+            do_lex(s, filename_out)
+    except:
+        print(colored("Unable to open file", "red"))
+        input_and_parse()
+        return True
+    try:
+        res_grammar = parser.parse(s)
+    except:
+        return False
 
-bfs(res_grammar)
+    bfs(res_grammar)
+    return True
+
+
+response = input_and_parse()
+if not response:
+    print(colored("Incorrect grammar", "red"))
+    exit(1)

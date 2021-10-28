@@ -1,0 +1,8 @@
+Node:   A =  B | C: Children  A =  B | C |
+Node:  A =  B | C: Children A | = |  B | C |
+Node: A: Children EMPTY
+Node: =: Children EMPTY
+Node:  B | C: Children B | | | C |
+Node: B: Children EMPTY
+Node: |: Children EMPTY
+Node: C: Children EMPTY

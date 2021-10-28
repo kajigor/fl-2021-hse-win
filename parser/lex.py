@@ -20,6 +20,7 @@ tokens = [
     "INDENT"
 ]
 
+default_lexer_filename = "lex.ebnf"
 
 def t_INDENT(t):
     r'(\ \ \ \ )+'
@@ -116,22 +117,24 @@ def build_lex():
     lexer = lex.lex()
 
 
-def do_lex():
-    fin = open(sys.argv[1], 'r')
-    lexer.input(fin.read())
-    fin.close()
-    while True:
-        tok = lexer.token()
-        print(tok)
-        if not tok:
-            break
-    if (t_MULTILINE_COMMENT.value != ""):
-        print(colored("missing pairing */ for /* in line {}".format(t_MULTILINE_COMMENT.first_token.lineno), "red"))
-        global ERROR
-        ERROR = True
+def do_lex(text : str, filename_out : str):
+    if(filename_out == ""):
+        filename_out = default_lexer_filename
+    lexer.input(text)
+    with open(filename_out, 'w') as fout:
+        while True:
+            tok = lexer.token()
+            if not tok:
+                break
+            print(tok, file=fout)
+        if (t_MULTILINE_COMMENT.value != ""):
+            print(colored("missing pairing */ for /* in line {}".format(t_MULTILINE_COMMENT.first_token.lineno), "red"))
+            global ERROR
+            ERROR = True
 
 
 build_lex()
-do_lex()
-if (ERROR):
-    exit(1)
+
+#if you want to just run lexer run do_lex(filename to lex)
+
+

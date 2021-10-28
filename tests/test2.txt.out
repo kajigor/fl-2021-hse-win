@@ -1,0 +1,12 @@
+Node:     A, =  B , C /*the best grammar*/ /*/* some comment  */*/: Children    A, =  B , C /*the best grammar*/ | /*/* some comment  */*/ |
+Node:    A, =  B , C /*the best grammar*/: Children   A, =  B , C | /*the best grammar*/ |
+Node: /*/* some comment  */*/: Children EMPTY
+Node:   A, =  B , C: Children  A, =  B , C |
+Node: /*the best grammar*/: Children EMPTY
+Node:  A, =  B , C: Children A, | = |  B , C |
+Node: A,: Children EMPTY
+Node: =: Children EMPTY
+Node:  B , C: Children B | , | C |
+Node: B: Children EMPTY
+Node: ,: Children EMPTY
+Node: C: Children EMPTY

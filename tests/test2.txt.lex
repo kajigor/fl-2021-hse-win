@@ -1,0 +1,7 @@
+LexToken(RULENAME,'A,',1,0)
+LexToken(EQ,'=',1,3)
+LexToken(PLAINTEXT,'B',1,4)
+LexToken(COMMA,',',1,7)
+LexToken(PLAINTEXT,'C',1,8)
+LexToken(MULTILINE_COMMENT,'/*the best grammar*/',1,11)
+LexToken(MULTILINE_COMMENT,'/*/* some comment  */*/',2,32)

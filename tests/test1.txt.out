@@ -1,0 +1,40 @@
+Node:    A =  C |  B ,  C |  A ,  ( B )  B =  D |  C ,   [ A ] ,  { B }: Children   A =  C |  B ,  C |  A ,  ( B ) |  B =  D |  C ,   [ A ] ,  { B } |
+Node:   A =  C |  B ,  C |  A ,  ( B ): Children  A =  C |  B ,  C |  A ,  ( B ) |
+Node:  B =  D |  C ,   [ A ] ,  { B }: Children B | = |  D |  C ,   [ A ] ,  { B } |
+Node:  A =  C |  B ,  C |  A ,  ( B ): Children A | = |  C |  B ,  C |  A ,  ( B ) |
+Node: B: Children EMPTY
+Node: =: Children EMPTY
+Node:  D |  C ,   [ A ] ,  { B }: Children D | | |  C ,   [ A ] ,  { B } |
+Node: A: Children EMPTY
+Node: =: Children EMPTY
+Node:  C |  B ,  C |  A ,  ( B ): Children C | | |  B ,  C |  A ,  ( B ) |
+Node: D: Children EMPTY
+Node: |: Children EMPTY
+Node:  C ,   [ A ] ,  { B }: Children C | , |   [ A ] ,  { B } |
+Node: C: Children EMPTY
+Node: |: Children EMPTY
+Node:  B ,  C |  A ,  ( B ): Children B | , |  C |  A ,  ( B ) |
+Node: C: Children EMPTY
+Node: ,: Children EMPTY
+Node:   [ A ] ,  { B }: Children  [ A ] | , |  { B } |
+Node: B: Children EMPTY
+Node: ,: Children EMPTY
+Node:  C |  A ,  ( B ): Children C | | |  A ,  ( B ) |
+Node:  [ A ]: Children [ | A | ] |
+Node: ,: Children EMPTY
+Node:  { B }: Children { | B | } |
+Node: C: Children EMPTY
+Node: |: Children EMPTY
+Node:  A ,  ( B ): Children A | , |  ( B ) |
+Node: [: Children EMPTY
+Node: A: Children EMPTY
+Node: ]: Children EMPTY
+Node: {: Children EMPTY
+Node: B: Children EMPTY
+Node: }: Children EMPTY
+Node: A: Children EMPTY
+Node: ,: Children EMPTY
+Node:  ( B ): Children ( | B | ) |
+Node: (: Children EMPTY
+Node: B: Children EMPTY
+Node: ): Children EMPTY

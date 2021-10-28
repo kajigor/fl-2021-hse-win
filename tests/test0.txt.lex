@@ -1,0 +1,5 @@
+LexToken(RULENAME,'A',1,0)
+LexToken(EQ,'=',1,1)
+LexToken(PLAINTEXT,'B',1,2)
+LexToken(ALT,'|',1,5)
+LexToken(PLAINTEXT,'C',1,6)
