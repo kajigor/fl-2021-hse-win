@@ -21,8 +21,10 @@ def bfs(v :Node):
         cur = q[i]
         i += 1
         print(cur.value, end = ": ")
+        if len(cur.children) == 0:
+            print("EMPTY")
         for j in cur.children:
-            print(j.value, end = " @ ")
+            print(j.value, end = " | ")
             q.append(j)
         print()
 
@@ -37,6 +39,7 @@ def p_grammar(p):
 def p_rule_list(p):
     '''rule_list :
                     | rule_list rule
+                    | rule_list comment
                     | rule'''
     if len(p) == 2:
         p[0] = Node("", [p[1]])
@@ -45,6 +48,9 @@ def p_rule_list(p):
 
     p[0].value = p[0].get_val()
 
+def p_comment(p):
+    '''comment : MULTILINE_COMMENT'''
+    p[0] = Node(p[1], [])
 
 def p_rule(p):
     'rule : RULENAME EQ expression'
@@ -91,7 +97,7 @@ except:
 try:
     res_grammar = parser.parse(s)
 except:
-    print("Syntax error")
+    print("INCORRECT GRAMMAR")
     exit(1)
 
 bfs(res_grammar)
