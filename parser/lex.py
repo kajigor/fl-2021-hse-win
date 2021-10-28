@@ -133,4 +133,4 @@ def do_lex():
 build_lex()
 do_lex()
 if (ERROR):
-    exit(0)
+    exit(1)
