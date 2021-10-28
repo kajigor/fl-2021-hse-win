@@ -21,8 +21,10 @@ def bfs(v :Node):
         cur = q[i]
         i += 1
         print(cur.value, end = ": ")
+        if len(cur.children) == 0:
+            print("EMPTY")
         for j in cur.children:
-            print(j.value, end = " @ ")
+            print(j.value, end = " | ")
             q.append(j)
         print()
 
@@ -37,6 +39,7 @@ def p_grammar(p):
 def p_rule_list(p):
     '''rule_list :
                     | rule_list rule
+                    | rule_list comment
                     | rule'''
     if len(p) == 2:
         p[0] = Node("", [p[1]])
@@ -45,6 +48,9 @@ def p_rule_list(p):
 
     p[0].value = p[0].get_val()
 
+def p_comment(p):
+    '''comment : MULTILINE_COMMENT'''
+    p[0] = Node(p[1], [])
 
 def p_rule(p):
     'rule : RULENAME EQ expression'
@@ -55,8 +61,10 @@ def p_rule(p):
 def p_expression(p):
     '''expression :
                     | expression COMMA expression
-                    | LPAREN expression RPAREN
                     | expression ALT expression
+                    | expression COMMA INDENT expression
+                    | expression ALT INDENT expression
+                    | LPAREN expression RPAREN
                     | LBRACE expression RBRACE
                     | LBRACKET expression RBRACKET
                     | RULENAME
@@ -65,6 +73,9 @@ def p_expression(p):
         p[0] = Node(p[1], [])
     elif p[1] == '(' or p[1] == '[' or p[1] == '{':
         p[0] = Node('', [Node(p[1], []), p[2], Node(p[3], [])])
+        p[0].value = p[0].get_val()
+    elif len(p) == 5:
+        p[0] = Node('', [p[1], Node(p[2], []), p[4]])
         p[0].value = p[0].get_val()
     elif p[2] == ',' or p[2] == '|':
         p[0] = Node('', [p[1], Node(p[2], []), p[3]])
@@ -77,13 +88,16 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-# try:
-s = ''.join(open(sys.argv[1]).readlines())
-res_grammar = parser.parse(s)
-# except:
-#     print("Unable to open file")
-#     exit(1)
+try:
+    s = ''.join(open(sys.argv[1]).readlines())
+except:
+    print("Unable to open file")
+    exit(1)
+
+try:
+    res_grammar = parser.parse(s)
+except:
+    print("INCORRECT GRAMMAR")
+    exit(1)
+
 bfs(res_grammar)
-
-
-
