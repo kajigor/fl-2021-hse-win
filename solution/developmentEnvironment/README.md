@@ -2,7 +2,7 @@
 
 В данном расширении поддерживаются:
 - Подстветка описанного языка: 
-  - Ключевых слов, таких как `int, binint, string, if, else, return, for, while, true, false, p_int, p_binint, p_string`
+  - Ключевых слов, таких как `int`, `binint`, `string`, `if`, `else`, `return`, `for`, `while`, `true`, `false`, `p_int`, `p_binint`, `p_string`
   - Однострочные комментарии
   - Числа типа `int`
   - Стандартные операторы `-, ^, *, /, +, !, &&, ||, ==, <=, <, >=, >`
