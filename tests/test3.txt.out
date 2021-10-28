@@ -1,0 +1,20 @@
+Node:   A =   [ a ] ,   { b } ,  [ c ]: Children  A =   [ a ] ,   { b } ,  [ c ] |
+Node:  A =   [ a ] ,   { b } ,  [ c ]: Children A | = |   [ a ] ,   { b } ,  [ c ] |
+Node: A: Children EMPTY
+Node: =: Children EMPTY
+Node:   [ a ] ,   { b } ,  [ c ]: Children  [ a ] | , |   { b } ,  [ c ] |
+Node:  [ a ]: Children [ | a | ] |
+Node: ,: Children EMPTY
+Node:   { b } ,  [ c ]: Children  { b } | , |  [ c ] |
+Node: [: Children EMPTY
+Node: a: Children EMPTY
+Node: ]: Children EMPTY
+Node:  { b }: Children { | b | } |
+Node: ,: Children EMPTY
+Node:  [ c ]: Children [ | c | ] |
+Node: {: Children EMPTY
+Node: b: Children EMPTY
+Node: }: Children EMPTY
+Node: [: Children EMPTY
+Node: c: Children EMPTY
+Node: ]: Children EMPTY
