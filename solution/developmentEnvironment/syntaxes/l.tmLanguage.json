@@ -1,0 +1,33 @@
+{
+    "scopeName": "source.l",
+    "patterns": [{ "include": "#expression" }],
+    "repository": {
+      "expression": {
+        "patterns": [{ "include": "#kw" }, { "include": "#constructor" }, { "include": "#commentLine" }, { "include": "#number" }, { "include": "#operator" }, { "include": "#customOperator" }]
+      },
+      "kw": {
+        "match": "\\b(int|binint|string|if|else|return|for|while|true|false|p_int|p_binint|p_string)\\b",
+        "name": "keyword.control.l"
+      },
+      "constructor": {
+        "match": "\\b([A-Z][_0-9A-Za-z]*)\\b",
+        "name": "constant.character.l"
+      },
+      "commentLine": {
+        "match": "(\/\/.*\\n)",
+        "name": "comment.line.l"
+      },
+      "number": {
+        "match": "\\b([0-9]+)\\b",
+        "name": "constant.numeric.l"
+      },
+      "operator": {
+        "match": "(-|\\^|\\*|\/|\\+|!|&&|\\|\\||==|<=|<|>=|>)",
+        "name": "keyword.other.l"
+      },
+      "customOperator": {
+        "match": "(o_.)",
+        "name": "keyword.other.l"
+      }
+    }
+  }

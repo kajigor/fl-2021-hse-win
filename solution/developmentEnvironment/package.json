@@ -1,0 +1,25 @@
+{
+    "name": "l",
+    "displayName": "l",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "l",
+            "aliases": ["l", ""],
+            "extensions": [".txt"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "l",
+            "scopeName": "source.l",
+            "path": "./syntaxes/l.tmLanguage.json"
+        }]
+    }
+}
