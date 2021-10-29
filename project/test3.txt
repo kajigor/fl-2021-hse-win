@@ -1,0 +1,24 @@
+main()
+{
+	if (1){
+		if(1){
+		if(1){
+		if(0){
+		return 0;
+		}
+		}
+		}
+	}
+	s=input("please type the text");
+	if (len(s)>10000){
+		print("you've written too much");
+	}elif(len(s)>5000){
+		print("you've written enough");
+	}
+	elif(len(s)==0){
+		print("you didn't write anything");
+	}
+	else{
+	print("you have written too little");
+	}
+}

@@ -8,7 +8,7 @@ reserved = {
     'main' : 'MAIN',
     'null' : 'NULL',
     'return' : 'RETURN',
-    'void' : 'VOID',
+    'def' : 'DEF',
     'skip' : 'SKIP'
 }
 

@@ -1,0 +1,28 @@
+def do_nothing(            )
+
+
+                {
+
+
+
+
+
+                										if(  1     )
+
+                										                {
+          skip;
+
+                										}
+                                    
+
+                                    }
+main(){
+	a=int(input());
+	b=int(input());
+	if (a<b){
+		print("a less b");
+	}else{
+		print("a great b");
+	}
+	return 0;
+}

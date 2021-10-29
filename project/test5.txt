@@ -1,0 +1,19 @@
+def phi (n) {
+	result = n;
+	i=2;
+	while (i*i<=n){
+		while (n / i *i==n){
+				n = n/i;
+			}
+			result = result - result / i;
+	if (n > 1){
+		result = result - result / n;
+	}
+	return result;
+	i=i+1;
+	}
+}
+
+main(){
+	print(phi(int(input())));
+}

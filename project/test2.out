@@ -1,0 +1,66 @@
+file:
+	function definitions:
+		function definition:
+			name:
+				do_nothing
+			body:
+				conditional operator:
+					if:
+						condition:
+							number:
+								1
+						body:
+							skip
+	main:
+		body:
+			assignment:
+				variable:
+					a
+				function call:
+					name:
+						int
+					args:
+						function call:
+							name:
+								input
+							args:
+								
+			assignment:
+				variable:
+					b
+				function call:
+					name:
+						int
+					args:
+						function call:
+							name:
+								input
+							args:
+								
+			conditional operator:
+				if:
+					condition:
+						expression:
+							<:
+								variable:
+									a
+								variable:
+									b
+					body:
+						function call:
+							name:
+								print
+							args:
+								string:
+									a less b
+				else:
+					body:
+						function call:
+							name:
+								print
+							args:
+								string:
+									a great b
+			return:
+				number:
+					0

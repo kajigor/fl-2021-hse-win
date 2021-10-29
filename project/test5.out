@@ -1,0 +1,124 @@
+file:
+	function definitions:
+		function definition:
+			name:
+				phi
+			arguments:
+				n
+			body:
+				assignment:
+					variable:
+						result
+					variable:
+						n
+				assignment:
+					variable:
+						i
+					number:
+						2
+				loop statement:
+					condition:
+						expression:
+							<=:
+								expression:
+									*:
+										variable:
+											i
+										variable:
+											i
+								variable:
+									n
+					body:
+						loop statement:
+							condition:
+								expression:
+									==:
+										expression:
+											*:
+												expression:
+													/:
+														variable:
+															n
+														variable:
+															i
+												variable:
+													i
+										variable:
+											n
+							body:
+								assignment:
+									variable:
+										n
+									expression:
+										/:
+											variable:
+												n
+											variable:
+												i
+						assignment:
+							variable:
+								result
+							expression:
+								-:
+									variable:
+										result
+									expression:
+										/:
+											variable:
+												result
+											variable:
+												i
+						conditional operator:
+							if:
+								condition:
+									expression:
+										>:
+											variable:
+												n
+											number:
+												1
+								body:
+									assignment:
+										variable:
+											result
+										expression:
+											-:
+												variable:
+													result
+												expression:
+													/:
+														variable:
+															result
+														variable:
+															n
+						return:
+							variable:
+								result
+						assignment:
+							variable:
+								i
+							expression:
+								+:
+									variable:
+										i
+									number:
+										1
+	main:
+		body:
+			function call:
+				name:
+					print
+				args:
+					function call:
+						name:
+							phi
+						args:
+							function call:
+								name:
+									int
+								args:
+									function call:
+										name:
+											input
+										args:
+											
