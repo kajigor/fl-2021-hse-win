@@ -1,0 +1,7 @@
+def binsum (a,b) {
+	return a+b;
+}
+
+main(){
+	print(binsum('1001101', '1101011'));
+}
