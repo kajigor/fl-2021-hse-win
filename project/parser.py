@@ -138,6 +138,11 @@ def p_expr_num(p):
     if (len(p) == 2):
         p[0] = Node('number', [p[1]])
 
+def p_expr_binnum(p):
+    '''expr : BINNUM'''
+    if (len(p) == 2):
+        p[0] = Node('binary number', [p[1]])
+
 def p_expr_null(p):
     '''expr : NULL'''
     if (len(p) == 2):
@@ -157,11 +162,6 @@ def p_expr_func_call(p):
     '''expr : func_call'''
     if (len(p) == 2):
         p[0] = p[1]
-
-def p_expr_num(p):
-    '''expr : NUM'''
-    if (len(p) == 2):
-        p[0] = Node('number', [p[1]])
     
 def p_while(p):
     '''while : WHILE condition block'''
@@ -209,11 +209,11 @@ def do_tests(n):
         print(result)
 
 def main():
-    do_tests(5)
-    fin = open(sys.argv[1], 'r')
-    sys.stdout = open(sys.argv[1] + '.out', 'w')
-    result = build_tree(fin.read())
-    fin.close()
-    print(result)
+    do_tests(6)
+    #fin = open(sys.argv[1], 'r')
+    #sys.stdout = open(sys.argv[1] + '.out', 'w')
+    #result = build_tree(fin.read())
+    #fin.close()
+    #print(result)
 
 main()
