@@ -35,7 +35,8 @@ tokens = [
    'CARET',
    'ASSIGN',
    'VAR',
-   'STRING'
+   'STRING',
+   'BINNUM'
 ] + list(reserved.values())
 
 t_OPENCURLYBRACE = r'\{'
@@ -63,9 +64,14 @@ t_ASSIGN = r'='
 t_ignore  = ' \t'
 
 def t_STRING(t):
-  r'"[^"\\]*(?:\\.[^"\\]*)*"'
-  t.value = t.value[1 : -1]
-  return t
+    r'"[^"\\]*(?:\\.[^"\\]*)*"'
+    t.value = t.value[1 : -1]
+    return t
+
+def t_BINNUM(t):
+    r'\'(0|1)+\''
+    t.value = t.value[1 : -1]
+    return t
 
 def t_VAR(t):
     r'([a-zA-Z][_0-9A-Za-z]*)'
