@@ -60,20 +60,30 @@ def p_comment(p):
 
 
 def p_rule(p):
-    'rule : RULENAME EQ expression'
+    'rule : RULENAME EQ expression1'
     p[0] = Node('', [Node(p[1], []), Node(p[2], []), p[3]])
     p[0].value = p[0].get_val()
 
+def p_expression1(p):
+    '''expression1 :
+                    | expression1 COMMA expression1
+                    | expression1 COMMA INDENT expression1
+                    | expression2'''
+    if len(p) == 2:
+        p[0] = Node("", [p[1]])
+    elif len(p) == 4:
+        p[0] = Node("", [p[1], Node(p[2], []), p[3]])
+    else:
+        p[0] = Node("", [p[1], Node(p[2], []), p[4]])
+    p[0].value = p[0].get_val()
 
-def p_expression(p):
-    '''expression :
-                    | expression COMMA expression
-                    | expression ALT expression
-                    | expression COMMA INDENT expression
-                    | expression ALT INDENT expression
-                    | LPAREN expression RPAREN
-                    | LBRACE expression RBRACE
-                    | LBRACKET expression RBRACKET
+def p_expression2(p):
+    '''expression2 :
+                    | expression1 ALT expression1
+                    | expression1 ALT INDENT expression1
+                    | LPAREN expression1 RPAREN
+                    | LBRACE expression1 RBRACE
+                    | LBRACKET expression1 RBRACKET
                     | RULENAME
                     | PLAINTEXT'''
     if len(p) == 2:
